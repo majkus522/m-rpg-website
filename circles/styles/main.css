@@ -1,0 +1,106 @@
+:root
+{
+    --panel-size: 300px;
+}
+
+main
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, var(--panel-size));
+    gap: 20px;
+    place-content: center;
+}
+
+main > a
+{
+    width: var(--panel-size);
+    height: calc(var(--panel-size) + 50px);
+    background-color: #676767;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+main > a > svg
+{
+    display: block;
+    background-color: #787878;
+    width: var(--panel-size);
+    height: var(--panel-size);
+}
+
+main > a > desc
+{
+    display: grid;
+    grid-template-columns: 40px 40px 1fr;
+    grid-template-rows: 50px;
+    padding: 0 5px;
+    width: 100%;
+}
+
+main > a > desc > ion-icon
+{
+    transform:rotateY(180deg);
+    height: 100%;
+    width: 100%;
+}
+
+main > a > desc > likes
+{
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+    font-size: 25px;
+}
+
+main > a > desc > div
+{
+    overflow: hidden;
+}
+
+main > a > desc > div > p
+{
+    margin-left: auto;
+    height: 100%;
+    line-height: 50px;
+    font-size: 25px;
+    text-align: right;
+    display: block;
+}
+
+main > a > desc > div > p.scrolling
+{
+    animation: textScroll calc(var(--length) * 0.24s) infinite linear;
+    display: inline-block;
+}
+
+@keyframes textScroll
+{
+    0%
+    {
+        transform: translate(0, 0);
+    }
+    5%
+    {
+        transform: translate(0, 0);
+    }
+    45%
+    {
+        transform: translate(calc(-100% + 205px), 0);
+    }
+    55%
+    {
+        transform: translate(calc(-100% + 205px), 0);
+    }
+    95%
+    {
+        transform: translate(0, 0);
+    }
+    100%
+    {
+        transform: translate(0, 0);
+    }
+}

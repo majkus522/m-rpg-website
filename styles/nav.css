@@ -1,0 +1,47 @@
+nav
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    background-color: #565656;
+    position: sticky;
+    top: 0;
+    left: 0;
+    gap: 5px;
+    width: 100%;
+}
+
+nav div
+{
+    background-color: #787878;
+    color: #ffffff;
+    width: 100px;
+    text-align: center;
+    position: relative;
+}
+
+nav a
+{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: block;
+    cursor: pointer;
+}
+
+nav div:hover
+{
+    background-color: #898989;
+}
+
+nav > div > div
+{
+    position: absolute; 
+    display: none;
+    right: 0;
+}
+
+nav > div:hover > div
+{
+    display: block;
+}

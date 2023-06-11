@@ -1,0 +1,41 @@
+main
+{
+    background-color: #565656;
+    width: 1400px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+items
+{
+    display: block;
+    background-color: #787878;
+    width: 100%;
+    aspect-ratio: 0.75;
+}
+
+info
+{
+    display: block;
+    padding: 30px;
+}
+
+h3
+{
+    font-weight: 100;
+    font-size: 40px;
+    text-align: center;
+}
+
+info > div
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+info > div:not(:last-child)
+{
+    border-bottom: 1px solid #eeeeee;
+}
