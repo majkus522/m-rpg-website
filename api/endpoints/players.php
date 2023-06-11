@@ -16,7 +16,7 @@
                                 $queryResult = connectToDatabase($query);
                                 if(empty($queryResult))
                                     exitApi(404, "Player doesn't exists");
-                                echo json_encode(password_verify(decode($header), decode($queryResult[0]->password)));
+                                echo json_encode(password_verify(base64_decode($header), decode($queryResult[0]->password)));
                             }
                             else
                                 exitApi(400, "Specify Passsword header");
@@ -32,7 +32,7 @@
                         $queryResult = connectToDatabase($query);
                         if(empty($queryResult))
                             exitApi(404, "Player doesn't exists");
-                        if(password_verify(decode($header), decode($queryResult[0]->password)))
+                        if(password_verify(base64_decode($header), decode($queryResult[0]->password)))
                             $query = 'select * from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
                         else
                             exitApi(401, "Wrong password");
