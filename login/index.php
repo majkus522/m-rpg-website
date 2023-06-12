@@ -46,6 +46,7 @@
                     <input type="password">
                 </label>
                 <input type="button" value="Login">
+                <p class="error"></p>
             </form>
         </main>
     </body>
