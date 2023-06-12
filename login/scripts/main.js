@@ -10,10 +10,24 @@ button.addEventListener("click", () =>
     request.open("GET", "../api/endpoints/players/" + username + "/logged");
     request.onload = function ()
     {
-        console.log(this.responseText);
+        let response = JSON.parse(this.responseText);
+        let error = document.querySelector("form p.error");
         if(this.status >= 400)
         {
-            document.querySelector("form p.error").textContent = JSON.parse(this.responseText).message;
+            error.textContent = response.message;
+        }
+        else if(this.status == 200)
+        {
+            if(response)
+            {
+                document.cookie = "username=" + username + ";path=/";
+                document.cookie = "password=" + password + ";path=/";
+                location.reload();
+            }
+            else
+            {
+                error.textContent = "Incorect password";
+            }
         }
     };
     request.setRequestHeader("Password", password);

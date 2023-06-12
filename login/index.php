@@ -1,13 +1,29 @@
 <?php
+    $validLogin = false;
     if(isset($_COOKIE["username"]) && strlen($_COOKIE["username"]) > 0 && isset($_COOKIE["password"]) && strlen($_COOKIE["password"]) > 0)
     {
-        require "../api/common.php";
-        $result = callApi("../api/endpoints/players/" . $_COOKIE["username"] . "/logged", "GET", ["Password" -> $_COOKIE["password"]]);
+        require "../imports/common.php";
+        $result = callApi("../api/endpoints/players/" . $_COOKIE["username"] . "/logged", "GET", array("Password: " . $_COOKIE["password"]));
+        if($result[1] == 200 && $result[0])
+        {
+            $validLogin = true;
+            header("Location: ../players/" . $_COOKIE["username"]);
+            exit();
+        }
+        else
+            clearCookie();
     }
     else
+        clearCookie();
+
+    function clearCookie()
     {
-        $_COOKIE["username"] = "";
-        $_COOKIE["password"] = "";
+        ?>
+<script>
+    document.cookie = "username=;path=/";
+    document.cookie = "password=;path=/";
+</script>
+        <?php
     }
 ?>
 <!DOCTYPE html>
@@ -27,14 +43,9 @@
             }
         ?></head>
     <body>
-        <nav>
-            <div><a>Lorem.</a></div>
-            <div><a>Lorem.</a></div>
-            <div><a>Lorem.</a></div>
-            <div><a href="../login/">Login</a>
-                <div><a href="../register/">Register</a></div>
-            </div>
-        </nav>
+        <?php
+            require "../imports/nav.php";
+        ?>
         <main>
             <form>
                 <label>

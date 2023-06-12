@@ -1,5 +1,28 @@
 <?php
-    require "../api/common.php";
+    require "../imports/common.php";
+    $validLogin = false;
+    if(isset($_COOKIE["username"]) && strlen($_COOKIE["username"]) > 0 && isset($_COOKIE["password"]) && strlen($_COOKIE["password"]) > 0)
+    {
+        $result = callApi("../api/endpoints/players/" . $_COOKIE["username"] . "/logged", "GET", array("Password: " . $_COOKIE["password"]));
+        if($result[1] == 200 && $result[0])
+        {
+            $validLogin = true;
+        }
+        else
+            clearCookie();
+    }
+    else
+        clearCookie();
+
+    function clearCookie()
+    {
+        ?>
+<script>
+    document.cookie = "username=;path=/";
+    document.cookie = "password=;path=/";
+</script>
+        <?php
+    }
     $part = explode("/", $_SERVER["REQUEST_URI"]);
     $username = end($part);
     $result = callApi("../api/endpoints/players/" . $username, "GET");
@@ -21,14 +44,9 @@
             }
         ?></head>
     <body>
-        <nav>
-            <div><a>Lorem.</a></div>
-            <div><a>Lorem.</a></div>
-            <div><a>Lorem.</a></div>
-            <div><a href="../login/">Login</a>
-                <div><a href="../register/">Register</a></div>
-            </div>
-        </nav>
+        <?php
+            require "../imports/nav.php";
+        ?>
         <main>
             <items></items>
             <info>

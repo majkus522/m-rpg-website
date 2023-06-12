@@ -1,6 +1,6 @@
 <?php
     require "errorHandler.php";
-    require "common.php";
+    require "../imports/common.php";
     require "databaseController.php";
     require "logger.php";
     require "hasher.php";
