@@ -64,6 +64,9 @@
                 <p class="error"></p>
             </form>
         </main>
+        <?php
+            require "../imports/footer.html";
+        ?>
     </body>
 </html>
 <script src="scripts/main.js"></script>
