@@ -20,8 +20,8 @@
     {
         ?>
 <script>
-    document.cookie = "username=;path=/";
-    document.cookie = "password=;path=/";
+    document.cookie = "username=;path=/;max-age=0;";
+    document.cookie = "password=;path=/;max-age=0;";
 </script>
         <?php
     }
@@ -55,6 +55,10 @@
                 <label>
                     Password
                     <input type="password">
+                </label>
+                <label>
+                    Remember me
+                    <input type="checkbox">
                 </label>
                 <input type="button" value="Login">
                 <p class="error"></p>

@@ -20,8 +20,9 @@ button.addEventListener("click", () =>
         {
             if(response)
             {
-                document.cookie = "username=" + username + ";path=/";
-                document.cookie = "password=" + password + ";path=/";
+                let remember = document.querySelector("form input[type='checkbox']").value;
+                document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60)) : "");
+                document.cookie = "password=" + password + ";path=/" + (!remember ? (";max-age=" + (60)) : "") + ";secure";
                 location.reload();
             }
             else
