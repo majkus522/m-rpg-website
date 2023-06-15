@@ -57,8 +57,8 @@
                     <input type="password">
                 </label>
                 <label>
-                    Remember me
                     <input type="checkbox">
+                    Remember me
                 </label>
                 <input type="button" value="Login">
                 <p class="error"></p>
