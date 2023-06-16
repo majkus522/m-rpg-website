@@ -18,6 +18,7 @@ label
 {
     font-size: 18px;
     gap: 8px;
+    color: var(--color);
 }
 
 label:not(:nth-child(3))
@@ -28,20 +29,13 @@ label:not(:nth-child(3))
 
 input
 {
-    font-size: 20px;
+    font-size: var(--fontSize);
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 100;
     padding: 8px;
-    border: 2px solid #efefef;
-    color: #efefef;
-    background-color: transparent;
-}
-
-input:hover,
-input:focus
-{
-    background-color: rgba(255, 255, 255, 0.15);
-    border: 2px solid #cbcbcb;
+    border: var(--border);
+    color: var(--color);
+    background-color: var(--background);
 }
 
 p.error
