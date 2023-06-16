@@ -25,7 +25,7 @@
     }
     $part = explode("/", $_SERVER["REQUEST_URI"]);
     $username = end($part);
-    $result = callApi("../api/endpoints/players/" . $username, "GET");
+    $result = callApi("../api/endpoints/players/" . $username, "GET", array("Password: " . $_COOKIE["password"]));
 ?>
 <!DOCTYPE html>
 <html lang="en">
