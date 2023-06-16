@@ -31,7 +31,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>M-RPG - Login</title>
         <?php
             $first = true;
             foreach(array_merge(glob("../styles/*.css"), glob("styles/*.css")) as $file)
