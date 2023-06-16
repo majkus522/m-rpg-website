@@ -1,4 +1,5 @@
 <?php
+    require "../imports/loginCheck.php";
     if(str_ends_with($_SERVER["REQUEST_URI"], "/"))
     {
         require "list.php";

@@ -16,13 +16,13 @@
             }
         ?></head>
     <body>
-        <nav>
-            <a>Lorem.</a>
-            <a>Lorem.</a>
-            <a>Lorem.</a>
-            <a>Lorem.</a>
-        </nav>
+        <?php
+            require "../imports/nav.php";
+        ?>
         <main></main>
+        <?php
+            require "../imports/footer.html";
+        ?>
     </body>
 </html>
 <script src="scripts/list.js"></script>

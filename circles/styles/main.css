@@ -6,7 +6,7 @@
 main
 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, var(--panel-size));
+    grid-template-columns: repeat(5, var(--panel-size));
     gap: 20px;
     place-content: center;
 }

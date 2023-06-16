@@ -1,15 +1,19 @@
 let main = document.querySelector("body > main");
-main.textContent = "";
-let request = new XMLHttpRequest();
-request.open("GET", "../api/controllers/circles-panel", true);
-request.onload = async function ()
+
+async function load()
 {
-    JSON.parse(this.responseText).forEach(element =>
+    main.textContent = "";
+    let request = new XMLHttpRequest();
+    request.open("GET", "../api/controllers/circles-panel", true);
+    request.onload = async function ()
     {
-        createPanel(element);
-    });
+        JSON.parse(this.responseText).forEach(element =>
+        {
+            createPanel(element);
+        });
+    }
+    request.send();
 }
-request.send();
 
 async function createPanel(data)
 {
@@ -25,7 +29,6 @@ async function createPanel(data)
     icon.name = "thumbs-up-outline";
     icon.addEventListener("click", async function (event)
     {
-        console.log("fdgdfgdf");
         event.stopPropagation();
         event.preventDefault();
     });
@@ -49,3 +52,5 @@ async function createPanel(data)
     panel.appendChild(desc);
     main.appendChild(panel);
 }
+
+load();
