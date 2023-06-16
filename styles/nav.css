@@ -3,7 +3,7 @@ nav
     display: flex;
     flex-direction: row;
     justify-content: end;
-    background-color: #565656;
+    background-color: var(--background);
     position: sticky;
     top: 0;
     left: 0;
@@ -13,8 +13,8 @@ nav
 
 nav div
 {
-    background-color: #787878;
-    color: #ffffff;
+    background-color: var(--background);
+    color: var(--color);
     width: 100px;
     text-align: center;
     position: relative;
@@ -31,7 +31,7 @@ nav a
 
 nav div:hover
 {
-    background-color: #898989;
+    background-color: var(--backgroundHover);
 }
 
 nav > div > div

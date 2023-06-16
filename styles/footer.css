@@ -3,7 +3,8 @@ footer
     width: 100%;
     text-align: center;
     padding: 15px 0 10px 0;
-    background-color: #565656;
+    background-color: var(--background);
+    color: var(--color);
     font-size: 18px;
     font-weight: 100;
     margin-top: auto;

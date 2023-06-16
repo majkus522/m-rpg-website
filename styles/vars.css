@@ -1,0 +1,23 @@
+body
+{
+    --background: #343434;
+    --color: #efefef;
+}
+
+nav
+{
+    --background: #565656;
+}
+
+nav div
+{
+    --background: #787878;
+    --color: #efefef;
+    --backgroundHover: #898989;
+}
+
+footer
+{
+    --background: #565656;
+    --color: #efefef;
+}
