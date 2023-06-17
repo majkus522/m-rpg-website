@@ -63,14 +63,6 @@
                         case "maxMana":
                             $query = $query . ' and `mana` <= ' . $value;
                             break;
-
-                        case "olderThan":
-                            $query = $query . ' and `creationDate` > "' . $value . '"';
-                            break;
-
-                        case "youngerThan":
-                            $query = $query . ' and `creationDate` < "' . $value . '"';
-                            break;
                     }
                 }
                 $query = $query . ' limit ' . $limit . ' offset ' . $offset;
@@ -88,8 +80,6 @@
                 "   Items: {offset(optional)}-{limit} = specify number and offset of selected players (default[Items: 0-50])",
                 "   ?minMana={minMana} = specify minimal mana usage of circle",
                 "   ?maxMana={maxMana} = specify maxminal mana usage of circle",
-                "   ?olderThan={date(rrrr-mm-dd hh:mm:ss)} = specify if circle is older than given date time",
-                "   ?youngerThan={date(rrrr-mm-dd hh:mm:ss)} = specify if circle is younger than given date time",
                 "GET /api/endpoints/circles = select all circles (hidden data), doeasn't show private ones (player logged)",
                 "   (required)Player: {username} = specify player username",
                 "   (required)Passowrd: {password} = send player password",
