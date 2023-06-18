@@ -1,2 +1,3 @@
 api/databaseController.php
 api/hasher.php
+api/endpoints/test.php

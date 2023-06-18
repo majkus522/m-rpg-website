@@ -38,7 +38,10 @@
                             exitApi(401, "Wrong password");
                     }
                     else
+                    {
                         $query = 'select `id`, `username` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
+                        http_response_code(206);
+                    }
                     $queryResult = connectToDatabase($query);
                     if(empty($queryResult))
                         exitApi(404, "Player doesn't exists");
@@ -66,6 +69,7 @@
                 if(empty($queryResult))
                     exitApi(404, "Can't find any player matching conditions");
                 header("Items-Count: " . sizeof($queryResult));
+                http_response_code(206);
                 echo json_encode($queryResult);
             }
             break;
