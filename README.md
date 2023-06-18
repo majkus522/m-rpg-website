@@ -8,10 +8,16 @@
   GET /api/endpoints/players/
 ```
 
-| Headers                     | Type     | Description                                 |
-| :-------------------------- | :------- | :------------------------------------------ |
-| `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of players and offset. |
-| `Items: ${limit}`           | `int`    | **Optional**. Number of players.            |
+| Headers                     | Type     | Description                                 | Accepted values             |
+| :-------------------------- | :------- | :------------------------------------------ | :-------------------------- |
+| `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of players and offset. | [0 - &infin;]-[1 - &infin;] |
+| `Items: ${limit}`           | `int`    | **Optional**. Number of players.            | 1 - &infin;                 |
+
+| Query string      | Type     | Description                                   | Accepted values           |
+| :---------------- | :------- | :-------------------------------------------- | :------------------------ |
+| `minLevel=${min}` | `int`    | **Optional**. Minimal player level.           | 0 - &infin;               |
+| `maxLevel=${max}` | `int`    | **Optional**. Maximal player level.           | 0 - &infin;               |
+| `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"` |
 
 #### Get player
 
@@ -33,12 +39,13 @@
   GET /api/endpoints/circles/
 ```
 
-| Headers                     | Type     | Description                                 |
-| :-------------------------- | :------- | :------------------------------------------ |
-| `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of players and offset. |
-| `Items: ${limit}`           | `int`    | **Optional**. Number of players.            |
+| Headers                     | Type     | Description                                 | Accepted values             |
+| :-------------------------- | :------- | :------------------------------------------ | :-------------------------- |
+| `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of players and offset. | [0 - &infin;]-[1 - &infin;] |
+| `Items: ${limit}`           | `int`    | **Optional**. Number of players.            | 1 - &infin;                 |
 
-| Query string     | Type     | Description                       |
-| :--------------- | :------- | :-------------------------------- |
-| `minMana=${min}` | `int`    | **Optional**. Minimal mana usage. |
-| `maxMana=${max}` | `int`    | **Optional**. Maximum mana usage. |
+| Query string     | Type     | Description                                        | Accepted values         |
+| :--------------- | :------- | :------------------------------------------------- | :---------------------- |
+| `minMana=${min}` | `int`    | **Optional**. Minimal mana usage.                  | 0 - &infin;             |
+| `maxMana=${max}` | `int`    | **Optional**. Maximal mana usage.                  | 0 - &infin;             |
+| `order=${order}` | `string` | **Optional**. Order circles by mana usage and etc. | `"mana-desc"`, `"mana"` |
