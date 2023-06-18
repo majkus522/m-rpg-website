@@ -30,20 +30,6 @@
             }
             else
             {
-                $header = getHeader("Items");
-                $limit = 50;
-                $offset = 0;
-                if($header != false)
-                {
-                    if(str_contains($header, "-"))
-                    {
-                        $part = explode("-", $header);
-                        $offset = (int)$part[0];
-                        $limit = (int)$part[1];
-                    }
-                    else
-                        $limit = (int)$header;
-                }
                 if($headerPlayer != false && $headerPassword != false)
                 {
                     if(!callApi("endpoints/players/" . $headerPlayer . "/logged", "GET", ["Password: " . $headerPassword])[0])
@@ -52,6 +38,7 @@
                 }
                 else
                     $query = 'select * from `circles` where !`private`';
+                $orderPresent = false;
                 foreach($_GET as $key => $value)
                 {
                     switch($key)
@@ -63,8 +50,27 @@
                         case "maxMana":
                             $query = $query . ' and `mana` <= ' . $value;
                             break;
+
+                        case "order":
+                            if(!$orderPresent)
+                            {
+                                switch($value)
+                                {
+                                    case "mana-desc":
+                                        $query = $query . ' order by `mana` desc';
+                                        $orderPresent = true;
+                                        break;
+    
+                                    case "mana":
+                                        $query = $query . ' order by `mana` asc';
+                                        $orderPresent = true;
+                                        break;
+                                }
+                            }
+                            break;
                     }
                 }
+                require "headerItems.php";
                 $query = $query . ' limit ' . $limit . ' offset ' . $offset;
                 $result = connectToDatabase($query);
                 if(empty($result))

@@ -50,21 +50,9 @@
             }
             else
             {
-                $header = getHeader("Items");
-                $limit = 50;
-                $offset = 0;
-                if($header != false)
-                {
-                    if(str_contains($header, "-"))
-                    {
-                        $part = explode("-", $header);
-                        $offset = (int)$part[0];
-                        $limit = (int)$part[1];
-                    }
-                    else
-                        $limit = (int)$header;
-                }
-                $query = 'select `id`, `username` from `players` limit ' . $limit . ' offset ' . $offset;
+                $query = 'select `id`, `username` from `players`';
+                require "headerItems.php";
+                $query = $query . ' limit ' . $limit . ' offset ' . $offset;
                 $queryResult = connectToDatabase($query);
                 if(empty($queryResult))
                     exitApi(404, "Can't find any player matching conditions");
