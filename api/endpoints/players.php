@@ -50,7 +50,38 @@
             }
             else
             {
-                $query = 'select `id`, `username` from `players`';
+                $query = 'select `id`, `username` from `players` where 1 = 1';
+                foreach($_GET as $key => $value)
+                {
+                    switch($key)
+                    {
+                        case "minLevel":
+                            $query = $query . ' and `level` >= ' . $value;
+                            break;
+
+                        case "maxLevel":
+                            $query = $query . ' and `level` <= ' . $value;
+                            break;
+
+                        case "order":
+                            if(!$orderPresent)
+                            {
+                                switch($value)
+                                {
+                                    case "level-desc":
+                                        $query = $query . ' order by `level` desc';
+                                        $orderPresent = true;
+                                        break;
+    
+                                    case "level":
+                                        $query = $query . ' order by `level` asc';
+                                        $orderPresent = true;
+                                        break;
+                                }
+                            }
+                            break;
+                    }
+                }
                 require "headerItems.php";
                 $query = $query . ' limit ' . $limit . ' offset ' . $offset;
                 $queryResult = connectToDatabase($query);
