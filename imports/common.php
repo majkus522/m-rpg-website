@@ -76,4 +76,9 @@
         }
         return $headers;
     }
+
+    function validPassword($password):bool|string
+    {
+        return true;
+    }
 ?>

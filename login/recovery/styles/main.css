@@ -1,0 +1,43 @@
+main
+{
+    margin-top: auto;
+    width: 40%;
+    background-color: var(--background);
+}
+
+form
+{
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    align-items: center;
+    gap: 20px;
+}
+
+label
+{
+    font-size: 18px;
+    gap: 8px;
+    color: var(--color);
+    display: flex;
+    flex-direction: column;
+}
+
+input
+{
+    font-size: var(--fontSize);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    padding: 8px;
+    border: var(--border);
+    color: var(--color);
+    background-color: var(--background);
+}
+
+p.error
+{
+    color: #ce3b3b;
+    font-size: 28px;
+    text-align: center;
+    font-weight: 300;
+}
