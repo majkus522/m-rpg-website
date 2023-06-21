@@ -76,3 +76,17 @@
 		</tr>
 	</tbody>
 </table>
+
+#### Set players new password
+
+```http
+  PATCH /api/controllers/password-recovery/${code}
+```
+
+| Parameter   | Type     | Description                          |
+| :---------- | :------- | :----------------------------------- |
+| `code`      | `string` | **Required**. Code recived in email. |
+
+| Headers                 | Type     | Description                 |
+| :---------------------- | :------- | :-------------------------- |
+| `Password: ${password}` | `string` | **Required**. New password. |
