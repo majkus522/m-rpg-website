@@ -1,5 +1,10 @@
 <?php
     require "../imports/loginCheck.php";
+    if(!$validLogin)
+    {
+        header("Location: ../login/");
+        exit();
+    }
     $part = explode("/", $_SERVER["REQUEST_URI"]);
     $username = end($part);
     $result = callApi("../api/endpoints/players/" . $username, "GET", array("Password: " . $_COOKIE["password"]));
