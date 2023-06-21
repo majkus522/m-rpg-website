@@ -39,15 +39,19 @@
                     Repeat password
                     <input type="password">
                 </label>
+                <label class="show">
+                    Show password
+                    <input type="checkbox">
+                </label>
                 <input type="button" value="Send">
                 <p class="error"></p>
             </form>
-            <?php
+        <?php
                 }
                 else
                 {
             ?>
-            <form>
+<form>
                 <label>
                     Username or email
                     <input type="text">
@@ -55,10 +59,9 @@
                 <input type="button" value="Send">
                 <p class="error"></p>
             </form>
-            <?php
+        <?php
                 }            
-            ?>
-        </main>
+            ?></main>
         <?php
             require $extraPath . "../imports/footer.html";
         ?>
@@ -69,6 +72,7 @@
     {
         ?>
 <script src="scripts/reset.js"></script>
+<script src="scripts/passwordHide.js"></script>
         <?php
     }
     else

@@ -21,6 +21,14 @@ label
     color: var(--color);
     display: flex;
     flex-direction: column;
+    width: 280px;
+}
+
+label.show
+{
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: -15px;
 }
 
 input

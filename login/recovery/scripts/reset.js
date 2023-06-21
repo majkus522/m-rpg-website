@@ -10,7 +10,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     {
         if(this.status == 200)
         {
-            result.textContent = "Password has been  changed";
+            result.textContent = "Password has been changed";
         }
         else
         {

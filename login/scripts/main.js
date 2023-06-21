@@ -2,14 +2,13 @@ let button = document.querySelector("form input[type='button']");
 let error = document.querySelector("form p.error");
 button.addEventListener("click", () =>
 {
-    let inputs = document.querySelectorAll("form > label > input");
-    let username = inputs[0].value;
+    let username = document.querySelector("form label.username input").value;
     if(username.length == 0)
     {
         error.textContent = "Enter username";
         return;
     }
-    let password = btoa(inputs[1].value);
+    let password = btoa(document.querySelector("form label.password input").value);
     if(password.length == 0)
     {
         error.textContent = "Enter password";
@@ -29,7 +28,7 @@ button.addEventListener("click", () =>
         {
             if(response)
             {
-                let remember = document.querySelector("form input[type='checkbox']").value;
+                let remember = document.querySelector("form label.remember input").value;
                 document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
                 document.cookie = "password=" + password + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
                 location.reload();

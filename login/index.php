@@ -28,16 +28,21 @@
         ?>
         <main>
             <form>
-                <label>
+                <label class="username">
                     Username
                     <input type="text">
                 </label>
-                <label>
+                <label class="password">
                     Password
                     <input type="password">
                 </label>
-                <label>
+                <label class="show">
+                    Show password
                     <input type="checkbox">
+                </label>
+                <label class="remember">
+                    <input type="checkbox">
+                    <span><div></div></span>
                     Remember me
                 </label>
                 <input type="button" value="Login">
@@ -50,3 +55,4 @@
     </body>
 </html>
 <script src="scripts/main.js"></script>
+<script src="scripts/passwordHide.js"></script>
