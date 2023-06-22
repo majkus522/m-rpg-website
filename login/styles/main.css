@@ -29,6 +29,7 @@ label.show
     flex-direction: row;
     justify-content: flex-end;
     margin-top: -15px;
+    cursor: pointer;
 }
 
 label.remember
@@ -36,6 +37,7 @@ label.remember
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
 }
   
 label.remember input
@@ -68,12 +70,16 @@ label.remember input:checked ~ span div
 input
 {
     font-size: var(--fontSize);
-    font-family: Arial, Helvetica, sans-serif;
     font-weight: 100;
     padding: 8px;
     border: var(--border);
     color: var(--color);
     background-color: var(--background);
+}
+
+input[type='button']
+{
+    cursor: pointer;
 }
 
 p.error
@@ -82,4 +88,14 @@ p.error
     font-size: 28px;
     text-align: center;
     font-weight: 300;
+}
+
+form a
+{
+    font-size: var(--fontSize);
+    font-weight: 100;
+    padding: 8px;
+    border: var(--border);
+    color: var(--color);
+    background-color: var(--background);
 }

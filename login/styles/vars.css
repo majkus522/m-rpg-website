@@ -8,7 +8,8 @@ label
     --color: #efefef;
 }
 
-input
+input,
+form a
 {
     --color: #efefef;
     --background: transparent;
@@ -17,7 +18,8 @@ input
 }
 
 input:hover,
-input:focus
+input:focus,
+form a:hover
 {
     --border: 2px solid #efefef;
     --background: rgba(255, 255, 255, 0.15);

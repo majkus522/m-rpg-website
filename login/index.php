@@ -47,6 +47,7 @@
                 </label>
                 <input type="button" value="Login">
                 <p class="error"></p>
+                <a href="recovery">Reset password</a>
             </form>
         </main>
         <?php

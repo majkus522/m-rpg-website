@@ -29,12 +29,12 @@ label.show
     flex-direction: row;
     justify-content: flex-end;
     margin-top: -15px;
+    cursor: pointer;
 }
 
 input
 {
     font-size: var(--fontSize);
-    font-family: Arial, Helvetica, sans-serif;
     font-weight: 100;
     padding: 8px;
     border: var(--border);
@@ -42,10 +42,20 @@ input
     background-color: var(--background);
 }
 
-p.error
+input[type='button']
 {
-    color: #ce3b3b;
+    cursor: pointer;
+}
+
+p
+{
+    color: #efefef;
     font-size: 28px;
     text-align: center;
     font-weight: 300;
+}
+
+p.error
+{
+    color: #ce3b3b;
 }

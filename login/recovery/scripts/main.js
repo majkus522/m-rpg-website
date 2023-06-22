@@ -14,10 +14,12 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     {
         if(this.status == 200)
         {
+            result.classList.remove("error");
             result.textContent = "Mail has been sent";
         }
         else
         {
+            result.classList.add("error");
             result.textContent = JSON.parse(this.responseText).message;
         }
     }
