@@ -36,10 +36,11 @@
                         connectToDatabase('delete from `password-recovery` where `code` = "' . $requestUrlPart[$urlIndex + 1] . '"');
                         exitApi(400, "Link expired");
                     }
+                    $header = base64_decode($header);
                     $passTest = validPassword($header);
                     if($passTest === true)
                     {
-                        $password = encode(password_hash(base64_decode($header), PASSWORD_DEFAULT));
+                        $password = encode(password_hash($header, PASSWORD_DEFAULT));
                         $query = 'update `players` set `password` = "' . $password . '" where `id` = ' . $queryResult[0]->player;
                         connectToDatabase($query);
                         $query = 'delete from `password-recovery` where `player` = ' . $queryResult[0]->player;

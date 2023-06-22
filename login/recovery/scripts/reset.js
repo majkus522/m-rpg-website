@@ -1,7 +1,7 @@
 let result = document.querySelector("form p");
 document.querySelector("form input[type='button']").addEventListener("click", () =>
 {
-    let inputs = document.querySelectorAll("form input[type='password']");
+    let inputs = document.querySelectorAll("form input[type='password'], form input[type='text']");
     if(inputs[0].value != inputs[1].value)
         return;
     let request = new XMLHttpRequest();
@@ -10,10 +10,12 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     {
         if(this.status == 200)
         {
+            result.classList.remove("error");
             result.textContent = "Password has been changed";
         }
         else
         {
+            result.classList.add("error");
             result.textContent = JSON.parse(this.responseText).message;
         }
     }
