@@ -16,7 +16,7 @@ button.addEventListener("click", () =>
     }
 
     let request = new XMLHttpRequest();
-    request.open("GET", "../api/endpoints/players/" + username + "/logged");
+    request.open("GET", "../api/endpoints/players/" + username + "/logged", true);
     request.onload = function ()
     {
         let response = JSON.parse(this.responseText);
