@@ -93,6 +93,28 @@
             }
             break;
 
+        case "POST":
+            $data = json_decode(file_get_contents("php://input"));
+            $validUsername = validUsername($data->username);
+            if($validUsername !== true)
+                exitApi(400, $validUsername);
+            $validEmail = validEmail($data->email);
+            if($validEmail !== true)
+                exitApi(400, $validEmail);
+            $validPassword = validPassword($data->password);
+            if($validPassword !== true)
+                exitApi(400, $validPassword);
+            $query = 'select `id` from `players` where `username` = "' . $data->username . '"';
+            if(!empty(connectToDatabase($query)))
+                exitApi(400, "Player already exists");
+            $query = 'select `id` from `players` where `email` = "' . $data->email . '"';
+            if(!empty(connectToDatabase($query)))
+                exitApi(400, "Email already taken");
+            $query = 'insert into `players`(`username`, `email`, `password`) values ("' . $data->username . '", "' . $data->email . '", "' . encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT)) . '")';
+            connectToDatabase($query);
+            http_response_code(201);
+            break;
+
         case "OPTIONS":
             echo json_encode([
                 "GET /api/endpoints/players = select all players (hidden data)",

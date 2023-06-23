@@ -1,0 +1,101 @@
+main
+{
+    margin-top: auto;
+    width: 40%;
+    background-color: var(--background);
+}
+
+form
+{
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    align-items: center;
+    gap: 20px;
+}
+
+label
+{
+    font-size: 18px;
+    gap: 8px;
+    color: var(--color);
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+}
+
+label.show
+{
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: -15px;
+    cursor: pointer;
+}
+
+label.remember
+{
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+  
+label.remember input
+{
+    display: none;
+}
+  
+label.remember span
+{
+    height: 27px;
+    width: 27px;
+    background-color: transparent;
+    border: 2px solid var(--color);
+    padding: 4px;
+}
+
+label.remember:hover input ~ span
+{
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 2px solid #efefef;
+}
+
+label.remember input:checked ~ span div
+{
+    background-color: #efefef;
+    width: 100%;
+    height: 100%;
+}
+
+input
+{
+    font-size: var(--fontSize);
+    font-weight: 100;
+    padding: 8px;
+    border: var(--border);
+    color: var(--color);
+    background-color: var(--background);
+}
+
+input[type='button']
+{
+    cursor: pointer;
+}
+
+p.error
+{
+    color: #ce3b3b;
+    font-size: 28px;
+    text-align: center;
+    font-weight: 300;
+}
+
+form a
+{
+    font-size: var(--fontSize);
+    font-weight: 100;
+    padding: 8px;
+    border: var(--border);
+    color: var(--color);
+    background-color: var(--background);
+}

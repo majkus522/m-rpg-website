@@ -1,0 +1,26 @@
+main
+{
+    --background: #565656;
+}
+
+label
+{
+    --color: #efefef;
+}
+
+input,
+form a
+{
+    --color: #efefef;
+    --background: transparent;
+    --fontSize: 20px;
+    --border: 2px solid var(--color);
+}
+
+input:hover,
+input:focus,
+form a:hover
+{
+    --border: 2px solid #efefef;
+    --background: rgba(255, 255, 255, 0.15);
+}
