@@ -19,6 +19,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
             result.textContent = JSON.parse(this.responseText).message;
         }
     }
-    request.setRequestHeader("Password", btoa(inputs[0].value));
-    request.send();
+    request.send(JSON.stringify({
+        password: btoa(inputs[0].value)
+    }));
 });

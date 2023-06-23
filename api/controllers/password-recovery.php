@@ -26,8 +26,8 @@
         case "PATCH":
             if(isSingleGet())
             {
-                $header = getHeader("Password");
-                if($header != false)
+                $data = json_decode(file_get_contents("php://input"));
+                if(property_exists($data, "password"))
                 {
                     $query = 'select `player` from `password-recovery` where `code` = "' . $requestUrlPart[$urlIndex + 1] . '" and hour(timediff(now(), `date`)) < 24 limit 1';
                     $queryResult = connectToDatabase($query);
@@ -36,11 +36,11 @@
                         connectToDatabase('delete from `password-recovery` where `code` = "' . $requestUrlPart[$urlIndex + 1] . '"');
                         exitApi(400, "Link expired");
                     }
-                    $header = base64_decode($header);
-                    $passTest = validPassword($header);
+                    $password = base64_decode($data->password);
+                    $passTest = validPassword($password);
                     if($passTest === true)
                     {
-                        $password = encode(password_hash($header, PASSWORD_DEFAULT));
+                        $password = encode(password_hash($password, PASSWORD_DEFAULT));
                         $query = 'update `players` set `password` = "' . $password . '" where `id` = ' . $queryResult[0]->player;
                         connectToDatabase($query);
                         $query = 'delete from `password-recovery` where `player` = ' . $queryResult[0]->player;
