@@ -110,6 +110,6 @@
 | :---------- | :------- | :----------------------------------- |
 | `code`      | `string` | **Required**. Code recived in email. |
 
-| Headers                 | Type     | Description                 |
-| :---------------------- | :------- | :-------------------------- |
-| `Password: ${password}` | `string` | **Required**. New password. |
+| Body (JSON Object) | Type     | Description                 |
+| :----------------- | :------- | :-------------------------- |
+| `password`         | `string` | **Required**. New password. |
