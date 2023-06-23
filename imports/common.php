@@ -100,7 +100,7 @@
             return "Username is to short";
         if(strlen($username) > 16)
             return "Username is to long";
-        if(preg_match("[^a-zA-Z0-9_]"))
+        if(preg_match("[^a-zA-Z0-9_]", $username))
             return "Username can only contain letters, numbers and underscore";
         return true;
     }
