@@ -2,7 +2,10 @@
 
 ## API Reference
 
-#### Get all players (only username)
+&nbsp;
+## Players
+
+#### Get all players (only username) :
 
 ```http
   GET /api/endpoints/players/
@@ -19,7 +22,7 @@
 | `maxLevel=${max}` | `int`    | **Optional**. Maximal player level.           | 0 - &infin;               |
 | `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"` |
 
-#### Get player
+#### Get player :
 
 ```http
   GET /api/endpoints/players/${username}
@@ -33,7 +36,23 @@
 | :---------------------- | :------- | :----------------------------------------------- |
 | `Password: ${password}` | `string` | **Optional**. Needed to access full player data. |
 
-#### Get all circles (only public ones)
+#### Add new player :
+
+```http
+  POST /api/endpoints/players/
+```
+
+| Body (JSON Object) | Type     | Description                     |
+| :----------------- | :------- | :------------------------------ |
+| `username`         | `string` | **Required**. Name of player.   |
+| `email`            | `string` | **Required**. Players email.    |
+| `password`         | `string` | **Required**. Players password. |
+
+---
+&nbsp;
+## Circles
+
+#### Get all circles (only public ones) :
 
 ```http
   GET /api/endpoints/circles/
@@ -50,7 +69,11 @@
 | `maxMana=${max}` | `int`    | **Optional**. Maximal mana usage.                  | 0 - &infin;             |
 | `order=${order}` | `string` | **Optional**. Order circles by mana usage and etc. | `"mana-desc"`, `"mana"` |
 
-#### Send password recovery email
+---
+&nbsp;
+## Password recovery
+
+#### Send password recovery email :
 
 ```http
   GET /api/controllers/password-recovery/
@@ -77,7 +100,7 @@
 	</tbody>
 </table>
 
-#### Set players new password
+#### Set players new password :
 
 ```http
   PATCH /api/controllers/password-recovery/${code}
