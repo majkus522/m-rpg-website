@@ -4,9 +4,9 @@
         case "GET":
             $query = 'select `id`, `username`, `email` from `players` where ';
             if(isset($_GET["username"]))
-                $query = $query . '`username` = "' . $_GET["username"] . '"';
+                $query .= '`username` = "' . $_GET["username"] . '"';
             else if(isset($_GET["email"]))
-                $query = $query . '`email` = "' . $_GET["email"] . '"';
+                $query .= '`email` = "' . $_GET["email"] . '"';
             else
                 exitApi(400, "Enter username or email");
             $queryResult = connectToDatabase($query . ' limit 1');

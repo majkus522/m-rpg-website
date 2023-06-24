@@ -44,11 +44,11 @@
                     switch($key)
                     {
                         case "minMana":
-                            $query = $query . ' and `mana` >= ' . $value;
+                            $query .= ' and `mana` >= ' . $value;
                             break;
 
                         case "maxMana":
-                            $query = $query . ' and `mana` <= ' . $value;
+                            $query .= ' and `mana` <= ' . $value;
                             break;
 
                         case "order":
@@ -57,12 +57,12 @@
                                 switch($value)
                                 {
                                     case "mana-desc":
-                                        $query = $query . ' order by `mana` desc';
+                                        $query .= ' order by `mana` desc';
                                         $orderPresent = true;
                                         break;
     
                                     case "mana":
-                                        $query = $query . ' order by `mana` asc';
+                                        $query .= ' order by `mana` asc';
                                         $orderPresent = true;
                                         break;
                                 }
@@ -71,7 +71,7 @@
                     }
                 }
                 require "headerItems.php";
-                $query = $query . ' limit ' . $limit . ' offset ' . $offset;
+                $query .= ' limit ' . $limit . ' offset ' . $offset;
                 $result = connectToDatabase($query);
                 if(empty($result))
                     exitApi(404, "Can't find any circles matching conditions");

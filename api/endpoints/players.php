@@ -56,11 +56,11 @@
                     switch($key)
                     {
                         case "minLevel":
-                            $query = $query . ' and `level` >= ' . $value;
+                            $query .= ' and `level` >= ' . $value;
                             break;
 
                         case "maxLevel":
-                            $query = $query . ' and `level` <= ' . $value;
+                            $query .= ' and `level` <= ' . $value;
                             break;
 
                         case "order":
@@ -69,12 +69,12 @@
                                 switch($value)
                                 {
                                     case "level-desc":
-                                        $query = $query . ' order by `level` desc';
+                                        $query .= ' order by `level` desc';
                                         $orderPresent = true;
                                         break;
     
                                     case "level":
-                                        $query = $query . ' order by `level` asc';
+                                        $query .= ' order by `level` asc';
                                         $orderPresent = true;
                                         break;
                                 }
@@ -83,7 +83,7 @@
                     }
                 }
                 require "headerItems.php";
-                $query = $query . ' limit ' . $limit . ' offset ' . $offset;
+                $query .= ' limit ' . $limit . ' offset ' . $offset;
                 $queryResult = connectToDatabase($query);
                 if(empty($queryResult))
                     exitApi(404, "Can't find any player matching conditions");
@@ -143,8 +143,8 @@
                             if(!empty(connectToDatabase('select `id` from `players` where `email` = "' . $value . '"')))
                                 exitApi(400, "Email already taken");
                             if(!$first)
-                                $query = $query . ',';
-                            $query = $query . ' `' . $key . '` = "' . $value . '"';
+                                $query .= ',';
+                            $query .= ' `' . $key . '` = "' . $value . '"';
                             $first = false;
                             break;
 
@@ -152,8 +152,8 @@
                             if($value < 1)
                                 exitApi(400, "Level : incorect value");
                             if(!$first)
-                                $query = $query . ',';
-                            $query = $query . ' `' . $key . '` = ' . $value;
+                                $query .= ',';
+                            $query .= ' `' . $key . '` = ' . $value;
                             $first = false;
                             break;
 
@@ -161,8 +161,8 @@
                             if($value < 0)
                                 exitApi(400, "Exp : incorect value");
                             if(!$first)
-                                $query = $query . ',';
-                            $query = $query . ' `' . $key . '` = ' . $value;
+                                $query .= ',';
+                            $query .= ' `' . $key . '` = ' . $value;
                             $first = false;
                             break;
 
@@ -172,13 +172,13 @@
                             if($valid !== true)
                                 exitApi(400, $valid);
                             if(!$first)
-                                $query = $query . ',';
-                            $query = $query . ' `' . $key . '` = "' . encode(password_hash($password, PASSWORD_DEFAULT)) . '"';
+                                $query .= ',';
+                            $query .= ' `' . $key . '` = "' . encode(password_hash($password, PASSWORD_DEFAULT)) . '"';
                             $first = false;
                             break;
                     }
                 }
-                $query = $query . ' where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+                $query .= ' where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
                 connectToDatabase($query);
             }
             else
