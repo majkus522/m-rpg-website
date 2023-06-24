@@ -48,6 +48,54 @@
 | `email`            | `string` | **Required**. Players email.    |
 | `password`         | `string` | **Required**. Players password. |
 
+#### Edit player data :
+
+```http
+  PATCH /api/endpoints/players/${username}
+```
+
+| Parameter       | Type     | Description                               |
+| :-------------- | :------- | :---------------------------------------- |
+| `username`      | `string` | **Required**. Username of player to edit. |
+
+| Headers                 | Type     | Description                              |
+| :---------------------- | :------- | :--------------------------------------- |
+| `Password: ${password}` | `string` | **Required**. Player's current password. |
+
+<table>
+	<thead>
+		<tr>
+			<th>Body (JSON Object)</th>
+			<th>Type</th>
+			<th>Description</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>"password": "${password}"</code></td>
+			<td><code>string</code></td>
+			<td>New password</td>
+			<td rowspan="4"><strong>Required</strong>. Needs one of this to work.</td>
+		</tr>
+		<tr>
+			<td><code>"email": "${email}"</code></td>
+			<td><code>string</code></td>
+			<td>New email</td>
+		</tr>
+		<tr>
+			<td><code>"level": ${level}</code></td>
+			<td><code>int</code></td>
+			<td>New level</td>
+		</tr>
+		<tr>
+			<td><code>"exp": ${exp}</code></td>
+			<td><code>int</code></td>
+			<td>New exp</td>
+		</tr>
+	</tbody>
+</table>
+
 ---
 &nbsp;
 ## Circles

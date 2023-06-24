@@ -115,6 +115,76 @@
             http_response_code(201);
             break;
 
+        case "PATCH":
+            if(isSingleGet())
+            {
+                $header = getHeader("Password");
+                if($header === false)
+                    exitApi(400, "Enter player password");
+                $query = 'select `password` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+                $queryResult = connectToDatabase($query);
+                if(empty($queryResult))
+                    exitApi(404, "Player doesn't exists");
+                if(!password_verify(base64_decode($header), decode($queryResult[0]->password)))
+                    exitApi(401, "Wrong password");
+                $vars = get_object_vars(json_decode(file_get_contents("php://input")));
+                if(empty($vars))
+                    exitApi(400, "Enter some changes");
+                $query = 'update `players` set';
+                $first = true;
+                foreach($vars as $key => $value)
+                {
+                    switch($key)
+                    {
+                        case "email":
+                            $valid = validEmail($value);
+                            if($valid !== true)
+                                exitApi(400, $valid);
+                            if(!empty(connectToDatabase('select `id` from `players` where `email` = "' . $value . '"')))
+                                exitApi(400, "Email already taken");
+                            if(!$first)
+                                $query = $query . ',';
+                            $query = $query . ' `' . $key . '` = "' . $value . '"';
+                            $first = false;
+                            break;
+
+                        case "level":
+                            if($value < 1)
+                                exitApi(400, "Level : incorect value");
+                            if(!$first)
+                                $query = $query . ',';
+                            $query = $query . ' `' . $key . '` = ' . $value;
+                            $first = false;
+                            break;
+
+                        case "exp":
+                            if($value < 0)
+                                exitApi(400, "Exp : incorect value");
+                            if(!$first)
+                                $query = $query . ',';
+                            $query = $query . ' `' . $key . '` = ' . $value;
+                            $first = false;
+                            break;
+
+                        case "password":
+                            $password = base64_decode($value);
+                            $valid = validPassword($password);
+                            if($valid !== true)
+                                exitApi(400, $valid);
+                            if(!$first)
+                                $query = $query . ',';
+                            $query = $query . ' `' . $key . '` = "' . encode(password_hash($password, PASSWORD_DEFAULT)) . '"';
+                            $first = false;
+                            break;
+                    }
+                }
+                $query = $query . ' where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+                connectToDatabase($query);
+            }
+            else
+                exitApi(400, "Specify player");
+            break;
+
         case "OPTIONS":
             echo json_encode([
                 "GET /api/endpoints/players = select all players (hidden data)",
