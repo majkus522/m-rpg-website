@@ -1,0 +1,18 @@
+main div
+{
+    --color: #efefef;
+    --fontSize: 20px;
+}
+
+main div input
+{
+    --background: transparent;
+    --border: 2px solid var(--color);
+}
+
+input:hover,
+input:focus
+{
+    --border: 2px solid #efefef;
+    --background: rgba(255, 255, 255, 0.15);
+}

@@ -11,7 +11,10 @@
                 {
                     ?>
 <div><a href="<?php echo $extraPath; ?>../players/<?php echo $_COOKIE["username"]; ?>">Player</a>
-                <div><a href="<?php echo $extraPath; ?>../logout/">Logout</a></div>
+                <div>
+                    <a href="<?php echo $extraPath; ?>../players/<?php echo $_COOKIE["username"]; ?>?tab=settings">Settings</a>
+                    <a href="<?php echo $extraPath; ?>../logout/">Logout</a>
+                </div>
             </div>
         <?php
                 }
@@ -19,7 +22,9 @@
                 {
                     ?>
 <div><a href="<?php echo $extraPath; ?>../login/">Login</a>
-                <div><a href="<?php echo $extraPath; ?>../register/">Register</a></div>
+                <div>
+                    <a href="<?php echo $extraPath; ?>../register/">Register</a>
+                </div>
             </div>
         <?php
                 }

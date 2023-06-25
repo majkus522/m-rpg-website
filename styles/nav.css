@@ -29,7 +29,7 @@ nav a
     cursor: pointer;
 }
 
-nav div:hover
+nav > div:hover
 {
     background-color: var(--backgroundHover);
 }
@@ -44,4 +44,9 @@ nav > div > div
 nav > div:hover > div
 {
     display: block;
+}
+
+nav > div > div > a:hover
+{
+    background-color: var(--backgroundHover);
 }
