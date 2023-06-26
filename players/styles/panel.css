@@ -1,8 +1,9 @@
-main
+@import "main.css";
+@import "nav.css";
+@import "vars.css";
+
+content
 {
-    background-color: #565656;
-    width: 1400px;
-    height: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr;
 }

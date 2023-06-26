@@ -1,0 +1,13 @@
+main
+{
+    width: 1400px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+content
+{
+    background-color: #565656;
+}

@@ -17,29 +17,33 @@
                 $first = false;
             }
         ?>    <link href="styles/settings.css" rel="stylesheet" type="text/css">
-        <link href="styles/vars.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <?php
             require "../imports/nav.php";
         ?>
         <main>
-            <div class="email">
-                Email
-                <input type="email" value="<?php echo $result[0]->email; ?>">
-                <input type="button" value="Update">
-                <p></p>
-            </div>
-            <div class="password">
-                Password
-                <input type="password" placeholder="Password">
-                <label class="show">
-                    Show password
-                    <input type="checkbox">
-                </label>
-                <input type="button" value="Update">
-                <p></p>
-            </div>
+            <?php
+                require "nav.php";
+            ?>
+            <content>
+                <div class="email">
+                    Email
+                    <input type="email" value="<?php echo $result[0]->email; ?>">
+                    <input type="button" value="Update">
+                    <p></p>
+                </div>
+                <div class="password">
+                    Password
+                    <input type="password" placeholder="Password">
+                    <label class="show">
+                        Show password
+                        <input type="checkbox">
+                    </label>
+                    <input type="button" value="Update">
+                    <p></p>
+                </div>
+            </content>
         </main>
     </body>
 </html>

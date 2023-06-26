@@ -1,14 +1,13 @@
-main
+@import "main.css";
+@import "nav.css";
+@import "vars.css";
+
+content
 {
-    background-color: #565656;
-    width: 1400px;
-    height: 100%;
     padding: 40px;
-    display: flex;
-    flex-direction: column;
 }
 
-main div
+content div
 {
     display: flex;
     flex-direction: row;
@@ -21,12 +20,12 @@ main div
     padding: 30px 50px;
 }
 
-main div:first-child
+content div:first-child
 {
     border-top: 2px solid #efefef;
 }
 
-main div input
+content div input
 {
     font-size: var(--fontSize);
     font-weight: 100;
@@ -36,17 +35,17 @@ main div input
     background-color: var(--background);
 }
 
-main div input:hover::placeholder
+content div input:hover::placeholder
 {
     color: #ababab;
 }
 
-main div input[type='button']
+content div input[type='button']
 {
     cursor: pointer;
 }
 
-main div p
+content div p
 {
     text-align: center;
     font-weight: 300;
