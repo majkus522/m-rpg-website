@@ -14,6 +14,11 @@
             break;
         }
     }
+    if($_COOKIE["username"] != $part[$urlIndex])
+    {
+        header("Location: " . $_COOKIE["username"]);
+        exit();
+    }
     if(!isset($_GET["tab"]))
     {
         require "panel.php";
