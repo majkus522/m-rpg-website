@@ -1,3 +1,7 @@
+@import "nav.css";
+@import "footer.css";
+@import "vars.css";
+
 *
 {
     box-sizing: border-box;

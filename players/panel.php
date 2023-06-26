@@ -1,22 +1,7 @@
 <?php
-    $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Password: " . $_COOKIE["password"]));
+            $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Password: " . $_COOKIE["password"]));
 ?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>M-RPG - <?php echo $result[0]->username; ?></title>
-        <?php
-            $first = true;
-            foreach(glob("../styles/*.css") as $file)
-            {
-                if(!$first)
-                    echo "\t";
-                echo '<link href="' . $file . '" rel="stylesheet" type="text/css">' . "\r\n\t";
-                $first = false;
-            }
-        ?>    <link href="styles/panel.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <?php
