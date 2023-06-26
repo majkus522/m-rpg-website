@@ -5,7 +5,7 @@
         header("Location: ../login/");
         exit();
     }
-    $part = explode("/", $_SERVER["REQUEST_URI"]);
+    $part = explode("/", $_SERVER["REDIRECT_URL"]);
     for($index = 0; $index < sizeof($part); $index++)
     {
         if($part[$index] == "players")
