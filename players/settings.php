@@ -28,6 +28,11 @@
                     <input type="button" value="Update">
                     <p></p>
                 </div>
+                <div class="delete">
+                    Delete account
+                    <input type="button" value="Delete">
+                    <p></p>
+                </div>
             </content>
         </main>
     </body>
