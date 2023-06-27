@@ -4,7 +4,7 @@
     if(isset($_COOKIE["username"]) && strlen($_COOKIE["username"]) > 0 && isset($_COOKIE["password"]) && strlen($_COOKIE["password"]) > 0)
     {
         $result = callApi("../api/endpoints/players/" . $_COOKIE["username"] . "/logged", "GET", array("Password: " . $_COOKIE["password"]));
-        if($result[1] == 200 && $result[0])
+        if($result[1] == 200)
         {
             $validLogin = true;
         }

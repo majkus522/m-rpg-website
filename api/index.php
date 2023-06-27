@@ -26,9 +26,11 @@
     else
         exitApi(404, "Unknown endpoint");
 
-    function exitApi(int $code, string $message):void
+    function exitApi(int $code, string|object $message):void
     {
         global $requestMethod;
+        if(gettype($message) == "object")
+            $message = json_encode($message);
         http_response_code($code);
         $data = debug_backtrace()[0];
         if($requestMethod != "HEAD")

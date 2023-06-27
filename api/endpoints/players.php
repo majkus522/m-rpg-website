@@ -10,16 +10,14 @@
                     {
                         case "logged":
                             $header = getHeader("Password");
-                            if($header != false)
-                            {
-                                $query = 'select `password` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
-                                $queryResult = connectToDatabase($query);
-                                if(empty($queryResult))
-                                    exitApi(404, "Player doesn't exists");
-                                echo json_encode(password_verify(base64_decode($header), decode($queryResult[0]->password)) ? 1 : 0);
-                            }
-                            else
-                                exitApi(400, "Specify Passsword header");
+                            if($header === false)
+                                exitApi(400, "Enter player password");
+                            $query = 'select `password` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+                            $queryResult = connectToDatabase($query);
+                            if(empty($queryResult))
+                                exitApi(404, "Player doesn't exists");
+                            if(!password_verify(base64_decode($header), decode($queryResult[0]->password)))
+                                exitApi(401, "Wrong password");
                             break;
                     }
                 }
@@ -28,14 +26,8 @@
                     $header = getHeader("Password");
                     if($header != false)
                     {
-                        $query = 'select `password` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
-                        $queryResult = connectToDatabase($query);
-                        if(empty($queryResult))
-                            exitApi(404, "Player doesn't exists");
-                        if(password_verify(base64_decode($header), decode($queryResult[0]->password)))
-                            $query = 'select * from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
-                        else
-                            exitApi(401, "Wrong password");
+                        require "playerLogged.php";
+                        $query = 'select * from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
                     }
                     else
                     {
@@ -118,15 +110,7 @@
         case "PATCH":
             if(isSingleGet())
             {
-                $header = getHeader("Password");
-                if($header === false)
-                    exitApi(400, "Enter player password");
-                $query = 'select `password` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
-                $queryResult = connectToDatabase($query);
-                if(empty($queryResult))
-                    exitApi(404, "Player doesn't exists");
-                if(!password_verify(base64_decode($header), decode($queryResult[0]->password)))
-                    exitApi(401, "Wrong password");
+                require "playerLogged.php";
                 $vars = get_object_vars(json_decode(file_get_contents("php://input")));
                 if(empty($vars))
                     exitApi(400, "Enter some changes");
@@ -188,17 +172,8 @@
         case "DELETE":
             if(isSingleGet())
             {
-                $header = getHeader("Password");
-                if($header === false)
-                    exitApi(400, "Enter player password");
-                $query = 'select `password` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
-                $queryResult = connectToDatabase($query);
-                if(empty($queryResult))
-                    exitApi(404, "Player doesn't exists");
-                if(!password_verify(base64_decode($header), decode($queryResult[0]->password)))
-                    exitApi(401, "Wrong password");
-                $query = 'delete from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
-                connectToDatabase($query);
+                require "playerLogged.php";
+                connectToDatabase('delete from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"');
             }
             else
                 exitApi(400, "Specify player");

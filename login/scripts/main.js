@@ -19,24 +19,16 @@ button.addEventListener("click", () =>
     request.open("GET", "../api/endpoints/players/" + username + "/logged", true);
     request.onload = function ()
     {
-        let response = JSON.parse(this.responseText);
         if(this.status >= 400)
         {
-            error.textContent = response.message;
+            error.textContent = JSON.parse(this.responseText).message;
         }
         else if(this.status == 200)
         {
-            if(response)
-            {
-                let remember = document.querySelector("form label.remember input").value;
-                document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
-                document.cookie = "password=" + password + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
-                location.reload();
-            }
-            else
-            {
-                error.textContent = "Incorect password";
-            }
+            let remember = document.querySelector("form label.remember input").value;
+            document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
+            document.cookie = "password=" + password + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
+            location.reload();
         }
     };
     request.setRequestHeader("Password", password);

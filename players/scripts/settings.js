@@ -65,5 +65,3 @@ function getCookie(name)
     });
     return placeholder;
 }
-
-console.log(document.cookie);
