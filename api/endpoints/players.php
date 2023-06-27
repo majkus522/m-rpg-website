@@ -185,6 +185,25 @@
                 exitApi(400, "Specify player");
             break;
 
+        case "DELETE":
+            if(isSingleGet())
+            {
+                $header = getHeader("Password");
+                if($header === false)
+                    exitApi(400, "Enter player password");
+                $query = 'select `password` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+                $queryResult = connectToDatabase($query);
+                if(empty($queryResult))
+                    exitApi(404, "Player doesn't exists");
+                if(!password_verify(base64_decode($header), decode($queryResult[0]->password)))
+                    exitApi(401, "Wrong password");
+                $query = 'delete from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+                connectToDatabase($query);
+            }
+            else
+                exitApi(400, "Specify player");
+            break;
+
         case "OPTIONS":
             echo json_encode([
                 "GET /api/endpoints/players = select all players (hidden data)",
