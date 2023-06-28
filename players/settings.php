@@ -16,7 +16,7 @@
                     Email
                     <input type="email" value="<?php echo $result[0]->email; ?>">
                     <input type="button" value="Update">
-                    <p></p>
+                    <p class="error"></p>
                 </div>
                 <div class="password">
                     Password
@@ -26,15 +26,29 @@
                         <input type="checkbox">
                     </label>
                     <input type="button" value="Update">
-                    <p></p>
+                    <p class="error"></p>
                 </div>
                 <div class="delete">
                     Delete account
                     <input type="button" value="Delete">
-                    <p></p>
                 </div>
             </content>
         </main>
+        <dialog>
+            <div></div>
+            <form>
+                <label>
+                    Enter your password
+                    <input type="password">
+                </label>
+                <label class="show">
+                    Show password
+                    <input type="checkbox">
+                </label>
+                <input type="button" value="Confirm">
+                <p class="error"></p>
+            </form>
+        </dialog>
     </body>
 </html>
 <script src="scripts/settings.js"></script>

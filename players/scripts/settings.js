@@ -1,3 +1,5 @@
+let passwordHeader = getCookie("password");
+
 let email = document.querySelector("main div.email");
 email.querySelector("input[type='button']").addEventListener("click", () =>
 {
@@ -27,10 +29,20 @@ password.querySelector("input[type='button']").addEventListener("click", () =>
 });
 
 let del = document.querySelector("main div.delete");
+let dialog = document.querySelector("dialog");
 del.querySelector("input[type='button']").addEventListener("click", () =>
 {
-    if(!confirm("Are you sure you want to delete your account ?"))
-        return;
+    dialog.showModal();
+});
+
+dialog.querySelector("div").addEventListener("click", () => 
+{
+    passwordHeader = getCookie("password");
+    dialog.close();
+});
+dialog.querySelector("form input[type='button']").addEventListener("click", () =>
+{
+    passwordHeader = btoa(dialog.querySelector("input[type='text'], input[type='password']").value);
     send({}, function ()
     {
         if(this.status == 200)
@@ -38,7 +50,7 @@ del.querySelector("input[type='button']").addEventListener("click", () =>
             location.replace("../logout");
         }
         else
-            password.querySelector("p").textContent = JSON.parse(this.responseText).message;
+            dialog.querySelector("p").textContent = JSON.parse(this.responseText).message;
     }, "DELETE");
 });
 
@@ -47,7 +59,7 @@ function send(body, onload, method = "PATCH")
     let request = new XMLHttpRequest();
     request.open(method, "../api/endpoints/players/" + getCookie("username"), true);
     request.onload = onload;
-    request.setRequestHeader("Password", getCookie("password"));
+    request.setRequestHeader("Password", passwordHeader);
     request.send(JSON.stringify(body));
 }
 

@@ -1,13 +1,15 @@
-main div
+main div,
+dialog label
 {
     --color: #efefef;
     --fontSize: 20px;
 }
 
-main div input
+input
 {
     --background: transparent;
     --border: 2px solid var(--color);
+    --fontSize: 20px;
 }
 
 input:hover,
