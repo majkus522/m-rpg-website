@@ -26,8 +26,8 @@
                     <div>
                         <p>Exp</p>
                         <p><?php
-                            echo $result[0]->exp;
-                        ?>/1</p>
+                            echo $result[0]->exp . " / " . levelExp($result[0]->level);
+                        ?></p>
                     </div>
                 </info>
             </content>

@@ -88,4 +88,9 @@
             return "Incorect email";
         return true;
     }
+
+    function levelExp(int $level):int
+    {
+        return (int)(log($level + 1) * 3750);
+    }
 ?>
