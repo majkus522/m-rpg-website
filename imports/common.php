@@ -1,28 +1,4 @@
 <?php
-    class ApiResult
-    {
-        public $code;
-        public $data;
-
-        function __construct(string $data, int $code)
-        {
-            $this->code = $code;
-            $this->data = $data;
-        }
-    }
-
-    class User
-    {
-        public $id;
-        public $username;
-
-        function __construct(int $id, string $username)
-        {
-            $this->id = $id;
-            $this->username = $username;
-        }
-    }
-
     function isSingleGet():bool
     {
         global $requestUrlPart;
