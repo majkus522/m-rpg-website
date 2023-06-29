@@ -59,6 +59,18 @@
                             $query .= ' and `level` <= ' . $value;
                             break;
 
+                        case "minMoney":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (minMoney)");
+                            $query .= ' and `money` >= ' . $value;
+                            break;
+
+                        case "maxMoney":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (maxMoney)");
+                            $query .= ' and `level` <= ' . $value;
+                            break;
+
                         case "order":
                             if(!$orderPresent)
                             {

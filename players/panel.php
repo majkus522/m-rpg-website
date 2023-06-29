@@ -29,6 +29,12 @@
                             echo $result[0]->exp . " / " . levelExp($result[0]->level);
                         ?></p>
                     </div>
+                    <div>
+                        <p>Money</p>
+                        <p><?php
+                            echo $result[0]->money;
+                        ?> $</p>
+                    </div>
                 </info>
             </content>
         </main>
