@@ -24,6 +24,9 @@
                         ?></p>
                     </div>
                     <div>
+                        <bar><fill style="width: <?php
+                            echo round($result[0]->exp / levelExp($result[0]->level) * 100, 2);
+                        ?>%;"></fill></bar>
                         <p>Exp</p>
                         <p><?php
                             echo $result[0]->exp . " / " . levelExp($result[0]->level);
