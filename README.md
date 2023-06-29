@@ -18,8 +18,8 @@
 
 | Query string      | Type     | Description                                   | Accepted values           |
 | :---------------- | :------- | :-------------------------------------------- | :------------------------ |
-| `minLevel=${min}` | `int`    | **Optional**. Minimal player level.           | 0 - &infin;               |
-| `maxLevel=${max}` | `int`    | **Optional**. Maximal player level.           | 0 - &infin;               |
+| `minLevel=${min}` | `int`    | **Optional**. Minimal player level.           | 1 - &infin;               |
+| `maxLevel=${max}` | `int`    | **Optional**. Maximal player level.           | 1 - &infin;               |
 | `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"` |
 
 #### Get player :
@@ -34,7 +34,7 @@
 
 | Headers                 | Type     | Description                                      |
 | :---------------------- | :------- | :----------------------------------------------- |
-| `Password: ${password}` | `string` | **Optional**. Needed to access full player data. |
+| `Password: ${password}` | `string` | **Optional**. Needed to access full data. |
 
 #### Add new player :
 

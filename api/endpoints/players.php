@@ -48,10 +48,14 @@
                     switch($key)
                     {
                         case "minLevel":
+                            if(!is_numeric($value) || $value < 1)
+                                exitApi(400, "Incorect query string (minLevel)");
                             $query .= ' and `level` >= ' . $value;
                             break;
 
                         case "maxLevel":
+                            if(!is_numeric($value) || $value < 1)
+                                exitApi(400, "Incorect query string (maxLevel)");
                             $query .= ' and `level` <= ' . $value;
                             break;
 

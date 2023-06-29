@@ -44,10 +44,14 @@
                     switch($key)
                     {
                         case "minMana":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (minMana)");
                             $query .= ' and `mana` >= ' . $value;
                             break;
 
                         case "maxMana":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (maxMana)");
                             $query .= ' and `mana` <= ' . $value;
                             break;
 
