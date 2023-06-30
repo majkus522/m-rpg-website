@@ -34,8 +34,8 @@
 | :-------------- | :------- | :----------------------------------------- |
 | `username`      | `string` | **Required**. Username of player to fetch. |
 
-| Headers                 | Type     | Description                                      |
-| :---------------------- | :------- | :----------------------------------------------- |
+| Headers                 | Type     | Description                               |
+| :---------------------- | :------- | :---------------------------------------- |
 | `Password: ${password}` | `string` | **Optional**. Needed to access full data. |
 
 #### Add new player :
