@@ -91,6 +91,8 @@
 
     function levelExp(int $level):int
     {
-        return (int)(log($level + 1) * 3750);
+        if($level == 0)
+            return 0;
+        return (int)(log($level + 1) * 3750) + levelExp($level - 1);
     }
 ?>
