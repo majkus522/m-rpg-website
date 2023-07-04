@@ -1,0 +1,19 @@
+@import "main.css";
+@import "nav.css";
+@import "vars.css";
+
+content
+{
+    padding: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+content skill
+{
+    padding: 10px;
+    border: 2px solid #efefef;
+    background-color: #676767;
+}

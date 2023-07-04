@@ -34,6 +34,10 @@
                     case "settings":
                         $file = "settings";
                         break;
+
+                    case "skills":
+                        $file = "skills";
+                        break;
             
                     default:
                     $file = "panel";
