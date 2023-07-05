@@ -121,6 +121,29 @@
 
 ---
 &nbsp;
+## Skills
+
+#### Get all players skills :
+
+```http
+  GET /api/endpoints/skills/${username}
+```
+
+| Parameter       | Type     | Description                                     |
+| :-------------- | :------- | :---------------------------------------------- |
+| `username`      | `string` | **Required**. Username of player to get skills. |
+
+| Headers                 | Type     | Description                      |
+| :---------------------- | :------- | :------------------------------- |
+| `Password: ${password}` | `string` | **Required**. Player's password. |
+
+| Query string       | Type     | Description                                   | Accepted values                                 |
+| :----------------- | :------- | :-------------------------------------------- | :---------------------------------------------- |
+| `rarity=${rarity}` | `string` | **Optional**. Skills rarity.                  | `"common"`, `"extra"`, `"unique"`, `"ultimate"` |
+| `order=${order}`   | `string` | **Optional**. Order skills by rarity and etc. | `"rarity"`, `"rarity-desc"`                     |
+
+---
+&nbsp;
 ## Password recovery
 
 #### Send password recovery email :
