@@ -62,12 +62,10 @@
                                 {
                                     case "mana-desc":
                                         $order = ' order by `mana` desc';
-                                        $orderPresent = true;
                                         break;
     
                                     case "mana":
                                         $order = ' order by `mana` asc';
-                                        $orderPresent = true;
                                         break;
                                 }
                             }

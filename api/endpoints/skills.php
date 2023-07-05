@@ -7,6 +7,7 @@
             require "playerLogged.php";
             $query = 'select `skills`.* from `skills`, `players` where `skills`.`player` = `players`.`id` and `players`.`username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
             $rarityPresent = false;
+            $order = "";
             foreach($_GET as $key => $value)
             {
                 switch($key)
@@ -18,10 +19,26 @@
                             $rarityPresent = true;
                         }
                         break;
+
+                    case "order":
+                        if($order == "")
+                        {
+                            switch($value)
+                            {
+                                case "rarity":
+                                    $order = ' order by `rarity` asc';
+                                    break;
+
+                                case "rarity-desc":
+                                    $order = ' order by `rarity` desc';
+                                    break;
+                            }
+                        }
+                        break;
                 }
             }
             require "headerItems.php";
-            $query .= ' limit ' . $limit . ' offset ' . $offset;
+            $query .= $order . ' limit ' . $limit . ' offset ' . $offset;
             $queryResult = connectToDatabase($query);
             if(empty($queryResult))
                 exitApi(404, "Can't find any skill matching conditions");

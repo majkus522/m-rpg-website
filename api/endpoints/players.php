@@ -79,12 +79,10 @@
                                 {
                                     case "level-desc":
                                         $order = ' order by `level` desc';
-                                        $orderPresent = true;
                                         break;
     
                                     case "level":
                                         $order = ' order by `level` asc';
-                                        $orderPresent = true;
                                         break;
                                 }
                             }
