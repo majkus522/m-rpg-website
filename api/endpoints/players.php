@@ -43,6 +43,7 @@
             else
             {
                 $query = 'select `id`, `username` from `players` where 1 = 1';
+                $order = "";
                 foreach($_GET as $key => $value)
                 {
                     switch($key)
@@ -72,17 +73,17 @@
                             break;
 
                         case "order":
-                            if(!$orderPresent)
+                            if($order == "")
                             {
                                 switch($value)
                                 {
                                     case "level-desc":
-                                        $query .= ' order by `level` desc';
+                                        $order = ' order by `level` desc';
                                         $orderPresent = true;
                                         break;
     
                                     case "level":
-                                        $query .= ' order by `level` asc';
+                                        $order = ' order by `level` asc';
                                         $orderPresent = true;
                                         break;
                                 }
@@ -91,7 +92,7 @@
                     }
                 }
                 require "headerItems.php";
-                $query .= ' limit ' . $limit . ' offset ' . $offset;
+                $query .= $order . ' limit ' . $limit . ' offset ' . $offset;
                 $queryResult = connectToDatabase($query);
                 if(empty($queryResult))
                     exitApi(404, "Can't find any player matching conditions");

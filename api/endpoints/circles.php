@@ -38,7 +38,7 @@
                 }
                 else
                     $query = 'select * from `circles` where !`private`';
-                $orderPresent = false;
+                $order = "";
                 foreach($_GET as $key => $value)
                 {
                     switch($key)
@@ -56,17 +56,17 @@
                             break;
 
                         case "order":
-                            if(!$orderPresent)
+                            if($order == "")
                             {
                                 switch($value)
                                 {
                                     case "mana-desc":
-                                        $query .= ' order by `mana` desc';
+                                        $order = ' order by `mana` desc';
                                         $orderPresent = true;
                                         break;
     
                                     case "mana":
-                                        $query .= ' order by `mana` asc';
+                                        $order = ' order by `mana` asc';
                                         $orderPresent = true;
                                         break;
                                 }
@@ -75,7 +75,7 @@
                     }
                 }
                 require "headerItems.php";
-                $query .= ' limit ' . $limit . ' offset ' . $offset;
+                $query .= $order . ' limit ' . $limit . ' offset ' . $offset;
                 $result = connectToDatabase($query);
                 if(empty($result))
                     exitApi(404, "Can't find any circles matching conditions");
