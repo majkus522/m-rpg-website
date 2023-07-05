@@ -6,12 +6,17 @@
                 exitApi(400, "Enter player");
             require "playerLogged.php";
             $query = 'select `skills`.* from `skills`, `players` where `skills`.`player` = `players`.`id` and `players`.`username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+            $rarityPresent = false;
             foreach($_GET as $key => $value)
             {
                 switch($key)
                 {
-                    case "skill":
-                        $query .= ' and skill = "' . $value . '"';
+                    case "rarity":
+                        if(!$rarityPresent)
+                        {
+                            $query .= ' and `rarity` = "' . $value . '"';
+                            $rarityPresent = true;
+                        }
                         break;
                 }
             }
