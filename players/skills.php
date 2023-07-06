@@ -12,25 +12,33 @@
                 require "nav.php";
             ?>
             <content>
-                <?php
-                    $result = callApi("../api/endpoints/skills/" . $result[0]->username, "GET", array("Password: " . $_COOKIE["password"]));
-                    if($result[1] == 404)
-                    {
-                        echo "<p>You don't have any skills</p>";
-                    }
-                    else
-                    {
-                        $first = true;
-                        foreach($result[0] as $skill)
+                <skills>
+                    <?php
+                        $result = callApi("../api/endpoints/skills/" . $result[0]->username, "GET", array("Password: " . $_COOKIE["password"]));
+                        if($result[1] == 404)
                         {
-                            if(!$first)
-                                echo "\t\t\t\t";
-                            echo "<skill>" . $skill->skill . "</skill>\r\n";
-                            $first = false;
+                            echo "<p>You don't have any skills</p>";
                         }
-                    }
-                ?>
+                        else
+                        {
+                            $first = true;
+                            foreach($result[0] as $skill)
+                            {
+                                if(!$first)
+                                    echo "\t\t\t\t\t";
+                                echo '<skill data-skill="' . $skill->skill . '"><img src="../img/skills/' . $skill->skill . '.png"></skill>' . "\r\n";
+                                $first = false;
+                            }
+                        }
+                    ?>
+                </skills>
+                <inspector>
+                    <img>
+                    <h2></h2>
+                    <p></p>
+                </inspector>
             </content>
         </main>
     </body>
 </html>
+<script src="scripts/skills.js"></script>
