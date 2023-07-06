@@ -17,3 +17,9 @@ content skill
     border: 2px solid #efefef;
     background-color: #676767;
 }
+
+content > p
+{
+    font-size: 20px;
+    color: #efefef;
+}

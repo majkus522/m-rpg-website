@@ -13,14 +13,21 @@
             ?>
             <content>
                 <?php
-                    $result = callApi("../api/endpoints/skills/" . $result[0]->username, "GET", array("Password: " . $_COOKIE["password"]))[0];
-                    $first = true;
-                    foreach($result as $skill)
+                    $result = callApi("../api/endpoints/skills/" . $result[0]->username, "GET", array("Password: " . $_COOKIE["password"]));
+                    if($result[1] == 404)
                     {
-                        if(!$first)
-                            echo "\t\t\t\t";
-                        echo "<skill>" . $skill->skill . "</skill>\r\n";
-                        $first = false;
+                        echo "<p>You don't have any skills</p>";
+                    }
+                    else
+                    {
+                        $first = true;
+                        foreach($result[0] as $skill)
+                        {
+                            if(!$first)
+                                echo "\t\t\t\t";
+                            echo "<skill>" . $skill->skill . "</skill>\r\n";
+                            $first = false;
+                        }
                     }
                 ?>
             </content>
