@@ -1,9 +1,9 @@
 <?php
     require "common.php";
     $validLogin = false;
-    if(isset($_COOKIE["username"]) && strlen($_COOKIE["username"]) > 0 && isset($_COOKIE["password"]) && strlen($_COOKIE["password"]) > 0)
+    if(isset($_COOKIE["username"]) && strlen($_COOKIE["username"]) > 0 && isset($_COOKIE["session"]) && strlen($_COOKIE["session"]) > 0)
     {
-        $result = callApi("../api/endpoints/players/" . $_COOKIE["username"] . "/logged", "GET", array("Password: " . $_COOKIE["password"]));
+        $result = callApi("../api/endpoints/players/" . $_COOKIE["username"] . "/session", "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
         if($result[1] == 200)
         {
             $validLogin = true;
@@ -18,8 +18,8 @@
     {
         ?>
 <script>
+    document.cookie = "session=;path=/;max-age=0;";
     document.cookie = "username=;path=/;max-age=0;";
-    document.cookie = "password=;path=/;max-age=0;";
 </script>
 <?php
     }

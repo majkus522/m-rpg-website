@@ -1,5 +1,5 @@
 <?php
-    $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Password: " . $_COOKIE["password"]));
+    $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
 ?>
         <title>M-RPG - <?php echo $result[0]->username; ?> - Settings</title>
     </head>
@@ -14,7 +14,7 @@
             <content>
                 <skills>
                     <?php
-                        $result = callApi("../api/endpoints/skills/" . $result[0]->username, "GET", array("Password: " . $_COOKIE["password"]));
+                        $result = callApi("../api/endpoints/skills/" . $result[0]->username, "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
                         if($result[1] == 404)
                         {
                             echo "<p>You don't have any skills</p>";

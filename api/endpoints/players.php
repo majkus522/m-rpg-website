@@ -9,21 +9,52 @@
                     switch(strtolower($requestUrlPart[$urlIndex + 2]))
                     {
                         case "logged":
-                            $header = getHeader("Password");
-                            if($header === false)
+                            $headerPassword = getHeader("Password");
+                            if($headerPassword === false)
                                 exitApi(400, "Enter player password");
-                            $query = 'select `password` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+                            $query = 'select `password`, `id` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
                             $queryResult = connectToDatabase($query);
                             if(empty($queryResult))
                                 exitApi(404, "Player doesn't exists");
-                            if(!password_verify(base64_decode($header), decode($queryResult[0]->password)))
+                            if(!password_verify(base64_decode($headerPassword), decode($queryResult[0]->password)))
                                 exitApi(401, "Wrong password");
+                            $headerType = getHeader("Session-Type");
+                            if($headerType === false)
+                                exitApi(400, "Enter session type");
+                            $headerTemp = getHeader("Temp");
+                            $key = generateSessionKey($requestUrlPart[$urlIndex + 1], $headerType);
+                            $query = 'insert into `players-sessions`(`key`, `player`, `type`';
+                            if($headerTemp)
+                            {
+                                $query .= ', `temp`, `date`';
+                            }
+                            $query .= ') values ("' . $key . '", ' . $queryResult[0]->id . ', "' . $headerType . '"';
+                            if($headerTemp)
+                            {
+                                $query .= ', 1, now()';
+                            }
+                            $query .= ')';
+                            connectToDatabase('delete from `players-sessions` where `player` = ' . $queryResult[0]->id . ' and `type` = "' . $headerType . '"');
+                            connectToDatabase($query);
+                            echo $key;
+                            break;
+
+                        case "session":
+                            $headerKey = getHeader("Session-Key");
+                            if($headerKey === false)
+                                exitApi(400, "Enter player session");
+                            $headerType = getHeader("Session-Type");
+                            if($headerType === false)
+                                exitApi(400, "Enter session type");
+                            $query = 'select `players-sessions`.`id` from `players-sessions`, `players` where `players-sessions`.`key` = "' . $headerKey . '" and `players-sessions`.`player` = `players`.`id` and `players`.`username` = "' . $requestUrlPart[$urlIndex + 1] . '" and `players-sessions`.`type` = "' . $headerType . '"';
+                            if(empty(connectToDatabase($query)))
+                                exitApi(401, "Incorect session key");
                             break;
                     }
                 }
                 else
                 {
-                    $header = getHeader("Password");
+                    $header = getHeader("Session-Key");
                     if($header != false)
                     {
                         require "playerLogged.php";
@@ -101,6 +132,9 @@
             break;
 
         case "POST":
+            $headerType = getHeader("Session-Type");
+            if($headerType === false)
+                exitApi(400, "Enter session type");
             $data = json_decode(file_get_contents("php://input"));
             $validUsername = validUsername($data->username);
             if($validUsername !== true)
@@ -119,7 +153,22 @@
                 exitApi(400, "Email already taken");
             $query = 'insert into `players`(`username`, `email`, `password`) values ("' . $data->username . '", "' . $data->email . '", "' . encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT)) . '")';
             connectToDatabase($query);
-            http_response_code(201);
+
+            $headerTemp = getHeader("Temp");
+            $key = generateSessionKey($validUsername, $headerType);
+            $query = 'insert into `players-sessions`(`key`, `player`, `type`';
+            if($headerTemp)
+            {
+                $query .= ', `temp`, `date`';
+            }
+            $query .= ') values ("' . $key . '", ' . $queryResult[0]->id . ', "' . $headerType . '"';
+            if($headerTemp)
+            {
+                $query .= ', 1, now()';
+            }
+            $query .= ')';
+            connectToDatabase($query);
+            exitApi(201, $key);
             break;
 
         case "PATCH":

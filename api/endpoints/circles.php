@@ -1,7 +1,7 @@
 <?php
     switch($requestMethod)
     {
-        case "GET":
+        /*case "GET":
             $headerPlayer = getHeader("Player");
             $headerPassword = getHeader("Password");
             if(isSingleGet())
@@ -101,6 +101,6 @@
 
         default:
             exitApi(501, "Method not implemented");
-            return;
+            return;*/
     }
 ?>

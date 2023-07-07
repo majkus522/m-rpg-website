@@ -1,4 +1,4 @@
-let passwordHeader = getCookie("password");
+let sessionHeader = getCookie("session");
 
 let email = document.querySelector("main div.email");
 email.querySelector("input[type='button']").addEventListener("click", () =>
@@ -20,7 +20,6 @@ password.querySelector("input[type='button']").addEventListener("click", () =>
     {
         if(this.status == 200)
         {
-            document.cookie = "password=" + newPassword + ";path=/;secure";
             location.reload();
         }
         else
@@ -35,14 +34,9 @@ del.querySelector("input[type='button']").addEventListener("click", () =>
     dialog.showModal();
 });
 
-dialog.querySelector("div").addEventListener("click", () => 
-{
-    passwordHeader = getCookie("password");
-    dialog.close();
-});
 dialog.querySelector("form input[type='button']").addEventListener("click", () =>
 {
-    passwordHeader = btoa(dialog.querySelector("input[type='text'], input[type='password']").value);
+    sessionHeader = btoa(dialog.querySelector("input[type='text'], input[type='password']").value);
     send({}, function ()
     {
         if(this.status == 200)
@@ -59,7 +53,8 @@ function send(body, onload, method = "PATCH")
     let request = new XMLHttpRequest();
     request.open(method, "../api/endpoints/players/" + getCookie("username"), true);
     request.onload = onload;
-    request.setRequestHeader("Password", passwordHeader);
+    request.setRequestHeader("Session-Key", sessionHeader);
+    request.setRequestHeader("Session-Type", "website");
     request.send(JSON.stringify(body));
 }
 

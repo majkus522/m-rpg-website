@@ -36,7 +36,39 @@
 
 | Headers                 | Type     | Description                               |
 | :---------------------- | :------- | :---------------------------------------- |
-| `Password: ${password}` | `string` | **Optional**. Needed to access full data. |
+| `Session-Key: ${key}`   | `string` | **Optional**. Needed to access full data. |
+| `Session-Type: ${type}` | `string` | **Optional**. Needed to access full data. |
+
+#### Login player :
+
+```http
+  GET /api/endpoints/players/${username}/logged
+```
+
+| Parameter       | Type     | Description                                |
+| :-------------- | :------- | :----------------------------------------- |
+| `username`      | `string` | **Required**. Username of player to fetch. |
+
+| Headers                 | Type     | Description                         |
+| :---------------------- | :------- | :---------------------------------- |
+| `Session-Type: ${type}` | `string` | **Required**. Session type.         |
+| `Password: ${password}` | `string` | **Required**. Player pasword.       |
+| `Temp: ${temp}`         | `bool`   | **Optional**. Is session temporary. |
+
+#### Check player session :
+
+```http
+  GET /api/endpoints/players/${username}/session
+```
+
+| Parameter       | Type     | Description                                |
+| :-------------- | :------- | :----------------------------------------- |
+| `username`      | `string` | **Required**. Username of player to fetch. |
+
+| Headers                 | Type     | Description                   |
+| :---------------------- | :------- | :---------------------------- |
+| `Session-Type: ${type}` | `string` | **Required**. Session type.   |
+| `Session-Type: ${type}` | `string` | **Required**. Session key. |
 
 #### Add new player :
 
@@ -60,9 +92,10 @@
 | :-------------- | :------- | :---------------------------------------- |
 | `username`      | `string` | **Required**. Username of player to edit. |
 
-| Headers                 | Type     | Description                              |
-| :---------------------- | :------- | :--------------------------------------- |
-| `Password: ${password}` | `string` | **Required**. Player's current password. |
+| Headers                 | Type     | Description                 |
+| :---------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`   | `string` | **Optional**. Session key.  |
+| `Session-Type: ${type}` | `string` | **Optional**. Session type. |
 
 <table>
 	<thead>
@@ -133,9 +166,10 @@
 | :-------------- | :------- | :---------------------------------------------- |
 | `username`      | `string` | **Required**. Username of player to get skills. |
 
-| Headers                 | Type     | Description                      |
-| :---------------------- | :------- | :------------------------------- |
-| `Password: ${password}` | `string` | **Required**. Player's password. |
+| Headers                 | Type     | Description                 |
+| :---------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`   | `string` | **Optional**. Session key.  |
+| `Session-Type: ${type}` | `string` | **Optional**. Session type. |
 
 | Query string       | Type     | Description                                   | Accepted values                                 |
 | :----------------- | :------- | :-------------------------------------------- | :---------------------------------------------- |

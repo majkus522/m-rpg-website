@@ -15,6 +15,7 @@ button.addEventListener("click", () =>
         return;
     }
 
+    let remember = document.querySelector("form label.remember input").value;
     let request = new XMLHttpRequest();
     request.open("GET", "../api/endpoints/players/" + username + "/logged", true);
     request.onload = function ()
@@ -25,12 +26,13 @@ button.addEventListener("click", () =>
         }
         else if(this.status == 200)
         {
-            let remember = document.querySelector("form label.remember input").value;
+            document.cookie = "session=" + this.responseText + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
             document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
-            document.cookie = "password=" + password + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
             location.reload();
         }
     };
     request.setRequestHeader("Password", password);
+    request.setRequestHeader("Session-Type", "website");
+    request.setRequestHeader("Temp", remember);
     request.send();
 });
