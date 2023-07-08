@@ -40,6 +40,7 @@
                             break;
 
                         case "session":
+                            connectToDatabase('delete from `players-sessions` where `temp` and hour(timediff(now(), `date`)) > 24');
                             $headerKey = getHeader("Session-Key");
                             if($headerKey === false)
                                 exitApi(400, "Enter player session");
