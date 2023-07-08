@@ -133,9 +133,6 @@
             break;
 
         case "POST":
-            $headerType = getHeader("Session-Type");
-            if($headerType === false)
-                exitApi(400, "Enter session type");
             $data = json_decode(file_get_contents("php://input"));
             $validUsername = validUsername($data->username);
             if($validUsername !== true)
@@ -143,7 +140,7 @@
             $validEmail = validEmail($data->email);
             if($validEmail !== true)
                 exitApi(400, $validEmail);
-            $validPassword = validPassword($data->password);
+            $validPassword = validPassword(base64_decode($data->password));
             if($validPassword !== true)
                 exitApi(400, $validPassword);
             $query = 'select `id` from `players` where `username` = "' . $data->username . '"';
@@ -154,22 +151,7 @@
                 exitApi(400, "Email already taken");
             $query = 'insert into `players`(`username`, `email`, `password`) values ("' . $data->username . '", "' . $data->email . '", "' . encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT)) . '")';
             connectToDatabase($query);
-
-            $headerTemp = getHeader("Temp");
-            $key = generateSessionKey($validUsername, $headerType);
-            $query = 'insert into `players-sessions`(`key`, `player`, `type`';
-            if($headerTemp)
-            {
-                $query .= ', `temp`, `date`';
-            }
-            $query .= ') values ("' . $key . '", ' . $queryResult[0]->id . ', "' . $headerType . '"';
-            if($headerTemp)
-            {
-                $query .= ', 1, now()';
-            }
-            $query .= ')';
-            connectToDatabase($query);
-            exitApi(201, $key);
+            http_response_code(201);
             break;
 
         case "PATCH":
