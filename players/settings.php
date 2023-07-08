@@ -31,24 +31,10 @@
                 <div class="delete">
                     Delete account
                     <input type="button" value="Delete">
+                    <p class="error"></p>
                 </div>
             </content>
         </main>
-        <dialog>
-            <div></div>
-            <form>
-                <label>
-                    Enter your password
-                    <input type="password">
-                </label>
-                <label class="show">
-                    Show password
-                    <input type="checkbox">
-                </label>
-                <input type="button" value="Confirm">
-                <p class="error"></p>
-            </form>
-        </dialog>
     </body>
 </html>
 <script src="scripts/settings.js"></script>

@@ -1,5 +1,3 @@
-let sessionHeader = getCookie("session");
-
 let email = document.querySelector("main div.email");
 email.querySelector("input[type='button']").addEventListener("click", () =>
 {
@@ -26,24 +24,20 @@ password.querySelector("input[type='button']").addEventListener("click", () =>
 });
 
 let del = document.querySelector("main div.delete");
-let dialog = document.querySelector("dialog");
 del.querySelector("input[type='button']").addEventListener("click", () =>
 {
-    dialog.showModal();
-});
-
-dialog.querySelector("form input[type='button']").addEventListener("click", () =>
-{
-    sessionHeader = btoa(dialog.querySelector("input[type='text'], input[type='password']").value);
-    send({}, function ()
+    if(confirm("Are you sure you want to delete your account ??"))
     {
-        if(this.status == 200)
-            location.replace("../logout");
-        else if(this.status == 401)
-            location.reload();
-        else
-            dialog.querySelector("p").textContent = JSON.parse(this.responseText).message;
-    }, "DELETE");
+        send({}, function ()
+        {
+            if(this.status == 200)
+                location.replace("../logout");
+            else if(this.status == 401)
+                location.reload();
+            else
+                del.querySelector("p").textContent = JSON.parse(this.responseText).message;
+        }, "DELETE");
+    }
 });
 
 function send(body, onload, method = "PATCH")
@@ -51,7 +45,7 @@ function send(body, onload, method = "PATCH")
     let request = new XMLHttpRequest();
     request.open(method, "../api/endpoints/players/" + getCookie("username"), true);
     request.onload = onload;
-    request.setRequestHeader("Session-Key", sessionHeader);
+    request.setRequestHeader("Session-Key", getCookie("session"));
     request.setRequestHeader("Session-Type", "website");
     request.send(JSON.stringify(body));
 }
