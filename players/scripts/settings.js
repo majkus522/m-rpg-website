@@ -5,7 +5,7 @@ email.querySelector("input[type='button']").addEventListener("click", () =>
 {
     send({ email: email.querySelector("input[type='email']").value}, function ()
     {
-        if(this.status == 200)
+        if(this.status == 200 || this.status == 401)
             location.reload();
         else
             email.querySelector("p").textContent = JSON.parse(this.responseText).message;
@@ -18,10 +18,8 @@ password.querySelector("input[type='button']").addEventListener("click", () =>
     let newPassword = btoa(password.querySelector("input[type='text'], input[type='password']").value);
     send({ password: newPassword }, function ()
     {
-        if(this.status == 200)
-        {
+        if(this.status == 200 || this.status == 401)
             location.reload();
-        }
         else
             password.querySelector("p").textContent = JSON.parse(this.responseText).message;
     });
@@ -40,9 +38,9 @@ dialog.querySelector("form input[type='button']").addEventListener("click", () =
     send({}, function ()
     {
         if(this.status == 200)
-        {
             location.replace("../logout");
-        }
+        else if(this.status == 401)
+            location.reload();
         else
             dialog.querySelector("p").textContent = JSON.parse(this.responseText).message;
     }, "DELETE");
