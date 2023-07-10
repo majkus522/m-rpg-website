@@ -24,7 +24,7 @@
 | `minMoney=${max}` | `float`  | **Optional**. Maximal player capital.         | 0 - &infin;               |
 | `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"` |
 
-#### Get player :
+#### Get player (only username) :
 
 ```http
   GET /api/endpoints/players/${username}
@@ -34,10 +34,29 @@
 | :-------------- | :------- | :----------------------------------------- |
 | `username`      | `string` | **Required**. Username of player to fetch. |
 
-| Headers                 | Type     | Description                               |
-| :---------------------- | :------- | :---------------------------------------- |
-| `Session-Key: ${key}`   | `string` | **Optional**. Needed to access full data. |
-| `Session-Type: ${type}` | `string` | **Optional**. Needed to access full data. |
+<table>
+	<thead>
+		<tr>
+			<th>Headers</th>
+			<th>Type</th>
+			<th>Description</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>Session-Key: ${key}</code></td>
+			<td><code>string</code></td>
+			<td><strong>Optional</strong>. Session key</td>
+			<td rowspan="2">Needed to access full data.</td>
+		</tr>
+		<tr>
+			<td><code>Session-Type: ${type}</code></td>
+			<td><code>string</code></td>
+			<td><strong>Optional</strong>. Session type</td>
+		</tr>
+	</tbody>
+</table>
 
 #### Login player :
 
@@ -68,7 +87,7 @@
 | Headers                 | Type     | Description                   |
 | :---------------------- | :------- | :---------------------------- |
 | `Session-Type: ${type}` | `string` | **Required**. Session type.   |
-| `Session-Type: ${type}` | `string` | **Required**. Session key. |
+| `Session-Key: ${key}`   | `string` | **Required**. Session key. |
 
 #### Add new player :
 
@@ -76,11 +95,11 @@
   POST /api/endpoints/players/
 ```
 
-| Body (JSON Object) | Type     | Description                     |
-| :----------------- | :------- | :------------------------------ |
-| `username`         | `string` | **Required**. Name of player.   |
-| `email`            | `string` | **Required**. Players email.    |
-| `password`         | `string` | **Required**. Players password. |
+| Body (JSON Object)          | Type     | Description                     |
+| :-------------------------- | :------- | :------------------------------ |
+| `"username": "${username}"` | `string` | **Required**. Name of player.   |
+| `"email": "${email}"`       | `string` | **Required**. Players email.    |
+| `"password": "${password}"` | `string` | **Required**. Players password. |
 
 #### Edit player data :
 
@@ -94,8 +113,8 @@
 
 | Headers                 | Type     | Description                 |
 | :---------------------- | :------- | :-------------------------- |
-| `Session-Key: ${key}`   | `string` | **Optional**. Session key.  |
-| `Session-Type: ${type}` | `string` | **Optional**. Session type. |
+| `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}` | `string` | **Required**. Session type. |
 
 <table>
 	<thead>
@@ -110,23 +129,23 @@
 		<tr>
 			<td><code>"password": "${password}"</code></td>
 			<td><code>string</code></td>
-			<td>New password</td>
-			<td rowspan="4"><strong>Required</strong>. Needs one of this to work.</td>
+			<td><strong>Optional</strong>. New password</td>
+			<td rowspan="4">Needs one of this to work.</td>
 		</tr>
 		<tr>
 			<td><code>"email": "${email}"</code></td>
 			<td><code>string</code></td>
-			<td>New email</td>
+			<td><strong>Optional</strong>. New email</td>
 		</tr>
 		<tr>
 			<td><code>"level": ${level}</code></td>
 			<td><code>int</code></td>
-			<td>New level</td>
+			<td><strong>Optional</strong>. New level</td>
 		</tr>
 		<tr>
 			<td><code>"exp": ${exp}</code></td>
 			<td><code>int</code></td>
-			<td>New exp</td>
+			<td><strong>Optional</strong>. New exp</td>
 		</tr>
 	</tbody>
 </table>
@@ -141,16 +160,91 @@
   GET /api/endpoints/circles/
 ```
 
-| Headers                     | Type     | Description                                 | Accepted values             |
-| :-------------------------- | :------- | :------------------------------------------ | :-------------------------- |
-| `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of players and offset. | [0 - &infin;]-[1 - &infin;] |
-| `Items: ${limit}`           | `int`    | **Optional**. Number of players.            | 1 - &infin;                 |
+<table>
+	<thead>
+		<tr>
+			<th>Headers</th>
+			<th>Type</th>
+			<th>Description</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>Items: ${offset}-${limit}</code></td>
+			<td><code>int</code></td>
+			<td><strong>Optional</strong>. Number of players and offset.</td>
+			<td><strong>Value:</strong> [0 - &infin;]-[1 - &infin;]</td>
+		</tr>
+		<tr>
+			<td><code>Items: ${limit}</code></td>
+			<td><code>int</code></td>
+			<td><strong>Optional</strong>. Number of players.</td>
+			<td><strong>Value:</strong> 1 - &infin;</td>
+		</tr>
+		<tr>
+			<td><code>Session-Key: ${key}</code></td>
+			<td><code>string</code></td>
+			<td><strong>Optional</strong>. Session key.</td>
+			<td rowspan="3">Needed to access players private circles.</td>
+		</tr>
+		<tr>
+			<td><code>Session-Type: ${type}</code></td>
+			<td><code>string</code></td>
+			<td><strong>Optional</strong>. Session type.</td>
+		</tr>
+		<tr>
+			<td><code>Player: ${limit}</code></td>
+			<td><code>string</code></td>
+			<td><strong>Optional</strong>. Players username.</td>
+		</tr>
+	</tbody>
+</table>
 
 | Query string     | Type     | Description                                        | Accepted values         |
 | :--------------- | :------- | :------------------------------------------------- | :---------------------- |
 | `minMana=${min}` | `int`    | **Optional**. Minimal mana usage.                  | 0 - &infin;             |
 | `maxMana=${max}` | `int`    | **Optional**. Maximal mana usage.                  | 0 - &infin;             |
 | `order=${order}` | `string` | **Optional**. Order circles by mana usage and etc. | `"mana-desc"`, `"mana"` |
+
+#### Get circle (only public ones) :
+
+```http
+  GET /api/endpoints/circles/${slug}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `slug`    | `string` | **Required**. Circle slug. |
+
+<table>
+	<thead>
+		<tr>
+			<th>Headers</th>
+			<th>Type</th>
+			<th>Description</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>Session-Key: ${key}</code></td>
+			<td><code>string</code></td>
+			<td><strong>Optional</strong>. Session key.</td>
+			<td rowspan="3">Needed to access players private circles.</td>
+		</tr>
+		<tr>
+			<td><code>Session-Type: ${type}</code></td>
+			<td><code>string</code></td>
+			<td><strong>Optional</strong>. Session type.</td>
+		</tr>
+		<tr>
+			<td><code>Player: ${limit}</code></td>
+			<td><code>string</code></td>
+			<td><strong>Optional</strong>. Players username.</td>
+		</tr>
+	</tbody>
+</table>
 
 ---
 &nbsp;
@@ -168,8 +262,8 @@
 
 | Headers                 | Type     | Description                 |
 | :---------------------- | :------- | :-------------------------- |
-| `Session-Key: ${key}`   | `string` | **Optional**. Session key.  |
-| `Session-Type: ${type}` | `string` | **Optional**. Session type. |
+| `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}` | `string` | **Required**. Session type. |
 
 | Query string       | Type     | Description                                   | Accepted values                                 |
 | :----------------- | :------- | :-------------------------------------------- | :---------------------------------------------- |
