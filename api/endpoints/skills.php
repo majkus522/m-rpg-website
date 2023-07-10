@@ -42,6 +42,7 @@
             $queryResult = connectToDatabase($query);
             if(empty($queryResult))
                 exitApi(404, "Can't find any skill matching conditions");
+            header("Items-Count: " . sizeof($queryResult));
             echo json_encode($queryResult);
             break;
 
