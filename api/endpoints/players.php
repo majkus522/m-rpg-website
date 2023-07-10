@@ -1,4 +1,6 @@
 <?php
+    require "playerLogged.php";
+
     switch($requestMethod)
     {
         case "GET":
@@ -55,12 +57,9 @@
                 }
                 else
                 {
-                    $header = getHeader("Session-Key");
-                    if($header != false)
-                    {
-                        require "playerLogged.php";
+                    $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+                    if($login === true)
                         $query = 'select * from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
-                    }
                     else
                     {
                         $query = 'select `id`, `username` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
@@ -157,7 +156,9 @@
         case "PATCH":
             if(isSingleGet())
             {
-                require "playerLogged.php";
+                $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+                if($login !== true)
+                    exitApi($login->code, $login->message);
                 $vars = get_object_vars(json_decode(file_get_contents("php://input")));
                 if(empty($vars))
                     exitApi(400, "Enter some changes");
@@ -219,7 +220,9 @@
         case "DELETE":
             if(isSingleGet())
             {
-                require "playerLogged.php";
+                $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+                if($login !== true)
+                    exitApi($login->code, $login->message);
                 connectToDatabase('delete from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"');
             }
             else

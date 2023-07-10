@@ -1,4 +1,16 @@
 <?php
+    class LoginResult
+    {
+        public int $code;
+        public string $message;
+
+        function __construct(int $code, string $message)
+        {
+            $this->code = $code;
+            $this->message = $message;
+        }
+    }
+
     function isSingleGet():bool
     {
         global $requestUrlPart;

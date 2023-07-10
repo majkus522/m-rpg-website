@@ -1,10 +1,14 @@
 <?php
+    require "playerLogged.php";
+
     switch($requestMethod)
     {
         case "GET":
             if(!isSingleGet())
                 exitApi(400, "Enter player");
-            require "playerLogged.php";
+            $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+            if($login !== true)
+                exitApi($login->code, $login->message);
             $query = 'select `skills`.* from `skills`, `players` where `skills`.`player` = `players`.`id` and `players`.`username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
             $rarityPresent = false;
             $order = "";
