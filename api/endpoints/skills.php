@@ -10,17 +10,20 @@
             if($login !== true)
                 exitApi($login->code, $login->message);
             $query = 'select `skills`.* from `skills`, `players` where `skills`.`player` = `players`.`id` and `players`.`username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
-            $rarityPresent = false;
+            $rarity = "(";
             $order = "";
             foreach($_GET as $key => $value)
             {
                 switch($key)
                 {
                     case "rarity":
-                        if(!$rarityPresent)
+                        $first = true;
+                        foreach($value as $element)
                         {
-                            $query .= ' and `rarity` = "' . $value . '"';
-                            $rarityPresent = true;
+                            if(!$first)
+                                $rarity .= " or";
+                            $rarity .= ' `rarity` = "' . $element . '"';
+                            $first = false;
                         }
                         break;
 
@@ -42,6 +45,8 @@
                 }
             }
             require "headerItems.php";
+            if(strlen($rarity) > 2)
+                $query .= ' and ' . $rarity . ")";
             $query .= $order . ' limit ' . $limit . ' offset ' . $offset;
             $queryResult = connectToDatabase($query);
             if(empty($queryResult))

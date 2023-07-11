@@ -265,10 +265,10 @@
 | `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
 | `Session-Type: ${type}` | `string` | **Required**. Session type. |
 
-| Query string       | Type     | Description                                   | Accepted values                                 |
-| :----------------- | :------- | :-------------------------------------------- | :---------------------------------------------- |
-| `rarity=${rarity}` | `string` | **Optional**. Skills rarity.                  | `"common"`, `"extra"`, `"unique"`, `"ultimate"` |
-| `order=${order}`   | `string` | **Optional**. Order skills by rarity and etc. | `"rarity"`, `"rarity-desc"`                     |
+| Query string         | Type            | Description                                   | Accepted values                                 |
+| :------------------- | :-------------- | :-------------------------------------------- | :---------------------------------------------- |
+| `rarity[]=${rarity}` | `array[string]` | **Optional**. Skills rarity.                  | `"common"`, `"extra"`, `"unique"`, `"ultimate"` |
+| `order=${order}`     | `string`        | **Optional**. Order skills by rarity and etc. | `"rarity"`, `"rarity-desc"`                     |
 
 ---
 &nbsp;
