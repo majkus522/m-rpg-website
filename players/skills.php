@@ -1,7 +1,7 @@
 <?php
     $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
 ?>
-        <title>M-RPG - <?php echo $result[0]->username; ?> - Settings</title>
+        <title>M-RPG - <?php echo $result[0]->username; ?> - Skills</title>
     </head>
     <body>
         <?php
@@ -12,33 +12,32 @@
                 require "nav.php";
             ?>
             <content>
-                <skills>
-                    <?php
-                        $result = callApi("../api/endpoints/skills/" . $result[0]->username, "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
-                        if($result[1] == 404)
-                        {
-                            echo "<p>You don't have any skills</p>";
-                        }
-                        else
-                        {
-                            $first = true;
-                            foreach($result[0] as $skill)
-                            {
-                                if(!$first)
-                                    echo "\t\t\t\t\t";
-                                echo '<skill data-skill="' . $skill->skill . '"><img src="../img/skills/' . $skill->skill . '.png"></skill>' . "\r\n";
-                                $first = false;
-                            }
-                        }
-                    ?>
-                </skills>
-                <inspector>
-                    <img>
-                    <h2></h2>
-                    <p></p>
-                </inspector>
+                <filters>
+                    <rarities>
+                        <div class="active">Common</div>
+                        <div class="active">Extra</div>
+                        <div class="active">Unique</div>
+                        <div class="active">Ultimate</div>
+                    </rarities>
+                    <select>
+                        <option value="default" selected>Default</option>
+                        <option value="rarity">Rarity - Ascending</option>
+                        <option value="rarity-desc">Rarity - Descending</option>
+                    </select>
+                    <button class="search">Search</button>
+                </filters>
+                <result>
+                    <skills>
+                    </skills>
+                    <inspector>
+                        <img>
+                        <h2></h2>
+                        <p></p>
+                    </inspector>
+                </result>
             </content>
         </main>
     </body>
 </html>
+<script src="../imports/scripts.js"></script>
 <script src="scripts/skills.js"></script>

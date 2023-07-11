@@ -7,8 +7,79 @@ content
     padding: 40px;
     gap: 10px;
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+content filters
+{
+    width: calc(100% + 30px);
+    background-color: #454545;
+    padding: 20px;
+    margin: -15px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+content filters rarities
+{
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+}
+
+content filters rarities div
+{
+    padding: 10px;
+    font-size: 20px;
+    background-color: #787878;
+    border: 3px solid transparent;
+    cursor: pointer;
+}
+
+content filters rarities div.active
+{
+    border-color: #efefef;
+}
+
+content filters select
+{
+    padding: 10px;
+    font-size: 20px;
+    color: #efefef;
+    border: 2px solid #efefef;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+content filters button.search
+{
+    padding: 10px;
+    font-size: 20px;
+    color: #efefef;
+    border: 2px solid #efefef;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+content filters button.search:hover
+{
+    background-color: #898989;
+}
+
+content filters select option
+{
+    color: #565656;
+}
+
+content result
+{
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    margin-top: 30px;
 }
 
 content skills

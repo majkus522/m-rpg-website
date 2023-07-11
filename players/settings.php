@@ -39,3 +39,4 @@
 </html>
 <script src="scripts/settings.js"></script>
 <script src="scripts/passwordHide.js"></script>
+<script src="../imports/scripts.js"></script>

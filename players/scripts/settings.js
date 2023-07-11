@@ -49,18 +49,3 @@ function send(body, onload, method = "PATCH")
     request.setRequestHeader("Session-Type", "website");
     request.send(JSON.stringify(body));
 }
-
-function getCookie(name)
-{
-    let part = document.cookie.split("; ");
-    let placeholder = "";
-    part.forEach(element => 
-    {
-        if(element.startsWith(name))
-        {
-            placeholder = element.replace(name + "=", "");
-            return;
-        }
-    });
-    return placeholder;
-}
