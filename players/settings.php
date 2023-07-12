@@ -35,6 +35,9 @@
                 </div>
             </content>
         </main>
+        <?php
+            require "../imports/footer.html";
+        ?>
     </body>
 </html>
 <script src="scripts/settings.js"></script>

@@ -37,6 +37,9 @@
                 </result>
             </content>
         </main>
+        <?php
+            require "../imports/footer.html";
+        ?>
     </body>
 </html>
 <script src="../imports/scripts.js"></script>

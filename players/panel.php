@@ -41,5 +41,8 @@
                 </info>
             </content>
         </main>
+        <?php
+            require "../imports/footer.html";
+        ?>
     </body>
 </html>
