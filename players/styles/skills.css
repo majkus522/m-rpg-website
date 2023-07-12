@@ -96,8 +96,9 @@ content skill
     padding: 10px;
     width: 80px;
     height: 80px;
-    border: 2px solid #efefef;
+    border: 3px solid var(--border);
     background-color: #676767;
+    --border: transparent;
 }
 
 content skill img
@@ -110,6 +111,26 @@ content skills p
 {
     font-size: 20px;
     color: #efefef;
+}
+
+content skill.common
+{
+    --border: #efefef;
+}
+
+content skill.extra
+{
+    --border: #62a806;
+}
+
+content skill.unique
+{
+    --border: #1e4bc7;
+}
+
+content skill.ultimate
+{
+    --border: #a7129a;
 }
 
 content inspector

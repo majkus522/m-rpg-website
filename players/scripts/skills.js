@@ -21,6 +21,7 @@ function getSkills(url)
         {
             let skill = document.createElement("skill");
             skill.dataset.skill = element.skill;
+            skill.classList.add(element.rarity);
             let img = document.createElement("img");
             img.src = "../img/skills/" + element.skill + ".png";
             skill.appendChild(img);
