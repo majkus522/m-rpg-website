@@ -13,6 +13,7 @@
 <div><a href="<?php echo $extraPath; ?>../players/<?php echo $_COOKIE["username"]; ?>">Player</a>
                 <div>
                     <a href="<?php echo $extraPath; ?>../players/<?php echo $_COOKIE["username"]; ?>?tab=settings">Settings</a>
+                    <a href="<?php echo $extraPath; ?>../players/<?php echo $_COOKIE["username"]; ?>?tab=skills">Skills</a>
                     <a href="<?php echo $extraPath; ?>../logout/">Logout</a>
                 </div>
             </div>
