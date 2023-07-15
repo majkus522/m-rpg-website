@@ -260,10 +260,13 @@
 | :-------------- | :------- | :---------------------------------------------- |
 | `username`      | `string` | **Required**. Username of player to get skills. |
 
-| Headers                 | Type     | Description                 |
-| :---------------------- | :------- | :-------------------------- |
-| `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
-| `Session-Type: ${type}` | `string` | **Required**. Session type. |
+| Headers                     | Type     | Description                                |
+| :-------------------------- | :------- | :----------------------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.                 |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type.                |
+| `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of skills and offset. |
+| `Items: ${limit}`           | `int`    | **Optional**. Number of skills.            |
+
 
 | Query string         | Type            | Description                                   | Accepted values                                 |
 | :------------------- | :-------------- | :-------------------------------------------- | :---------------------------------------------- |
