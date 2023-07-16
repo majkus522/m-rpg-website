@@ -59,7 +59,7 @@
                 {
                     $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
                     if($login === true)
-                        $query = 'select * from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
+                        $query = 'select * from `view-players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
                     else
                     {
                         $query = 'select `id`, `username` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
