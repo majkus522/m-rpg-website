@@ -13,7 +13,7 @@
             $response = array_combine(["message", "file", "line"], $values);
             $result = json_encode($response);
             header("Content-Length: " . strlen($result));
-            if(strtoupper($requestMethod) != "HEAD")
+            if($requestMethod != "HEAD")
                 echo $result;
             die();
         }

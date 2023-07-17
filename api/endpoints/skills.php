@@ -4,6 +4,7 @@
     switch($requestMethod)
     {
         case "GET":
+        case "HEAD":
             if(!isSingleGet())
                 exitApi(400, "Enter player");
             $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
@@ -52,7 +53,10 @@
             if(empty($queryResult))
                 exitApi(404, "Can't find any skill matching conditions");
             header("Items-Count: " . sizeof($queryResult));
-            echo json_encode($queryResult);
+            if($requestMethod != "HEAD")
+                echo json_encode($queryResult);
+            else
+                echo header("Content-Length: " . strlen(json_encode($queryResult)));
             break;
 
         default:

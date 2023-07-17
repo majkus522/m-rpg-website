@@ -4,6 +4,7 @@
     switch($requestMethod)
     {
         case "GET":
+        case "HEAD":
             if(isSingleGet())
             {
                 if(isset($requestUrlPart[$urlIndex + 2]))
@@ -38,7 +39,10 @@
                             $query .= ')';
                             connectToDatabase('delete from `players-sessions` where `player` = ' . $queryResult[0]->id . ' and `type` = "' . $headerType . '"');
                             connectToDatabase($query);
-                            echo $key;
+                            if($requestMethod != "HEAD")
+                                echo $key;
+                            else
+                                echo header("Content-Length: " . strlen($key));
                             break;
 
                         case "session":
@@ -68,7 +72,10 @@
                     $queryResult = connectToDatabase($query);
                     if(empty($queryResult))
                         exitApi(404, "Player doesn't exists");
-                    echo json_encode($queryResult[0]);
+                    if($requestMethod != "HEAD")
+                        echo json_encode($queryResult[0]);
+                    else
+                        echo header("Content-Length: " . strlen(json_encode($queryResult[0])));
                 }
             }
             else
@@ -127,7 +134,10 @@
                     exitApi(404, "Can't find any player matching conditions");
                 header("Items-Count: " . sizeof($queryResult));
                 http_response_code(206);
-                echo json_encode($queryResult);
+                if($requestMethod != "HEAD")
+                    echo json_encode($queryResult);
+                else
+                    echo header("Content-Length: " . strlen(json_encode($queryResult)));
             }
             break;
 
@@ -227,17 +237,6 @@
             }
             else
                 exitApi(400, "Specify player");
-            break;
-
-        case "OPTIONS":
-            echo json_encode([
-                "GET /api/endpoints/players = select all players (hidden data)",
-                "   Items: {offset(optional)}-{limit} = specify number and offset of selected players (default[Items: 0-50])",
-                "GET /api/endpoints/players/{username} = show specified player data",
-                "   Passowrd: {password} = send player password to get acces to full player data",
-                "GET /api/endpoints/players/{username}/logged = check if player is logged",
-                "   (required)Passowrd: {password} = send player password"
-            ]);
             break;
 
         default:

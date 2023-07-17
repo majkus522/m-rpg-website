@@ -4,6 +4,7 @@
     switch($requestMethod)
     {
         case "GET":
+        case "HEAD":
             if(isSingleGet())
             {
                 $query = 'select * from `circles` where (!`private`';
@@ -77,7 +78,10 @@
                 header("Items-Count: " . sizeof($queryResult));
                 $result = $queryResult;
             }
-            echo json_encode($result);
+            if($requestMethod != "HEAD")
+                echo json_encode($result);
+            else
+                echo header("Content-Length: " . strlen(json_encode($result)));
             break;
 
         default:
