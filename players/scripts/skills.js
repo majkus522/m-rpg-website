@@ -16,28 +16,35 @@ function getSkills(url)
     request.onload = function ()
     {
         container.innerHTML = "";
-        let skills = JSON.parse(this.responseText);
-        skills.forEach(element =>
+        if(this.status == 200)
         {
-            let skill = document.createElement("skill");
-            skill.dataset.skill = element.skill;
-            skill.classList.add(element.rarity);
-            let img = document.createElement("img");
-            img.src = "../img/skills/" + element.skill + ".png";
-            skill.appendChild(img);
-            container.appendChild(skill);
-            skill.addEventListener("click", async (event) =>
+            let skills = JSON.parse(this.responseText);
+            skills.forEach(element =>
             {
-                let target = event.target;
-                if(target.tagName == "IMG")
-                    target = target.parentElement;
-                let data = await (await fetch("../api/data/skills/" + target.dataset.skill + ".json")).json();
-                inspector.querySelector("img").src = "../img/skills/" + target.dataset.skill + ".png";
-                inspector.querySelector("h2").textContent = data.label;
-                inspector.querySelector("p").textContent = data.description;
-                inspector.style.display = "flex";
-            })
-        });
+                let skill = document.createElement("skill");
+                skill.dataset.skill = element.skill;
+                skill.classList.add(element.rarity);
+                let img = document.createElement("img");
+                img.src = "../img/skills/" + element.skill + ".png";
+                skill.appendChild(img);
+                container.appendChild(skill);
+                skill.addEventListener("click", async (event) =>
+                {
+                    let target = event.target;
+                    if(target.tagName == "IMG")
+                        target = target.parentElement;
+                    let data = await (await fetch("../api/data/skills/" + target.dataset.skill + ".json")).json();
+                    inspector.querySelector("img").src = "../img/skills/" + target.dataset.skill + ".png";
+                    inspector.querySelector("h2").textContent = data.label;
+                    inspector.querySelector("p").textContent = data.description;
+                    inspector.style.display = "flex";
+                })
+            });
+        }
+        else
+        {
+            container.innerHTML = "<p>You don't have any skills</p>";
+        }
     }
     request.setRequestHeader("Session-Key", getCookie("session"));
     request.setRequestHeader("Session-Type", "website");
@@ -51,6 +58,7 @@ document.querySelector("content filters .search").addEventListener("click", func
     let order = document.querySelector("content filters select").value;
     if(order != "default")
         url += "order=" + order;
+    url += "&rarity[]=unknown";
     document.querySelectorAll("content filters rarities div.active").forEach(element =>
     {
         url += "&rarity[]=" + element.textContent.toLowerCase();

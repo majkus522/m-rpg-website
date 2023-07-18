@@ -268,10 +268,10 @@
 | `Items: ${limit}`           | `int`    | **Optional**. Number of skills.            |
 
 
-| Query string         | Type            | Description                                   | Accepted values                                 |
-| :------------------- | :-------------- | :-------------------------------------------- | :---------------------------------------------- |
-| `rarity[]=${rarity}` | `array<string>` | **Optional**. Skills rarity.                  | `"common"`, `"extra"`, `"unique"`, `"ultimate"` |
-| `order=${order}`     | `string`        | **Optional**. Order skills by rarity and etc. | `"rarity"`, `"rarity-desc"`                     |
+| Query string         | Type            | Description                                   | Accepted values                                              |
+| :------------------- | :-------------- | :-------------------------------------------- | :----------------------------------------------------------- |
+| `rarity[]=${rarity}` | `array<string>` | **Optional**. Skills rarity.                  | `"common"`, `"extra"`, `"unique"`, `"ultimate"`, `"unknown"` |
+| `order=${order}`     | `string`        | **Optional**. Order skills by rarity and etc. | `"rarity"`, `"rarity-desc"`                                  |
 
 ---
 &nbsp;
