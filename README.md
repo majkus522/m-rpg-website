@@ -16,13 +16,13 @@
 | `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of players and offset. | [0 - &infin;]-[1 - &infin;] |
 | `Items: ${limit}`           | `int`    | **Optional**. Number of players.            | 1 - &infin;                 |
 
-| Query string      | Type     | Description                                   | Accepted values           |
-| :---------------- | :------- | :-------------------------------------------- | :------------------------ |
-| `minLevel=${min}` | `int`    | **Optional**. Minimal player level.           | 1 - &infin;               |
-| `maxLevel=${max}` | `int`    | **Optional**. Maximal player level.           | 1 - &infin;               |
-| `minMoney=${max}` | `float`  | **Optional**. Minimal player capital.         | 0 - &infin;               |
-| `minMoney=${max}` | `float`  | **Optional**. Maximal player capital.         | 0 - &infin;               |
-| `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"` |
+| Query string      | Type     | Description                                   | Accepted values                                      |
+| :---------------- | :------- | :-------------------------------------------- | :--------------------------------------------------- |
+| `minLevel=${min}` | `int`    | **Optional**. Minimal player level.           | 1 - &infin;                                          |
+| `maxLevel=${max}` | `int`    | **Optional**. Maximal player level.           | 1 - &infin;                                          |
+| `minMoney=${max}` | `float`  | **Optional**. Minimal player capital.         | 0 - &infin;                                          |
+| `minMoney=${max}` | `float`  | **Optional**. Maximal player capital.         | 0 - &infin;                                          |
+| `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"`, `"money"`, `"money-desc"` |
 
 #### Get player (only username) :
 

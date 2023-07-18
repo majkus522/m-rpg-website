@@ -122,6 +122,14 @@
                                     case "level":
                                         $order = ' order by `level` asc';
                                         break;
+
+                                    case "money-desc":
+                                        $order = ' order by `money` desc';
+                                        break;
+    
+                                    case "money":
+                                        $order = ' order by `money` asc';
+                                        break;
                                 }
                             }
                             break;
