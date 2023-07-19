@@ -59,6 +59,25 @@
                 echo header("Content-Length: " . strlen(json_encode($queryResult)));
             break;
 
+        case "POST":
+            $data = json_decode(file_get_contents("php://input"));
+            if(!isset($data->player))
+                exitApi(400, "Enter player");
+            $validPlayer = validUsername($data->player);
+            if($validPlayer !== true || empty(connectToDatabase('select `id` from `players` where `username` = "' . $data->player . '"')))
+                exitApi(404, "Player doesn't exists");
+            $login = isPlayerLogged($data->player);
+            if($login !== true)
+                exitApi($login->code, $login->message);
+            if(!isset($data->skill))
+                exitApi(400, "Enter skill");
+            if(!file_exists("data/skills/" . $data->skill . ".json"))
+                exitApi(404, "Skill doesn't exists");
+            $query = 'insert into `skills`(`skill`, `player`, `rarity`) values ("' . $data->skill . '", (select `id` from `players` where `username` = "' . $data->player . '" limit 1), "' . json_decode(file_get_contents("data/skills/" . $data->skill . ".json"))->rarity . '")';
+            connectToDatabase($query);
+            http_response_code(201);
+            break;
+
         default:
             exitApi(501, "Method not implemented");
             return;

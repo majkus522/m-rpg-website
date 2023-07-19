@@ -1,5 +1,6 @@
 {
     "label": "Mana sense",
     "active": false,
-    "description": "Allows you to sense surrounding mana"
+    "description": "Allows you to sense surrounding mana",
+    "rarity": "extra"
 }
