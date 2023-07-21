@@ -29,7 +29,7 @@ h3
     text-align: center;
 }
 
-info > div
+info stat
 {
     display: flex;
     justify-content: space-between;
@@ -38,9 +38,14 @@ info > div
     gap: 15px;
 }
 
-info > div:not(:last-child)
+info div stat:not(:last-child)
 {
     border-bottom: 1px solid #eeeeee;
+}
+
+info > stat
+{
+    border-top: 1px solid #eeeeee;
 }
 
 bar
@@ -56,4 +61,68 @@ bar > fill
     height: 20px;
     background-color: #acacac;
     display: block;
+}
+
+info > div
+{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 1fr;
+    overflow: auto;
+}
+
+info graph
+{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+info graph svg
+{
+    height: 100%;
+}
+
+info graph svg polygon
+{
+    fill: rgba(65, 65, 65, 0.3);
+    stroke: white;
+    stroke-width: 1;
+}
+
+info graph svg line
+{
+    stroke: white;
+    stroke-width: 2;
+}
+
+info graph p
+{
+    position: absolute;
+    font-size: 13px;
+}
+
+info graph p:nth-of-type(1)
+{
+    top: 5px;
+}
+
+info graph p:nth-of-type(2)
+{
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    right: 5px;
+}
+
+info graph p:nth-of-type(3)
+{
+    bottom: 5px;
+}
+
+info graph p:nth-of-type(4)
+{
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    left: 5px;
 }
