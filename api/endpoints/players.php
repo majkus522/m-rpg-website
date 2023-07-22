@@ -110,6 +110,54 @@
                             $query .= ' and `level` <= ' . $value;
                             break;
 
+                        case "minStrength":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (minStrength)");
+                            $query .= ' and `strength` >= ' . $value;
+                            break;
+
+                        case "maxStrength":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (maxStrength)");
+                            $query .= ' and `strength` <= ' . $value;
+                            break;
+
+                        case "minAgility":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (minAgility)");
+                            $query .= ' and `agility` >= ' . $value;
+                            break;
+
+                        case "maxAgility":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (maxAgility)");
+                            $query .= ' and `agility` <= ' . $value;
+                            break;
+
+                        case "minCharisma":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (minCharisma)");
+                            $query .= ' and `charisma` >= ' . $value;
+                            break;
+
+                        case "maxCharisma":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (maxCharisma)");
+                            $query .= ' and `charisma` <= ' . $value;
+                            break;
+
+                        case "minIntelligence":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (minIntelligence)");
+                            $query .= ' and `intelligence` >= ' . $value;
+                            break;
+
+                        case "maxIntelligence":
+                            if(!is_numeric($value) || $value < 0)
+                                exitApi(400, "Incorect query string (maxIntelligence)");
+                            $query .= ' and `intelligence` <= ' . $value;
+                            break;
+
                         case "order":
                             if($order == "")
                             {
@@ -129,6 +177,38 @@
     
                                     case "money":
                                         $order = ' order by `money` asc';
+                                        break;
+
+                                    case "strength-desc":
+                                        $order = ' order by `strength` desc';
+                                        break;
+    
+                                    case "strength":
+                                        $order = ' order by `strength` asc';
+                                        break;
+
+                                    case "agility-desc":
+                                        $order = ' order by `agility` desc';
+                                        break;
+    
+                                    case "agility":
+                                        $order = ' order by `agility` asc';
+                                        break;
+
+                                    case "charisma-desc":
+                                        $order = ' order by `charisma` desc';
+                                        break;
+    
+                                    case "charisma":
+                                        $order = ' order by `charisma` asc';
+                                        break;
+
+                                    case "intelligence-desc":
+                                        $order = ' order by `intelligence` desc';
+                                        break;
+    
+                                    case "intelligence":
+                                        $order = ' order by `intelligence` asc';
                                         break;
                                 }
                             }
