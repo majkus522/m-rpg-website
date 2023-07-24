@@ -281,6 +281,22 @@
 | `rarity[]=${rarity}` | `array<string>` | **Optional**. Skills rarity.                  | `"common"`, `"extra"`, `"unique"`, `"ultimate"`, `"unknown"` |
 | `order=${order}`     | `string`        | **Optional**. Order skills by rarity and etc. | `"rarity"`, `"rarity-desc"`                                  |
 
+#### Check if player has skill :
+
+```http
+  GET /api/endpoints/skills/${username}/${skill}
+```
+
+| Parameter       | Type     | Description                            |
+| :-------------- | :------- | :------------------------------------- |
+| `username`      | `string` | **Required**. Username of player.      |
+| `skill`         | `string` | **Required**. Skill you want to check. |
+
+| Headers                     | Type     | Description                                |
+| :-------------------------- | :------- | :----------------------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.                 |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type.                |
+
 ---
 &nbsp;
 ## Password recovery
