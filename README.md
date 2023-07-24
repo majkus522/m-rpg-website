@@ -287,15 +287,31 @@
   GET /api/endpoints/skills/${username}/${skill}
 ```
 
-| Parameter       | Type     | Description                            |
-| :-------------- | :------- | :------------------------------------- |
-| `username`      | `string` | **Required**. Username of player.      |
-| `skill`         | `string` | **Required**. Skill you want to check. |
+| Parameter       | Type     | Description                       |
+| :-------------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. Username of player. |
+| `skill`         | `string` | **Required**. Skill to check.     |
 
-| Headers                     | Type     | Description                                |
-| :-------------------------- | :------- | :----------------------------------------- |
-| `Session-Key: ${key}`       | `string` | **Required**. Session key.                 |
-| `Session-Type: ${type}`     | `string` | **Required**. Session type.                |
+| Headers                     | Type     | Description                 |
+| :-------------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
+
+#### Add skill to player :
+
+```http
+  POST /api/endpoints/skills/
+```
+
+| Body (JSON Object) | Type     | Description                                    |
+| :----------------- | :------- | :--------------------------------------------- |
+| `player`           | `string` | **Required**. Username of player to add skill. |
+| `skill`            | `string` | **Required**. Name of skill to add.            |
+
+| Headers                     | Type     | Description                 |
+| :-------------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
 
 ---
 &nbsp;
