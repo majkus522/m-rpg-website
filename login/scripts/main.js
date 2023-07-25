@@ -15,7 +15,7 @@ button.addEventListener("click", () =>
         return;
     }
 
-    let remember = document.querySelector("form label.remember input").value;
+    let remember = document.querySelector("form label.remember input").checked;
     let request = new XMLHttpRequest();
     request.open("GET", "../api/endpoints/players/" + username + "/logged", true);
     request.onload = function ()
@@ -33,6 +33,6 @@ button.addEventListener("click", () =>
     };
     request.setRequestHeader("Password", password);
     request.setRequestHeader("Session-Type", "website");
-    request.setRequestHeader("Temp", remember);
+    request.setRequestHeader("Temp", !remember);
     request.send();
 });

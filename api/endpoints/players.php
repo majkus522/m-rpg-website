@@ -24,7 +24,7 @@
                             $headerType = getHeader("Session-Type");
                             if($headerType === false)
                                 exitApi(400, "Enter session type");
-                            $headerTemp = getHeader("Temp");
+                            $headerTemp = filter_var(getHeader("Temp"), FILTER_VALIDATE_BOOLEAN);
                             $key = generateSessionKey($requestUrlPart[$urlIndex + 1], $headerType);
                             $query = 'insert into `players-sessions`(`key`, `player`, `type`';
                             if($headerTemp)
