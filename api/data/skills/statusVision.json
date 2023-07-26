@@ -1,0 +1,7 @@
+{
+    "label": "Status Vision",
+    "active": false,
+    "description": "Allows you to see your and other players status",
+    "rarity": "unique",
+    "evolution": "statusPreview"
+}
