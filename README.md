@@ -66,7 +66,7 @@
 	</tbody>
 </table>
 
-#### Login player :
+#### Login player (recive session key) :
 
 ```http
   GET /api/endpoints/players/${username}/logged
@@ -307,6 +307,22 @@
 | :----------------- | :------- | :--------------------------------------------- |
 | `player`           | `string` | **Required**. Username of player to add skill. |
 | `skill`            | `string` | **Required**. Name of skill to add.            |
+
+| Headers                     | Type     | Description                 |
+| :-------------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
+
+#### Remove skill from player :
+
+```http
+  DELETE /api/endpoints/skills/${username}/${skill}
+```
+
+| Parameter       | Type     | Description                       |
+| :-------------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. Username of player. |
+| `skill`         | `string` | **Required**. Skill to check.     |
 
 | Headers                     | Type     | Description                 |
 | :-------------------------- | :------- | :-------------------------- |
