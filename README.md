@@ -276,10 +276,11 @@
 | `Items: ${limit}`           | `int`    | **Optional**. Number of skills.            |
 
 
-| Query string         | Type            | Description                                   | Accepted values                                              |
-| :------------------- | :-------------- | :-------------------------------------------- | :----------------------------------------------------------- |
-| `rarity[]=${rarity}` | `array<string>` | **Optional**. Skills rarity.                  | `"common"`, `"extra"`, `"unique"`, `"ultimate"`, `"unknown"` |
-| `order=${order}`     | `string`        | **Optional**. Order skills by rarity and etc. | `"rarity"`, `"rarity-desc"`                                  |
+| Query string         | Type            | Description                                     | Accepted values                                              |
+| :------------------- | :-------------- | :---------------------------------------------- | :----------------------------------------------------------- |
+| `rarity[]=${rarity}` | `array<string>` | **Optional**. Skills rarity.                    | `"common"`, `"extra"`, `"unique"`, `"ultimate"`, `"unknown"` |
+| `order=${order}`     | `string`        | **Optional**. Order skills by rarity and etc.   | `"rarity"`, `"rarity-desc"`                                  |
+| `toggle=${toggle}`   | `bool`          | **Optional**. Check if skill is enabled or not. | `true`, `false`                                              |
 
 #### Check if player has skill :
 
@@ -312,6 +313,26 @@
 | :-------------------------- | :------- | :-------------------------- |
 | `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
 | `Session-Type: ${type}`     | `string` | **Required**. Session type. |
+
+#### Toggle skill :
+
+```http
+  PATCH /api/endpoints/skills/${username}/${skill}
+```
+
+| Parameter       | Type     | Description                       |
+| :-------------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. Username of player. |
+| `skill`         | `string` | **Required**. Skill to check.     |
+
+| Body (bool) | Type   | Description                               |
+| :---------- | :----- | :---------------------------------------- |
+| `value`     | `bool` | **Required**. New value of toggled skill. |
+
+| Headers                 | Type     | Description                 |
+| :---------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}` | `string` | **Required**. Session type. |
 
 #### Remove skill from player :
 

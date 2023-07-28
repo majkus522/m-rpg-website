@@ -37,6 +37,12 @@
                                 $first = false;
                             }
                             break;
+
+                        case "toggle":
+                            if(strtolower($value) != "true" && strtolower($value) != "false")
+                                exitApi(400, "Incorect query string (toggle)");
+                            $query .= " and `toggle` = " . strtolower($value);
+                            break;
     
                         case "order":
                             if($order == "")
@@ -87,6 +93,24 @@
             $query = 'insert into `skills`(`skill`, `player`, `rarity`) values ("' . $data->skill . '", (select `id` from `players` where `username` = "' . $data->player . '" limit 1), "' . json_decode(file_get_contents("data/skills/" . $data->skill . ".json"))->rarity . '")';
             connectToDatabase($query);
             http_response_code(201);
+            break;
+
+        case "PATCH":
+            if(!isset($requestUrlPart[$urlIndex + 1]))
+                exitApi(400, "Enter player");
+            if(!isset($requestUrlPart[$urlIndex + 2]))
+                exitApi(400, "Enter skill");
+            if(!file_exists("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))
+                exitApi(404, "Skill doesn't exists");
+            if(!json_decode(file_get_contents("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))->toggle)
+                exitApi(400, "Skill can't be toggled");
+            $queryResult = connectToDatabase('select `id` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"');
+            if(empty($queryResult))
+                exitApi(404, "Player doesn't exists");
+            $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+            if($login !== true)
+                exitApi($login->code, $login->message);
+            connectToDatabase('update `skills` set `toggle` = ' . (int) filter_var(file_get_contents("php://input"), FILTER_VALIDATE_BOOLEAN) . ' where `player` = ' . $queryResult[0]->id . ' and `skill` = "' . $requestUrlPart[$urlIndex + 2] . '"');
             break;
 
         case "DELETE":
