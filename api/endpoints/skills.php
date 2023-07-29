@@ -97,20 +97,52 @@
 
         case "PATCH":
             if(!isset($requestUrlPart[$urlIndex + 1]))
+                exitApi(400, "Enter PATCH mode");
+            $data = json_decode(file_get_contents("php://input"));
+            if(!isset($data->player))
                 exitApi(400, "Enter player");
-            if(!isset($requestUrlPart[$urlIndex + 2]))
+            if(!isset($data->skill))
                 exitApi(400, "Enter skill");
-            if(!file_exists("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))
+            if(!file_exists("data/skills/" . $data->skill . ".json"))
                 exitApi(404, "Skill doesn't exists");
-            if(!json_decode(file_get_contents("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))->toggle)
-                exitApi(400, "Skill can't be toggled");
-            $queryResult = connectToDatabase('select `id` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"');
+            $queryResult = connectToDatabase('select `id` from `players` where `username` = "' . $data->player . '"');
             if(empty($queryResult))
                 exitApi(404, "Player doesn't exists");
-            $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+            $login = isPlayerLogged($data->player);
             if($login !== true)
                 exitApi($login->code, $login->message);
-            connectToDatabase('update `skills` set `toggle` = ' . (int) filter_var(file_get_contents("php://input"), FILTER_VALIDATE_BOOLEAN) . ' where `player` = ' . $queryResult[0]->id . ' and `skill` = "' . $requestUrlPart[$urlIndex + 2] . '"');
+            $skillData = json_decode(file_get_contents("data/skills/" . $data->skill . ".json"));
+            switch($requestUrlPart[$urlIndex + 1])
+            {
+                case "toggle":
+                    if(!isset($data->toggle))
+                        exitApi(400, "Enter skill toggle");
+                    if(!$skillData->toggle)
+                        exitApi(400, "Skill can't be toggled");
+                    connectToDatabase('update `skills` set `toggle` = ' . (int) filter_var($data->toggle, FILTER_VALIDATE_BOOLEAN) . ' where `player` = ' . $queryResult[0]->id . ' and `skill` = "' . $data->skill . '"');
+                    break;
+
+                case "evolve":
+                    if(!isset($skillData->evolution) || sizeof($skillData->evolution) == 0)
+                        exitApi(400, "You can't evolve this skill");
+                    foreach($skillData->evolution as $skill)
+                    {
+                        $apiResult = callApi("endpoints/skills/" . $data->player . "/" . $skill, "GET", ["Session-Key: " . getHeader("Session-Key"), "Session-Type: " . getHeader("Session-Type")]);
+                        if($apiResult[1] != 200)
+                            exitApi(400, "You don't have required skill (" . $skill . ")");
+                        $apiResult = callApi("endpoints/skills/" . $data->player . "/" . $skill, "DELETE", ["Session-Key: " . getHeader("Session-Key"), "Session-Type: " . getHeader("Session-Type")]);
+                        if($apiResult[1] != 200)
+                            exitApi($apiResult[1], $apiResult[0]->message);
+                    }
+                    $apiResult = callApi("endpoints/skills/", "POST", ["Session-Key: " . getHeader("Session-Key"), "Session-Type: " . getHeader("Session-Type")], json_encode(["player" => $data->player, "skill" => $data->skill]));
+                    if($apiResult[1] != 201)
+                        exitApi($apiResult[1], $apiResult[0]->message);
+                    break;
+
+                default:
+                    exitApi(400, "Incorect patch mode");
+                    break;
+            }
             break;
 
         case "DELETE":
