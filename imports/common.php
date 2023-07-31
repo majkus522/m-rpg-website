@@ -1,71 +1,4 @@
 <?php
-    class LoginResult
-    {
-        public int $code;
-        public string $message;
-
-        function __construct(int $code, string $message)
-        {
-            $this->code = $code;
-            $this->message = $message;
-        }
-    }
-
-    function isSingleGet():bool
-    {
-        global $requestUrlPart;
-        global $urlIndex;
-        return sizeof($requestUrlPart) > ($urlIndex + 1);
-    }
-
-    function getHeader(string $key):string|bool
-    {
-        $headers = getallheaders();
-        if(array_key_exists($key, $headers))
-            return getallheaders()[$key];
-        return false;
-    }
-
-    function clearRequestUrl():string
-    {
-        $url = $_SERVER["REDIRECT_URL"];
-        if(str_ends_with($url, "/"))
-            return substr($url, 0, strlen($url) - 1);
-        return $url;
-    }
-
-    function callApi(string $url, string $method, array $headers = [], string $body = ""):array
-    {
-        $ch = curl_init("http://127.0.0.1/m-rpg/api/" . $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-        $response = curl_exec($ch);
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-        $result = json_decode(substr($response , $headerSize));
-        $headers = headersToArray(substr($response, 0, $headerSize));
-        return [$result, $code, $headers];
-    }
-
-    function headersToArray(string $input):array
-    {
-        $headers = array();
-        $part = explode("\r\n", $input);
-        for ($index = 0; $index < sizeof($part); $index++)
-        {
-            if (strlen($part[$index]) > 0 && strpos( $part[$index], ":"))
-            {
-                $headerName = substr($part[$index], 0, strpos($part[$index], ":"));
-                $headerValue = substr($part[$index], strpos($part[$index], ":") + 1);
-                $headers[$headerName] = $headerValue;
-            }
-        }
-        return $headers;
-    }
-
     function validPassword(string $password):bool|string
     {
         $password = trim($password);
@@ -107,5 +40,51 @@
         if($level == 0)
             return 0;
         return (int)(log($level + 1) * 3750) + levelExp($level - 1);
+    }
+
+    function connectToDatabase(string $query, array $parameters = []):array
+    {
+        require "databaseConfig.php";
+        $mysqli = new mysqli($host, $user, $password, $database);
+        $stmt = $mysqli->prepare($query);
+        $types = $parameters[0];
+        unset($parameters[0]);
+        $stmt->bind_param($types, ...$parameters);
+        $stmt->execute();
+        $result = [];
+        $stmtResult = $stmt->get_result();
+        if($stmtResult === false)
+            return [];
+		while($row = $stmtResult->fetch_assoc())
+			array_push($result, (object)$row);
+        return $result;
+    }
+
+    function slugify(string $text):string
+	{
+		$divider = '-';
+		$text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+		$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+		$text = preg_replace('~[^-\w]+~', '', $text);
+		$text = trim($text, $divider);
+		$text = preg_replace('~-+~', $divider, $text);
+		$text = strtolower($text);
+		if (empty($text))
+			return 'n-a';
+		return $text;
+	}
+
+    function exitApi(int $code, string $message):void
+    {
+        http_response_code($code);
+        exit($message);
+    }
+
+    function getHeader(string $key):string|bool
+    {
+        $headers = getallheaders();
+        if(array_key_exists($key, $headers))
+            return getallheaders()[$key];
+        return false;
     }
 ?>
