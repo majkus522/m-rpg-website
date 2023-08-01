@@ -30,7 +30,7 @@ button.addEventListener("click", () =>
             location.reload();
             
         }
-        else if(this.status == 200)
+        else
         {
             error.textContent = this.responseText;
         }
