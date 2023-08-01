@@ -47,9 +47,12 @@
         require "databaseConfig.php";
         $mysqli = new mysqli($host, $user, $password, $database);
         $stmt = $mysqli->prepare($query);
-        $types = $parameters[0];
-        unset($parameters[0]);
-        $stmt->bind_param($types, ...$parameters);
+        if(!empty($parameters))
+        {
+            $types = $parameters[0];
+            unset($parameters[0]);
+            $stmt->bind_param($types, ...$parameters);
+        }
         $stmt->execute();
         $result = [];
         $stmtResult = $stmt->get_result();
