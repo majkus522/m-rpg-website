@@ -1,7 +1,4 @@
-<?php
-    $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
-?>
-        <title>M-RPG - <?php echo $result[0]->username; ?> - Skills</title>
+        <title>M-RPG - <?php echo $_COOKIE["username"]; ?> - Skills</title>
     </head>
     <body>
         <?php
