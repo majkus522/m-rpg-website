@@ -1,3 +1,4 @@
 imports/databaseConfig.php
 api/hasher.php
 test.php
+api/mailer.php

@@ -75,5 +75,9 @@
             $query = 'delete from `players` where `username` = ?';
             connectToDatabase($query, array("s", $_COOKIE["username"]));
             break;
+
+        default:
+            exitApi(501, "Method not implemented");
+            break;
     }
 ?>

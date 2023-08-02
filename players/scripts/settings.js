@@ -16,8 +16,10 @@ password.querySelector("input[type='button']").addEventListener("click", () =>
     let newPassword = btoa(password.querySelector("input[type='text'], input[type='password']").value);
     send({ password: newPassword }, function ()
     {
-        if(this.status == 200 || this.status == 401)
+        if(this.status == 401)
             location.reload();
+        else if(this.status == 200)
+            password.querySelector("p").textContent = "Password has been changed";
         else
             password.querySelector("p").textContent = this.responseText;
     });
