@@ -12,47 +12,47 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     password = btoa(passwordField[0].value);
     remember = document.querySelector("form label.remember input").value;
     let request = new XMLHttpRequest();
-    request.open("POST", "../api/players.php", true);
+    request.open("POST", "../api/endpoints/players", true);
     request.onload = function ()
     {
-        if(this.status >= 200 && this.status < 300)
+        if(this.status == 201)
         {
+            error.textContent = "";
             login();
         }
         else
         {
-            error.textContent = this.responseText;
+            error.textContent = JSON.parse(this.responseText).message;
         }
         console.log(this.responseText)
     }
     request.send(JSON.stringify({
         username: username,
         email: email,
-        password: password,
-        remember: remember
+        password: password
     }));
 });
 
 async function login()
 {
     let request = new XMLHttpRequest();
-    let url = "../api/login.php?player=" + username;
-    if(!remember)
-        url += "&temp";
-    request.open("GET", url, true);
+    request.open("GET", "../api/endpoints/players/" + username + "/logged", true);
     request.onload = function ()
     {
-        if(this.status >= 200 && this.status < 300)
+        if(this.status == 200)
         {
+            error.textContent = "";
             document.cookie = "session=" + this.responseText + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
             document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
-            location.replace("../");
+            location.replace("../players/" + username + "");
         }
         else
         {
-            error.textContent = this.responseText;
+            error.textContent = JSON.parse(this.responseText).message;
         }
-    };
+    }
+    request.setRequestHeader("Session-Type", "website");
+    request.setRequestHeader("Temp", remember);
     request.setRequestHeader("Password", password);
     request.send();
 }

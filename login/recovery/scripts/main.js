@@ -2,7 +2,7 @@ let result = document.querySelector("form p");
 document.querySelector("form input[type='button']").addEventListener("click", () =>
 {
     let input = document.querySelector("form input[type='text']").value;
-    let url = "../../api/password-recovery.php?";
+    let url = "../../api/controllers/password-recovery?";
     if(input.includes("@"))
         url += "email";
     else
@@ -20,7 +20,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
         else
         {
             result.classList.add("error");
-            result.textContent = this.responseText;
+            result.textContent = JSON.parse(this.responseText).message;
         }
     }
     request.send();

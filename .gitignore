@@ -1,4 +1,5 @@
-imports/databaseConfig.php
+api/databaseController.php
 api/hasher.php
-test.php
+api/endpoints/test.php
 api/mailer.php
+test.php
