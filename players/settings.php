@@ -1,7 +1,7 @@
 <?php
-    $queryResult = connectToDatabase('select * from `view-players` where `username` = ? limit 1', array("s", $_COOKIE["username"]))[0];
+    $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
 ?>
-        <title>M-RPG - <?php echo $_COOKIE["username"]; ?> - Settings</title>
+        <title>M-RPG - <?php echo $result[0]->username; ?> - Settings</title>
     </head>
     <body>
         <?php
@@ -14,7 +14,7 @@
             <content>
                 <div class="email">
                     Email
-                    <input type="email" value="<?php echo $queryResult->email; ?>">
+                    <input type="email" value="<?php echo $result[0]->email; ?>">
                     <input type="button" value="Update">
                     <p class="error"></p>
                 </div>

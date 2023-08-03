@@ -17,24 +17,22 @@ button.addEventListener("click", () =>
 
     let remember = document.querySelector("form label.remember input").checked;
     let request = new XMLHttpRequest();
-    let url = "../api/login.php?player=" + username;
-    if(!remember)
-        url += "&temp";
-    request.open("GET", url, true);
+    request.open("GET", "../api/endpoints/players/" + username + "/logged", true);
     request.onload = function ()
     {
-        if(this.status >= 200 && this.status < 300)
+        if(this.status >= 400)
+        {
+            error.textContent = JSON.parse(this.responseText).message;
+        }
+        else if(this.status == 200)
         {
             document.cookie = "session=" + this.responseText + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
             document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
             location.reload();
-            
-        }
-        else
-        {
-            error.textContent = this.responseText;
         }
     };
     request.setRequestHeader("Password", password);
+    request.setRequestHeader("Session-Type", "website");
+    request.setRequestHeader("Temp", !remember);
     request.send();
 });

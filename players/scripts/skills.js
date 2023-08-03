@@ -33,7 +33,7 @@ function getSkills(url)
                     let target = event.target;
                     if(target.tagName == "IMG")
                         target = target.parentElement;
-                    let data = await (await fetch("../data/skills/" + target.dataset.skill + ".json")).json();
+                    let data = await (await fetch("../api/data/skills/" + target.dataset.skill + ".json")).json();
                     inspector.querySelector("img").src = "../img/skills/" + target.dataset.skill + ".png";
                     inspector.querySelector("h2").textContent = data.label;
                     inspector.querySelector("p").textContent = data.description;
@@ -41,18 +41,20 @@ function getSkills(url)
                 })
             });
         }
-        else if(this.status == 401)
-            location.reload();
         else
+        {
             container.innerHTML = "<p>You don't have any skills</p>";
+        }
     }
+    request.setRequestHeader("Session-Key", getCookie("session"));
+    request.setRequestHeader("Session-Type", "website");
     request.send();
 }
-getSkills("../api/skills.php");
+getSkills("../api/endpoints/skills/" + getCookie("username"));
 
 document.querySelector("content filters .search").addEventListener("click", function ()
 {
-    let url = "../api/skills.php" + "?";
+    let url = "../api/endpoints/skills/" + getCookie("username") + "?";
     let order = document.querySelector("content filters select").value;
     if(order != "default")
         url += "order=" + order;

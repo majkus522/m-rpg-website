@@ -3,13 +3,13 @@
     $validLogin = false;
     if(isset($_COOKIE["username"]) && strlen($_COOKIE["username"]) > 0 && isset($_COOKIE["session"]) && strlen($_COOKIE["session"]) > 0)
     {
-        $queryResult = connectToDatabase('select `players`.`id` from `players-sessions`, `players` where `players-sessions`.`player` = `players`.`id` and `players`.`username` = ? and `players-sessions`.`key` = ?', array("ss", $_COOKIE["username"], $_COOKIE["session"]));
-        if(empty($queryResult))
+        $result = callApi("../api/endpoints/players/" . $_COOKIE["username"] . "/session", "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
+        if($result[1] == 200)
         {
-            clearCookie();
+            $validLogin = true;
         }
         else
-            $validLogin = true;
+            clearCookie();
     }
     else
         clearCookie();
