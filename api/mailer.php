@@ -1,13 +1,13 @@
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
     function sendMail($to, $subject, $message)
     {
         require "https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/Exception.php";
         require "https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/PHPMailer.php";
         require "https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/SMTP.php";
         require "mailerConfig.php";
-    
-        use PHPMailer\PHPMailer\PHPMailer;
-        use PHPMailer\PHPMailer\Exception;
     
         $mail = new PHPMailer(true);
         try
