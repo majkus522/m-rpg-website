@@ -1,15 +1,23 @@
 <?php
-    function isPlayerLogged(string $player):object|true
+    function isPlayerLogged(string $player, bool $exit = true):object|null
     {
         $headerKey = getHeader("Session-Key");
         if($headerKey === false)
-            return new LoginResult(400, "Enter player session key");
+            return exitLogin(400, "Enter player session key", $exit);
         $headerType = getHeader("Session-Type");
         if($headerType === false)
-            return new LoginResult(400, "Enter player session type");
-        $apiResult = callApi("endpoints/players/" . $player . "/session", "GET", ["Session-Key: " . $headerKey, "Session-Type: " . $headerType]);
-        if($apiResult[1] != 200)
-            return new LoginResult($apiResult[1], $apiResult[0]->message);
-        return true;
+            return exitLogin(400, "Enter player session type", $exit);
+        $apiResult = callApi("endpoints/players/{$player}/session", "GET", ["Session-Key: {$headerKey}", "Session-Type: {$headerType}"]);
+        if($apiResult->code >= 200 && $apiResult->code < 300)
+            return null;
+        return exitLogin($apiResult->code, $apiResult->content->message, $exit);
+    }
+
+    function exitLogin(int $code, string $message, bool $exit):object|null
+    {
+        if($exit)
+            exitApi($code, $message);
+        else
+            return new LoginResult($code, $message);
     }
 ?>

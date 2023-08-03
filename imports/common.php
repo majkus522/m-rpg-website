@@ -11,6 +11,20 @@
         }
     }
 
+    class ApiResult
+    {
+        public int $code;
+        public mixed $content;
+        public array $headers;
+
+        function __construct(int $code, mixed $content, array $headers)
+        {
+            $this->code = $code;
+            $this->content = $content;
+            $this->headers = $headers;
+        }
+    }
+
     function isSingleGet():bool
     {
         global $requestUrlPart;
@@ -34,7 +48,7 @@
         return $url;
     }
 
-    function callApi(string $url, string $method, array $headers = [], string $body = ""):array
+    function callApi(string $url, string $method, array $headers = [], string $body = ""):object
     {
         $ch = curl_init("http://127.0.0.1/m-rpg/api/" . $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -46,8 +60,9 @@
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $result = json_decode(substr($response , $headerSize));
-        $headers = headersToArray(substr($response, 0, $headerSize));
-        return [$result, $code, $headers];
+        if(gettype($result) != "object")
+            $result = substr($response , $headerSize);
+        return new ApiResult($code, $result, headersToArray(substr($response, 0, $headerSize)));
     }
 
     function headersToArray(string $input):array

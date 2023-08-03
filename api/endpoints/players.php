@@ -15,30 +15,25 @@
                             $headerPassword = getHeader("Password");
                             if($headerPassword === false)
                                 exitApi(400, "Enter player password");
-                            $query = 'select `password`, `id` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
-                            $queryResult = connectToDatabase($query);
+                            $headerType = getHeader("Session-Type");
+                            if($headerType === false)
+                                exitApi(400, "Enter session type");
+                            $query = 'select `password`, `id` from `players` where `username` = ? limit 1';
+                            $queryResult = connectToDatabase($query, array("s", $requestUrlPart[$urlIndex + 1]));
                             if(empty($queryResult))
                                 exitApi(404, "Player doesn't exists");
                             if(!password_verify(base64_decode($headerPassword), decode($queryResult[0]->password)))
                                 exitApi(401, "Wrong password");
-                            $headerType = getHeader("Session-Type");
-                            if($headerType === false)
-                                exitApi(400, "Enter session type");
                             $headerTemp = filter_var(getHeader("Temp"), FILTER_VALIDATE_BOOLEAN);
-                            $key = generateSessionKey($requestUrlPart[$urlIndex + 1], $headerType);
+                            $key = generateSessionKey($queryResult[0]->id, $headerType);
                             $query = 'insert into `players-sessions`(`key`, `player`, `type`';
                             if($headerTemp)
-                            {
                                 $query .= ', `temp`, `date`';
-                            }
-                            $query .= ') values ("' . $key . '", ' . $queryResult[0]->id . ', "' . $headerType . '"';
+                            $query .= ') values (?, ?, ?';
                             if($headerTemp)
-                            {
                                 $query .= ', 1, now()';
-                            }
-                            $query .= ')';
-                            connectToDatabase('delete from `players-sessions` where `player` = ' . $queryResult[0]->id . ' and `type` = "' . $headerType . '"');
-                            connectToDatabase($query);
+                            connectToDatabase('delete from `players-sessions` where `player` = ? and `type` = ?', array("is", $queryResult[0]->id, $headerType));
+                            connectToDatabase($query . ')', array("sis", $key, $queryResult[0]->id, $headerType));
                             if($requestMethod != "HEAD")
                                 echo $key;
                             else
@@ -53,23 +48,29 @@
                             $headerType = getHeader("Session-Type");
                             if($headerType === false)
                                 exitApi(400, "Enter session type");
-                            $query = 'select `players-sessions`.`id` from `players-sessions`, `players` where `players-sessions`.`key` = "' . $headerKey . '" and `players-sessions`.`player` = `players`.`id` and `players`.`username` = "' . $requestUrlPart[$urlIndex + 1] . '" and `players-sessions`.`type` = "' . $headerType . '"';
-                            if(empty(connectToDatabase($query)))
+                            $query = 'select `id` from `players` where `username` = ? limit 1';
+                            $queryResult = connectToDatabase($query, array("s", $requestUrlPart[$urlIndex + 1]));
+                            if(empty($queryResult))
+                                exitApi(404, "Player doesn't exists");
+                            $query = 'select `players-sessions`.`id` from `players-sessions` where `type` = ? and `key` = ? and `player` = ? limit 1';
+                            if(empty(connectToDatabase($query, array("ssi", $headerType, $headerKey, $queryResult[0]->id))))
                                 exitApi(401, "Incorect session key");
+                            http_response_code(204);
                             break;
                     }
                 }
                 else
                 {
-                    $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+                    $login = isPlayerLogged($requestUrlPart[$urlIndex + 1], false);
+                    $query = 'select ';
                     if($login === true)
-                        $query = 'select * from `view-players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
+                        $query .= '*';
                     else
                     {
-                        $query = 'select `id`, `username` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '" limit 1';
+                        $query .= '`id`, `username`';
                         http_response_code(206);
                     }
-                    $queryResult = connectToDatabase($query);
+                    $queryResult = connectToDatabase($query . ' from `view-players` where `username` = ? limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
                     if(empty($queryResult))
                         exitApi(404, "Player doesn't exists");
                     if($requestMethod != "HEAD")
@@ -80,144 +81,74 @@
             }
             else
             {
-                $query = 'select `id`, `username` from `players` where 1 = 1';
+                $query = 'select `id`, `username` from `view-players` where 1 = 1';
                 $order = "";
+                $allowedParams = array("level", "money", "strength", "agility", "charisma", "intelligence");
+                $parameters = array();
+                $types = "";
                 foreach($_GET as $key => $value)
                 {
                     switch($key)
                     {
-                        case "minLevel":
-                            if(!is_numeric($value) || $value < 1)
-                                exitApi(400, "Incorect query string (minLevel)");
-                            $query .= ' and `level` >= ' . $value;
-                            break;
-
-                        case "maxLevel":
-                            if(!is_numeric($value) || $value < 1)
-                                exitApi(400, "Incorect query string (maxLevel)");
-                            $query .= ' and `level` <= ' . $value;
-                            break;
-
-                        case "minMoney":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (minMoney)");
-                            $query .= ' and `money` >= ' . $value;
-                            break;
-
-                        case "maxMoney":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (maxMoney)");
-                            $query .= ' and `level` <= ' . $value;
-                            break;
-
-                        case "minStrength":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (minStrength)");
-                            $query .= ' and `strength` >= ' . $value;
-                            break;
-
-                        case "maxStrength":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (maxStrength)");
-                            $query .= ' and `strength` <= ' . $value;
-                            break;
-
-                        case "minAgility":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (minAgility)");
-                            $query .= ' and `agility` >= ' . $value;
-                            break;
-
-                        case "maxAgility":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (maxAgility)");
-                            $query .= ' and `agility` <= ' . $value;
-                            break;
-
-                        case "minCharisma":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (minCharisma)");
-                            $query .= ' and `charisma` >= ' . $value;
-                            break;
-
-                        case "maxCharisma":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (maxCharisma)");
-                            $query .= ' and `charisma` <= ' . $value;
-                            break;
-
-                        case "minIntelligence":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (minIntelligence)");
-                            $query .= ' and `intelligence` >= ' . $value;
-                            break;
-
-                        case "maxIntelligence":
-                            if(!is_numeric($value) || $value < 0)
-                                exitApi(400, "Incorect query string (maxIntelligence)");
-                            $query .= ' and `intelligence` <= ' . $value;
+                        default:
+                            $unknown = true;
+                            foreach($allowedParams as $element)
+                            {
+                                if($key == ("min" . ucfirst($element)))
+                                {
+                                    if(!is_numeric($value) || $value < 0)
+                                        exitApi(400, "Incorect query string (min" . ucfirst($element) . ")");
+                                    $types .= "i";
+                                    $query .= ' and `intelligence` >= ?';
+                                    array_push($parameters, $value);
+                                    $unknown = false;
+                                    break;
+                                }
+                                else if($key == ("max" . ucfirst($element)))
+                                {
+                                    if(!is_numeric($value) || $value < 0)
+                                        exitApi(400, "Incorect query string (max" . ucfirst($element) . ")");
+                                    $types .= "i";
+                                    $query .= ' and `intelligence` <= ?';
+                                    array_push($parameters, $value);
+                                    $unknown = false;
+                                    break;
+                                }
+                            }
+                            if($unknown)
+                                exitApi(400, "Unknown query string parameter ({$key})");
                             break;
 
                         case "order":
                             if($order == "")
                             {
-                                switch($value)
+                                $unknown = true;
+                                foreach($allowedParams as $element)
                                 {
-                                    case "level-desc":
-                                        $order = ' order by `level` desc';
+                                    if($value == $element)
+                                    {
+                                        $order = ' order by `' . $element . '` asc';
+                                        $unknown = false;
                                         break;
-    
-                                    case "level":
-                                        $order = ' order by `level` asc';
+                                    }
+                                    else if($value == ($element . "-desc"))
+                                    {
+                                        $order = ' order by `' . $element . '` desc';
+                                        $unknown = false;
                                         break;
-
-                                    case "money-desc":
-                                        $order = ' order by `money` desc';
-                                        break;
-    
-                                    case "money":
-                                        $order = ' order by `money` asc';
-                                        break;
-
-                                    case "strength-desc":
-                                        $order = ' order by `strength` desc';
-                                        break;
-    
-                                    case "strength":
-                                        $order = ' order by `strength` asc';
-                                        break;
-
-                                    case "agility-desc":
-                                        $order = ' order by `agility` desc';
-                                        break;
-    
-                                    case "agility":
-                                        $order = ' order by `agility` asc';
-                                        break;
-
-                                    case "charisma-desc":
-                                        $order = ' order by `charisma` desc';
-                                        break;
-    
-                                    case "charisma":
-                                        $order = ' order by `charisma` asc';
-                                        break;
-
-                                    case "intelligence-desc":
-                                        $order = ' order by `intelligence` desc';
-                                        break;
-    
-                                    case "intelligence":
-                                        $order = ' order by `intelligence` asc';
-                                        break;
+                                    }
                                 }
+                                if($unknown)
+                                    exitApi(400, "Unknown order parameter ({$value})");
                             }
                             break;
                     }
                 }
                 require "headerItems.php";
-                $query .= $order . ' limit ' . $limit . ' offset ' . $offset;
-                $queryResult = connectToDatabase($query);
+                array_push($parameters, $limit, $offset);
+                $types .= "ii";
+                $query .= $order . ' limit ? offset ?';
+                $queryResult = connectToDatabase($query, array_merge(array($types), $parameters));
                 if(empty($queryResult))
                     exitApi(404, "Can't find any player matching conditions");
                 header("Items-Count: " . sizeof($queryResult));
@@ -240,28 +171,31 @@
             $validPassword = validPassword(base64_decode($data->password));
             if($validPassword !== true)
                 exitApi(400, $validPassword);
-            $query = 'select `id` from `players` where `username` = "' . $data->username . '"';
-            if(!empty(connectToDatabase($query)))
+            $query = 'select `id` from `players` where `username` = ?';
+            if(!empty(connectToDatabase($query, array("s", $data->username))))
                 exitApi(400, "Player already exists");
-            $query = 'select `id` from `players` where `email` = "' . $data->email . '"';
-            if(!empty(connectToDatabase($query)))
+            $query = 'select `id` from `players` where `email` = ?';
+            if(!empty(connectToDatabase($query, array("s", $data->email))))
                 exitApi(400, "Email already taken");
-            $query = 'insert into `players`(`username`, `email`, `password`) values ("' . $data->username . '", "' . $data->email . '", "' . encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT)) . '")';
-            connectToDatabase($query);
+            $query = 'insert into `players`(`username`, `email`, `password`) values (?, ?, ?)';
+            connectToDatabase($query, array("sss", $data->username, $data->email, encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT))));
             http_response_code(201);
+
+            $apiResult = callApi("endpoints/players/{$data->username}/logged", "GET", ["Password: {$data->password}", "Session-Type: website"]);
+            echo $apiResult->content;
             break;
 
         case "PATCH":
             if(isSingleGet())
             {
-                $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-                if($login !== true)
-                    exitApi($login->code, $login->message);
+                isPlayerLogged($requestUrlPart[$urlIndex + 1]);
                 $vars = get_object_vars(json_decode(file_get_contents("php://input")));
                 if(empty($vars))
                     exitApi(400, "Enter some changes");
                 $query = 'update `players` set';
                 $first = true;
+                $parameters = array();
+                $types = "";
                 foreach($vars as $key => $value)
                 {
                     switch($key)
@@ -274,26 +208,10 @@
                                 exitApi(400, "Email already taken");
                             if(!$first)
                                 $query .= ',';
-                            $query .= ' `' . $key . '` = "' . $value . '"';
+                            $query .= ' `email` = ?';
                             $first = false;
-                            break;
-
-                        case "level":
-                            if($value < 1)
-                                exitApi(400, "Level : incorect value");
-                            if(!$first)
-                                $query .= ',';
-                            $query .= ' `' . $key . '` = ' . $value;
-                            $first = false;
-                            break;
-
-                        case "exp":
-                            if($value < 0)
-                                exitApi(400, "Exp : incorect value");
-                            if(!$first)
-                                $query .= ',';
-                            $query .= ' `' . $key . '` = ' . $value;
-                            $first = false;
+                            $types .= "s";
+                            array_push($parameters, $value);
                             break;
 
                         case "password":
@@ -303,28 +221,30 @@
                                 exitApi(400, $valid);
                             if(!$first)
                                 $query .= ',';
-                            $query .= ' `' . $key . '` = "' . encode(password_hash($password, PASSWORD_DEFAULT)) . '"';
+                            $query .= ' `password` = ?';
                             $first = false;
+                            $types .= "s";
+                            array_push($parameters, encode(password_hash($password, PASSWORD_DEFAULT)));
                             break;
                     }
                 }
-                $query .= ' where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
-                connectToDatabase($query);
+                $query .= ' where `username` = ?';
+                connectToDatabase($query, array_merge(array($types . "s"), $parameters, array($requestUrlPart[$urlIndex + 1])));
             }
             else
                 exitApi(400, "Specify player");
+            http_response_code(204);
             break;
 
         case "DELETE":
             if(isSingleGet())
             {
-                $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-                if($login !== true)
-                    exitApi($login->code, $login->message);
-                connectToDatabase('delete from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"');
+                isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+                connectToDatabase('delete from `players` where `username` = ?', array("s", $requestUrlPart[$urlIndex + 1]));
             }
             else
                 exitApi(400, "Specify player");
+            http_response_code(204);
             break;
 
         default:
