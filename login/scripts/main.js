@@ -20,16 +20,14 @@ button.addEventListener("click", () =>
     request.open("GET", "../api/endpoints/players/" + username + "/logged", true);
     request.onload = function ()
     {
-        if(this.status >= 400)
-        {
-            error.textContent = JSON.parse(this.responseText).message;
-        }
-        else if(this.status == 200)
+        if(this.status >= 200 && this.status < 300)
         {
             document.cookie = "session=" + this.responseText + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
             document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
             location.reload();
         }
+        else
+            error.textContent = JSON.parse(this.responseText).message;
     };
     request.setRequestHeader("Password", password);
     request.setRequestHeader("Session-Type", "website");
