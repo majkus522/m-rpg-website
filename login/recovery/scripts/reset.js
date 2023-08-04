@@ -8,7 +8,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     request.open("PATCH", "../../api/controllers/password-recovery/" + code, true);
     request.onload = function ()
     {
-        if(this.status == 200)
+        if(this.status >= 200 && this.status < 300)
         {
             result.classList.remove("error");
             result.textContent = "Password has been changed";

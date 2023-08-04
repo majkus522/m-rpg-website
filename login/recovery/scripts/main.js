@@ -12,7 +12,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     request.open("GET", url, true);
     request.onload = function ()
     {
-        if(this.status == 200)
+        if(this.status >= 200 && this.status < 300)
         {
             result.classList.remove("error");
             result.textContent = "Mail has been sent";
