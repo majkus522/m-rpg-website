@@ -1,5 +1,10 @@
 <?php
     require "../imports/loginCheck.php";
+    if($validLogin)
+    {
+        header("Location: ../players/" . $_COOKIE["username"]);
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
