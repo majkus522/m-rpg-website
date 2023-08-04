@@ -1,7 +1,7 @@
 <?php
-            $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
+    $result = callApi("../api/endpoints/players/$part[$urlIndex]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
 ?>
-        <title>M-RPG - <?php echo $result[0]->username; ?></title>
+        <title>M-RPG - <?php echo $result->content->username; ?></title>
     </head>
     <body>
         <?php
@@ -15,32 +15,32 @@
                 <items></items>
                 <info>
                     <h3><?php
-                        echo $result[0]->username;
+                        echo $result->content->username;
                     ?></h3>
                     <div>
                         <div>
                             <stat>
                                 <p>Strength</p>
                                 <p><?php
-                                    echo $result[0]->strength;
+                                    echo $result->content->strength;
                                 ?></p>
                             </stat>
                             <stat>
                                 <p>Agility</p>
                                 <p><?php
-                                    echo $result[0]->agility;
+                                    echo $result->content->agility;
                                 ?></p>
                             </stat>
                             <stat>
                                 <p>Charisma</p>
                                 <p><?php
-                                    echo $result[0]->charisma;
+                                    echo $result->content->charisma;
                                 ?></p>
                             </stat>
                             <stat>
                                 <p>Intelligence</p>
                                 <p><?php
-                                    echo $result[0]->intelligence;
+                                    echo $result->content->intelligence;
                                 ?></p>
                             </stat>
                         </div>
@@ -59,22 +59,22 @@
                     <stat>
                         <p>Level</p>
                         <p><?php
-                            echo $result[0]->level;
+                            echo $result->content->level;
                         ?></p>
                     </stat>
                     <stat>
                         <bar><fill style="width: <?php
-                            echo round($result[0]->exp / levelExp($result[0]->level) * 100, 2);
+                            echo round($result->content->exp / levelExp($result->content->level) * 100, 2);
                         ?>%;"></fill></bar>
                         <p>Exp</p>
                         <p><?php
-                            echo $result[0]->exp . " / " . levelExp($result[0]->level);
+                            echo $result->content->exp . " / " . levelExp($result->content->level);
                         ?></p>
                     </stat>
                     <stat>
                         <p>Money</p>
                         <p><?php
-                            echo $result[0]->money;
+                            echo $result->content->money;
                         ?> $</p>
                     </stat>
                 </info>
@@ -86,9 +86,9 @@
     </body>
 </html>
 <script>
-    let str = <?php echo $result[0]->strength; ?>;
-    let agl = <?php echo $result[0]->agility; ?>;
-    let chr = <?php echo $result[0]->charisma; ?>;
-    let int = <?php echo $result[0]->intelligence; ?>;
+    let str = <?php echo $result->content->strength; ?>;
+    let agl = <?php echo $result->content->agility; ?>;
+    let chr = <?php echo $result->content->charisma; ?>;
+    let int = <?php echo $result->content->intelligence; ?>;
 </script>
 <script src="scripts/panel.js"></script>

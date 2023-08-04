@@ -16,7 +16,7 @@ function getSkills(url)
     request.onload = function ()
     {
         container.innerHTML = "";
-        if(this.status == 200)
+        if(this.status >= 200 && this.status < 300)
         {
             let skills = JSON.parse(this.responseText);
             skills.forEach(element =>

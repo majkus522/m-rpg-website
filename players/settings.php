@@ -1,7 +1,7 @@
 <?php
-    $result = callApi("../api/endpoints/players/" . $part[$urlIndex], "GET", array("Session-Key: " . $_COOKIE["session"], "Session-Type: website"));
+    $result = callApi("../api/endpoints/players/$part[$urlIndex]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
 ?>
-        <title>M-RPG - <?php echo $result[0]->username; ?> - Settings</title>
+        <title>M-RPG - <?php echo $result->content->username; ?> - Settings</title>
     </head>
     <body>
         <?php
@@ -14,7 +14,7 @@
             <content>
                 <div class="email">
                     Email
-                    <input type="email" value="<?php echo $result[0]->email; ?>">
+                    <input type="email" value="<?php echo $result->content->email; ?>">
                     <input type="button" value="Update">
                     <p class="error"></p>
                 </div>

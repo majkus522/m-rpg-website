@@ -128,15 +128,15 @@
                     foreach($skillData->evolution as $skill)
                     {
                         $apiResult = callApi("endpoints/skills/" . $data->player . "/" . $skill, "GET", ["Session-Key: " . getHeader("Session-Key"), "Session-Type: " . getHeader("Session-Type")]);
-                        if($apiResult[1] != 200)
+                        if(!($apiResult->code >= 200 && $apiResult->code < 300))
                             exitApi(400, "You don't have required skill (" . $skill . ")");
                         $apiResult = callApi("endpoints/skills/" . $data->player . "/" . $skill, "DELETE", ["Session-Key: " . getHeader("Session-Key"), "Session-Type: " . getHeader("Session-Type")]);
-                        if($apiResult[1] != 200)
-                            exitApi($apiResult[1], $apiResult[0]->message);
+                        if(!($apiResult->code >= 200 && $apiResult->code < 300))
+                            exitApi($apiResult->code, $apiResult->content->message);
                     }
                     $apiResult = callApi("endpoints/skills/", "POST", ["Session-Key: " . getHeader("Session-Key"), "Session-Type: " . getHeader("Session-Type")], json_encode(["player" => $data->player, "skill" => $data->skill]));
-                    if($apiResult[1] != 201)
-                        exitApi($apiResult[1], $apiResult[0]->message);
+                    if(!($apiResult->code >= 200 && $apiResult->code < 300))
+                        exitApi($apiResult->code, $apiResult->content->message);
                     break;
 
                 default:
