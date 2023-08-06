@@ -298,55 +298,6 @@
 | `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
 | `Session-Type: ${type}`     | `string` | **Required**. Session type. |
 
-#### Add skill to player :
-
-```http
-  POST /api/endpoints/skills/
-```
-
-| Body (JSON Object) | Type     | Description                                    |
-| :----------------- | :------- | :--------------------------------------------- |
-| `player`           | `string` | **Required**. Username of player to add skill. |
-| `skill`            | `string` | **Required**. Name of skill to add.            |
-
-| Headers                     | Type     | Description                 |
-| :-------------------------- | :------- | :-------------------------- |
-| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
-| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
-
-#### Toggle skill :
-
-```http
-  PATCH /api/endpoints/skills/toggle
-```
-
-| Body (JSON Object) | Type     | Description                                |
-| :----------------- | :------- | :----------------------------------------- |
-| `player`           | `string` | **Required**. Player with skill to toggle. |
-| `skill`            | `string` | **Required**. Skill to toggle.             |
-| `toggle`           | `bool`   | **Required**. New value of toggled skill.  |
-
-| Headers                 | Type     | Description                 |
-| :---------------------- | :------- | :-------------------------- |
-| `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
-| `Session-Type: ${type}` | `string` | **Required**. Session type. |
-
-#### Evolve skill :
-
-```http
-  PATCH /api/endpoints/skills/evolve
-```
-
-| Body (JSON Object) | Type     | Description                                |
-| :----------------- | :------- | :----------------------------------------- |
-| `player`           | `string` | **Required**. Player with skill to evolve. |
-| `skill`            | `string` | **Required**. Skill to evolve.             |
-
-| Headers                 | Type     | Description                 |
-| :---------------------- | :------- | :-------------------------- |
-| `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
-| `Session-Type: ${type}` | `string` | **Required**. Session type. |
-
 #### Remove skill from player :
 
 ```http

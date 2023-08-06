@@ -96,7 +96,7 @@
                             {
                                 if($key == ("min" . ucfirst($element)))
                                 {
-                                    if(!is_numeric($value) || $value < 0)
+                                    if(!is_numeric($value) || $value < ($element == "level" ? 1 : 0))
                                         exitApi(400, "Incorect query string (min" . ucfirst($element) . ")");
                                     $types .= "i";
                                     $query .= ' and `intelligence` >= ?';
@@ -106,7 +106,7 @@
                                 }
                                 else if($key == ("max" . ucfirst($element)))
                                 {
-                                    if(!is_numeric($value) || $value < 0)
+                                    if(!is_numeric($value) || $value < ($element == "level" ? 1 : 0))
                                         exitApi(400, "Incorect query string (max" . ucfirst($element) . ")");
                                     $types .= "i";
                                     $query .= ' and `intelligence` <= ?';
