@@ -316,6 +316,108 @@
 
 ---
 &nbsp;
+## Fake status
+
+#### Get player fake status :
+
+```http
+  GET /api/endpoints/fake-status/${username}
+```
+
+| Parameter       | Type     | Description                       |
+| :-------------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. Username of player. |
+
+| Headers                     | Type     | Description                 |
+| :-------------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
+
+#### Create players fake status :
+
+```http
+  POST /api/endpoints/fake-status/${username}
+```
+
+| Parameter       | Type     | Description                       |
+| :-------------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. Username of player. |
+
+| Headers                     | Type     | Description                 |
+| :-------------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
+
+| Body (JSON Object)                | Type     | Description                                |
+| :-------------------------------- | :------- | :----------------------------------------- |
+| `"level": ${level}`               | `int`    | **Required**. Fake level of player.        |
+| `"money": ${money}`               | `float`  | **Required**. Fake money of player.        |
+| `"strength": ${strength}`         | `int`    | **Required**. Fake strength of player.     |
+| `"agility": ${agility}`           | `int`    | **Required**. Fake agility of player.      |
+| `"charisma": ${charisma}`         | `int`    | **Required**. Fake charisma of player.     |
+| `"intelligence": ${intelligence}` | `int`    | **Required**. Fake intelligence of player. |
+
+#### Change players fake status :
+
+```http
+  PATCH /api/endpoints/fake-status/${username}
+```
+
+| Parameter       | Type     | Description                       |
+| :-------------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. Username of player. |
+
+| Headers                     | Type     | Description                 |
+| :-------------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
+
+<table>
+	<thead>
+		<tr>
+			<th>Body (JSON Object)</th>
+			<th>Type</th>
+			<th>Description</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>"level": ${level}</code></td>
+			<td><code>int</code></td>
+			<td><strong>Optional</strong>. New fake level of player</td>
+			<td rowspan="6">Needs one of this to work.</td>
+		</tr>
+		<tr>
+			<td><code>"money": ${money}</code></td>
+			<td><code>float</code></td>
+			<td><strong>Optional</strong>. New fake money of player</td>
+		</tr>
+		<tr>
+			<td><code>"strength": ${strength}</code></td>
+			<td><code>int</code></td>
+			<td><strong>Optional</strong>. New fake strength of player</td>
+		</tr>
+		<tr>
+			<td><code>"agility": ${agility}</code></td>
+			<td><code>int</code></td>
+			<td><strong>Optional</strong>. New fake agility of player</td>
+		</tr>
+		<tr>
+			<td><code>"charisma": ${charisma}</code></td>
+			<td><code>int</code></td>
+			<td><strong>Optional</strong>. New fake charisma of player</td>
+		</tr>
+		<tr>
+			<td><code>"intelligence": ${intelligence}</code></td>
+			<td><code>int</code></td>
+			<td><strong>Optional</strong>. New fake intelligence of player</td>
+		</tr>
+	</tbody>
+</table>
+
+---
+&nbsp;
 ## Password recovery
 
 #### Send password recovery email :
