@@ -25,9 +25,8 @@
                 header("Location: " . $_COOKIE["username"]);
                 exit();
             }
-            if(!isset($_GET["tab"]))
-                $file = "panel";
-            else
+            $file = "panel";
+            if(isset($_GET["tab"]))
             {
                 switch($_GET["tab"])
                 {
@@ -38,9 +37,11 @@
                     case "skills":
                         $file = "skills";
                         break;
-            
-                    default:
-                    $file = "panel";
+
+                    case "statusFake":
+                        $apiResult = callApi("../api/endpoints/skills/$part[$urlIndex]/statusFake", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+                        if($apiResult->code >= 200 && $apiResult->code < 300)
+                            $file = "statusFake";
                         break;
                 }
             }
