@@ -9,7 +9,7 @@ document.querySelectorAll("content filters rarities div").forEach(element => ele
 }));
 
 let container = document.querySelector("content skills");
-function getSkills(url)
+async function getSkills(url)
 {
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
@@ -19,11 +19,11 @@ function getSkills(url)
         if(this.status >= 200 && this.status < 300)
         {
             let skills = JSON.parse(this.responseText);
-            skills.forEach(element =>
+            skills.forEach(async element =>
             {
                 let skill = document.createElement("skill");
                 skill.dataset.skill = element.skill;
-                skill.classList.add(element.rarity);
+                skill.classList.add((await (await fetch("../api/data/skills/" + element.skill + ".json")).json()).rarity);
                 let img = document.createElement("img");
                 img.src = "../img/skills/" + element.skill + ".png";
                 skill.appendChild(img);
@@ -33,7 +33,7 @@ function getSkills(url)
                     let target = event.target;
                     if(target.tagName == "IMG")
                         target = target.parentElement;
-                    let data = await (await fetch("../api/data/skills/" + target.dataset.skill + ".json")).json();
+                    let data = await(await fetch("../api/data/skills/" + target.dataset.skill + ".json")).json();
                     inspector.querySelector("img").src = "../img/skills/" + target.dataset.skill + ".png";
                     inspector.querySelector("h2").textContent = data.label;
                     inspector.querySelector("p").textContent = data.description;

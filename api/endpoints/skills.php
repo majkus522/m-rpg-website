@@ -7,22 +7,23 @@
         case "HEAD":
             if(!isSingleGet())
                 exitApi(400, "Enter player");
-            $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            if($login !== true)
-                exitApi($login->code, $login->message);
-            $query = 'select `skills`.* from `skills`, `players` where `skills`.`player` = `players`.`id` and `players`.`username` = "' . $requestUrlPart[$urlIndex + 1] . '"';
+            isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+            $query = 'select `skills`.* from `skills`, `players` where `skills`.`player` = `players`.`id` and `players`.`username` = ?';
             if(isset($requestUrlPart[$urlIndex + 2]))
             {
                 if(!file_exists("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))
                     exitApi(404, "Skill doesn't exists");
-                $query .= ' and `skills`.`skill` = "' . $requestUrlPart[$urlIndex + 2] . '"';
-                if(empty(connectToDatabase($query)))
+                $query .= ' and `skills`.`skill` = ?';
+                if(empty(connectToDatabase($query, array("ss", $requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 2]))))
                     exitApi(404, "Player doesn't have this skill");
+                http_response_code(204);
             }
             else
             {
                 $rarity = "(";
                 $order = "";
+                $types = "s";
+                $parameters = array($requestUrlPart[$urlIndex + 1]);
                 foreach($_GET as $key => $value)
                 {
                     switch($key)
@@ -33,8 +34,10 @@
                             {
                                 if(!$first)
                                     $rarity .= " or";
-                                $rarity .= ' `rarity` = "' . $element . '"';
+                                $rarity .= ' rarity("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`) = ?';
                                 $first = false;
+                                $types .= "s";
+                                array_push($parameters, $element);
                             }
                             break;
 
@@ -65,7 +68,7 @@
                 if(strlen($rarity) > 2)
                     $query .= ' and ' . $rarity . ")";
                 $query .= $order . ' limit ' . $limit . ' offset ' . $offset;
-                $queryResult = connectToDatabase($query);
+                $queryResult = connectToDatabase($query, array_merge(array($types), $parameters));
                 if(empty($queryResult))
                     exitApi(404, "Can't find any skill matching conditions");
                 header("Items-Count: " . sizeof($queryResult));
@@ -77,20 +80,16 @@
             break;
 
         case "DELETE":
-            $login = isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            if($login !== true)
-                exitApi($login->code, $login->message);
             if(!isset($requestUrlPart[$urlIndex + 1]))
                 exitApi(400, "Enter player");
+            isPlayerLogged($requestUrlPart[$urlIndex + 1]);
             if(!isset($requestUrlPart[$urlIndex + 2]))
                 exitApi(400, "Enter skill");
-            $queryResult = connectToDatabase('select `id` from `players` where `username` = "' . $requestUrlPart[$urlIndex + 1] . '"');
-            if(empty($queryResult))
-                exitApi(404, "Player doesn't exists");
             if(!file_exists("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))
                 exitApi(404, "Skill doesn't exists");
-            $query = 'delete from `skills` where `player` = ' . $queryResult[0]->id . ' and `skill` = "' . $requestUrlPart[$urlIndex + 2] . '"';
-            connectToDatabase($query);
+            $query = 'delete from `skills` where `player` = (select `id` from `players` where `username` = ? limit 1) and `skill` = ?';
+            connectToDatabase($query, array("is", $requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 2]));
+            http_response_code(204);
             break;
 
         default:
