@@ -22,10 +22,10 @@
                     <h2>Real</h2>
                     <p>Level: <?php echo $result->content->level ?></p>
                     <p>Money: <?php echo $result->content->money ?> $</p>
-                    <p>STR: <?php echo $result->content->strength ?></p>
-                    <p>AGL: <?php echo $result->content->agility ?></p>
-                    <p>CHR: <?php echo $result->content->charisma ?></p>
-                    <p>INT: <?php echo $result->content->intelligence ?></p>
+                    <p>STR: <?php echo $result->content->str ?></p>
+                    <p>AGL: <?php echo $result->content->agl ?></p>
+                    <p>CHR: <?php echo $result->content->chr ?></p>
+                    <p>INT: <?php echo $result->content->intl ?></p>
                 </div>
                 <div class="fake">
                     <h2>Fake</h2>
@@ -39,19 +39,19 @@
                     </stat>
                     <stat>
                         STR:
-                        <input type="number" value="<?php echo $fake->strength ?>" data-stat="strength" data-init="<?php echo $fake->strength ?>">
+                        <input type="number" value="<?php echo $fake->str ?>" data-stat="str" data-init="<?php echo $fake->str ?>">
                     </stat>
                     <stat>
                         AGL:
-                        <input type="number" value="<?php echo $fake->agility ?>" data-stat="agility" data-init="<?php echo $fake->agility ?>">
+                        <input type="number" value="<?php echo $fake->agl ?>" data-stat="agl" data-init="<?php echo $fake->agl ?>">
                     </stat>
                     <stat>
                         CHR:
-                        <input type="number" value="<?php echo $fake->charisma ?>" data-stat="charisma" data-init="<?php echo $fake->charisma ?>">
+                        <input type="number" value="<?php echo $fake->chr ?>" data-stat="chr" data-init="<?php echo $fake->chr ?>">
                     </stat>
                     <stat>
                         INT:
-                        <input type="number" value="<?php echo $fake->intelligence ?>" data-stat="intelligence" data-init="<?php echo $fake->intelligence ?>">
+                        <input type="number" value="<?php echo $fake->intl ?>" data-stat="intl" data-init="<?php echo $fake->intl ?>">
                     </stat>
                     <div>
                         <p class="error"></p>

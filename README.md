@@ -348,14 +348,14 @@
 | `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
 | `Session-Type: ${type}`     | `string` | **Required**. Session type. |
 
-| Body (JSON Object)                | Type     | Description                                |
-| :-------------------------------- | :------- | :----------------------------------------- |
-| `"level": ${level}`               | `int`    | **Required**. Fake level of player.        |
-| `"money": ${money}`               | `float`  | **Required**. Fake money of player.        |
-| `"strength": ${strength}`         | `int`    | **Required**. Fake strength of player.     |
-| `"agility": ${agility}`           | `int`    | **Required**. Fake agility of player.      |
-| `"charisma": ${charisma}`         | `int`    | **Required**. Fake charisma of player.     |
-| `"intelligence": ${intelligence}` | `int`    | **Required**. Fake intelligence of player. |
+| Body (JSON Object)  | Type     | Description                                |
+| :------------------ | :------- | :----------------------------------------- |
+| `"level": ${level}` | `int`    | **Required**. Fake level of player.        |
+| `"money": ${money}` | `float`  | **Required**. Fake money of player.        |
+| `"str": ${str}`     | `int`    | **Required**. Fake strength of player.     |
+| `"agl": ${agl}`     | `int`    | **Required**. Fake agility of player.      |
+| `"chr": ${chr}`     | `int`    | **Required**. Fake charisma of player.     |
+| `"intl": ${intl}`   | `int`    | **Required**. Fake intelligence of player. |
 
 #### Change players fake status :
 
@@ -394,22 +394,22 @@
 			<td><strong>Optional</strong>. New fake money of player</td>
 		</tr>
 		<tr>
-			<td><code>"strength": ${strength}</code></td>
+			<td><code>"str": ${str}</code></td>
 			<td><code>int</code></td>
 			<td><strong>Optional</strong>. New fake strength of player</td>
 		</tr>
 		<tr>
-			<td><code>"agility": ${agility}</code></td>
+			<td><code>"agl": ${agl}</code></td>
 			<td><code>int</code></td>
 			<td><strong>Optional</strong>. New fake agility of player</td>
 		</tr>
 		<tr>
-			<td><code>"charisma": ${charisma}</code></td>
+			<td><code>"chr": ${chr}</code></td>
 			<td><code>int</code></td>
 			<td><strong>Optional</strong>. New fake charisma of player</td>
 		</tr>
 		<tr>
-			<td><code>"intelligence": ${intelligence}</code></td>
+			<td><code>"intl": ${intl}</code></td>
 			<td><code>int</code></td>
 			<td><strong>Optional</strong>. New fake intelligence of player</td>
 		</tr>

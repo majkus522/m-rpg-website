@@ -4,7 +4,7 @@ document.querySelector(".fake button").addEventListener("click", () =>
     let changes = {};
     document.querySelectorAll(".fake input").forEach(element =>
     {
-        if(element.dataset.init != element.value)
+        if(element.dataset.init != element.value || !fakeExists)
             changes[element.dataset.stat] = Number(element.value);
     });
     let request = new XMLHttpRequest();

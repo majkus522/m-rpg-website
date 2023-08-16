@@ -1,6 +1,6 @@
 <?php
     require "playerLogged.php";
-    $allowedParams = array("level", "money", "strength", "agility", "charisma", "intelligence");
+    $allowedParams = array("level", "money", "str", "agl", "chr", "intl");
 
     switch($requestMethod)
     {
