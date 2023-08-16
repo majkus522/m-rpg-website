@@ -22,25 +22,25 @@
                             <stat>
                                 <p>Strength</p>
                                 <p><?php
-                                    echo $result->content->strength;
+                                    echo $result->content->str;
                                 ?></p>
                             </stat>
                             <stat>
                                 <p>Agility</p>
                                 <p><?php
-                                    echo $result->content->agility;
+                                    echo $result->content->agl;
                                 ?></p>
                             </stat>
                             <stat>
                                 <p>Charisma</p>
                                 <p><?php
-                                    echo $result->content->charisma;
+                                    echo $result->content->chr;
                                 ?></p>
                             </stat>
                             <stat>
                                 <p>Intelligence</p>
                                 <p><?php
-                                    echo $result->content->intelligence;
+                                    echo $result->content->int;
                                 ?></p>
                             </stat>
                         </div>
@@ -86,9 +86,9 @@
     </body>
 </html>
 <script>
-    let str = <?php echo $result->content->strength; ?>;
-    let agl = <?php echo $result->content->agility; ?>;
-    let chr = <?php echo $result->content->charisma; ?>;
-    let int = <?php echo $result->content->intelligence; ?>;
+    let str = <?php echo $result->content->str; ?>;
+    let agl = <?php echo $result->content->agl; ?>;
+    let chr = <?php echo $result->content->chr; ?>;
+    let int = <?php echo $result->content->int; ?>;
 </script>
 <script src="scripts/panel.js"></script>

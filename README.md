@@ -16,21 +16,21 @@
 | `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of players and offset. | [0 - &infin;]-[1 - &infin;] |
 | `Items: ${limit}`           | `int`    | **Optional**. Number of players.            | 1 - &infin;                 |
 
-| Query string             | Type     | Description                                   | Accepted values                                      |
-| :----------------------- | :------- | :-------------------------------------------- | :--------------------------------------------------- |
-| `minLevel=${min}`        | `int`    | **Optional**. Minimal player level.           | 1 - &infin;                                          |
-| `maxLevel=${max}`        | `int`    | **Optional**. Maximal player level.           | 1 - &infin;                                          |
-| `minMoney=${max}`        | `float`  | **Optional**. Minimal player capital.         | 0 - &infin;                                          |
-| `minMoney=${max}`        | `float`  | **Optional**. Maximal player capital.         | 0 - &infin;                                          |
-| `minStrength=${max}`     | `int`    | **Optional**. Minimal player capital.         | 0 - &infin;                                          |
-| `maxStrength=${max}`     | `int`    | **Optional**. Maximal player capital.         | 0 - &infin;                                          |
-| `minAgility=${max}`      | `int`    | **Optional**. Minimal player capital.         | 0 - &infin;                                          |
-| `maxAgility=${max}`      | `int`    | **Optional**. Maximal player capital.         | 0 - &infin;                                          |
-| `minCharisma=${max}`     | `int`    | **Optional**. Minimal player capital.         | 0 - &infin;                                          |
-| `maxCharisma=${max}`     | `int`    | **Optional**. Maximal player capital.         | 0 - &infin;                                          |
-| `minIntelligence=${max}` | `int`    | **Optional**. Minimal player capital.         | 0 - &infin;                                          |
-| `maxIntelligence=${max}` | `int`    | **Optional**. Maximal player capital.         | 0 - &infin;                                          |
-| `order=${order}`         | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"`, `"money"`, `"money-desc"`, `"strength-desc"`, `"strength"`, `"agility"`, `"agility-desc"`, `"charisma-desc"`, `"charisma"`, `"intelligence"`, `"intelligence-desc"` |
+| Query string      | Type     | Description                                   | Accepted values |
+| :---------------- | :------- | :-------------------------------------------- | :-------------- |
+| `minLevel=${min}` | `int`    | **Optional**. Minimal player level.           | 1 - &infin;     |
+| `maxLevel=${max}` | `int`    | **Optional**. Maximal player level.           | 1 - &infin;     |
+| `minMoney=${max}` | `float`  | **Optional**. Minimal player capital.         | 0 - &infin;     |
+| `minMoney=${max}` | `float`  | **Optional**. Maximal player capital.         | 0 - &infin;     |
+| `minStr=${max}`   | `int`    | **Optional**. Minimal player strength.        | 0 - &infin;     |
+| `maxStr=${max}`   | `int`    | **Optional**. Maximal player strength.        | 0 - &infin;     |
+| `minAgl=${max}`   | `int`    | **Optional**. Minimal player agility.         | 0 - &infin;     |
+| `maxAgl=${max}`   | `int`    | **Optional**. Maximal player agility.         | 0 - &infin;     |
+| `minChr=${max}`   | `int`    | **Optional**. Minimal player charisma.        | 0 - &infin;     |
+| `maxChr=${max}`   | `int`    | **Optional**. Maximal player charisma.        | 0 - &infin;     |
+| `minInt=${max}`   | `int`    | **Optional**. Minimal player intelligence.    | 0 - &infin;     |
+| `maxInt=${max}`   | `int`    | **Optional**. Maximal player intelligence.    | 0 - &infin;     |
+| `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"`, `"money"`, `"money-desc"`, `"str"`, `"str-desc"`, `"agl"`, `"agl-desc"`, `"chr"`, `"chr-desc"`, `"int"`, `"int-desc"` |
 
 #### Get player (only username) :
 

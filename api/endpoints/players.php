@@ -83,7 +83,7 @@
             {
                 $query = 'select `id`, `username` from `view-players` where 1 = 1';
                 $order = "";
-                $allowedParams = array("level", "money", "strength", "agility", "charisma", "intelligence");
+                $allowedParams = array("level", "money", "str", "agl", "chr", "int");
                 $parameters = array();
                 $types = "";
                 foreach($_GET as $key => $value)
