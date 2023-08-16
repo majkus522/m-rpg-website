@@ -28,9 +28,9 @@
 | `maxAgl=${max}`   | `int`    | **Optional**. Maximal player agility.         | 0 - &infin;     |
 | `minChr=${max}`   | `int`    | **Optional**. Minimal player charisma.        | 0 - &infin;     |
 | `maxChr=${max}`   | `int`    | **Optional**. Maximal player charisma.        | 0 - &infin;     |
-| `minInt=${max}`   | `int`    | **Optional**. Minimal player intelligence.    | 0 - &infin;     |
-| `maxInt=${max}`   | `int`    | **Optional**. Maximal player intelligence.    | 0 - &infin;     |
-| `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"`, `"money"`, `"money-desc"`, `"str"`, `"str-desc"`, `"agl"`, `"agl-desc"`, `"chr"`, `"chr-desc"`, `"int"`, `"int-desc"` |
+| `minIntl=${max}`  | `int`    | **Optional**. Minimal player intelligence.    | 0 - &infin;     |
+| `maxIntl=${max}`  | `int`    | **Optional**. Maximal player intelligence.    | 0 - &infin;     |
+| `order=${order}`  | `string` | **Optional**. Order players by level and etc. | `"level-desc"`, `"level"`, `"money"`, `"money-desc"`, `"str"`, `"str-desc"`, `"agl"`, `"agl-desc"`, `"chr"`, `"chr-desc"`, `"intl"`, `"intl-desc"` |
 
 #### Get player (only username) :
 

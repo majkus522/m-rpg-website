@@ -40,7 +40,7 @@
                             <stat>
                                 <p>Intelligence</p>
                                 <p><?php
-                                    echo $result->content->int;
+                                    echo $result->content->intl;
                                 ?></p>
                             </stat>
                         </div>
@@ -89,6 +89,6 @@
     let str = <?php echo $result->content->str; ?>;
     let agl = <?php echo $result->content->agl; ?>;
     let chr = <?php echo $result->content->chr; ?>;
-    let int = <?php echo $result->content->int; ?>;
+    let intl = <?php echo $result->content->intl; ?>;
 </script>
 <script src="scripts/panel.js"></script>
