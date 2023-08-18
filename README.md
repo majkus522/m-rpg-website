@@ -275,12 +275,12 @@
 | `Items: ${offset}-${limit}` | `int`    | **Optional**. Number of skills and offset. |
 | `Items: ${limit}`           | `int`    | **Optional**. Number of skills.            |
 
-
-| Query string         | Type            | Description                                     | Accepted values                                              |
-| :------------------- | :-------------- | :---------------------------------------------- | :----------------------------------------------------------- |
-| `rarity[]=${rarity}` | `array<string>` | **Optional**. Skills rarity.                    | `"common"`, `"extra"`, `"unique"`, `"ultimate"`, `"unknown"` |
-| `order=${order}`     | `string`        | **Optional**. Order skills by rarity and etc.   | `"rarity"`, `"rarity-desc"`                                  |
-| `toggle=${toggle}`   | `bool`          | **Optional**. Check if skill is enabled or not. | `true`, `false`                                              |
+| Query string         | Type            | Description                                      | Accepted values                                              |
+| :------------------- | :-------------- | :----------------------------------------------- | :----------------------------------------------------------- |
+| `rarity[]=${rarity}` | `array<string>` | **Optional**. Skills rarity.                     | `"common"`, `"extra"`, `"unique"`, `"ultimate"`, `"unknown"` |
+| `order=${order}`     | `string`        | **Optional**. Order skills by rarity and etc.    | `"rarity"`, `"rarity-desc"`                                  |
+| `toggle=${toggle}`   | `bool`          | **Optional**. Check if skill is enabled or not.  | `true`, `false`                                              |
+| `search=%{search}`   | `string`        | **Optional**. Search skill by it's label or name |
 
 #### Check if player has skill :
 

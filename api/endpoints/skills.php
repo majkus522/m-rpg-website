@@ -23,7 +23,9 @@
                 $rarity = "(";
                 $order = "";
                 $types = "s";
+                $rarityTypes = "";
                 $parameters = array($requestUrlPart[$urlIndex + 1]);
+                $rarityParameters = array();
                 foreach($_GET as $key => $value)
                 {
                     switch($key)
@@ -34,10 +36,10 @@
                             {
                                 if(!$first)
                                     $rarity .= " or";
-                                $rarity .= ' rarity("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`) = ?';
+                                $rarity .= ' skill_rarity("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`) = ?';
                                 $first = false;
-                                $types .= "s";
-                                array_push($parameters, $element);
+                                $rarityTypes .= "s";
+                                array_push($rarityParameters, $element);
                             }
                             break;
 
@@ -45,6 +47,12 @@
                             if(strtolower($value) != "true" && strtolower($value) != "false")
                                 exitApi(400, "Incorect query string (toggle)");
                             $query .= " and `toggle` = " . strtolower($value);
+                            break;
+
+                        case "search":
+                            $query .= ' and (LOWER(`skill`) like ? or LOWER(skill_label("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`)) like ?)';
+                            array_push($parameters, "%" . strtolower($value) . "%", "%" . strtolower($value) . "%");
+                            $types .= "ss";
                             break;
     
                         case "order":
@@ -68,7 +76,7 @@
                 if(strlen($rarity) > 2)
                     $query .= ' and ' . $rarity . ")";
                 $query .= $order . ' limit ' . $limit . ' offset ' . $offset;
-                $queryResult = connectToDatabase($query, array_merge(array($types), $parameters));
+                $queryResult = connectToDatabase($query, array_merge(array($types . $rarityTypes), $parameters, $rarityParameters));
                 if(empty($queryResult))
                     exitApi(404, "Can't find any skill matching conditions");
                 header("Items-Count: " . sizeof($queryResult));
