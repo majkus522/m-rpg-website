@@ -87,6 +87,25 @@
             }
             break;
 
+        case "PATCH":
+            if(!isset($requestUrlPart[$urlIndex + 1]))
+                exitApi(400, "Enter player");
+            isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+            if(!isset($requestUrlPart[$urlIndex + 2]))
+                exitApi(400, "Enter skill");
+            if(!file_exists("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))
+                exitApi(404, "Skill doesn't exists");
+            if(!json_decode(file_get_contents("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))->toggle)
+                exitApi(400, "Skill can't be toggled");
+            $data = file_get_contents("php://input");
+            if(strlen($data) < 1)
+                exitApi(400, "Enter new toggle value");
+            $toggle = filter_var($data, FILTER_VALIDATE_BOOLEAN);
+            $query = 'update `skills` set `toggle` = ? where `player` = (select `id` from `players` where `username` = ? limit 1) and `skill` = ?';
+            connectToDatabase($query, array("iss", (int) $toggle, $requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 2]));
+            http_response_code(204);
+            break;
+
         case "DELETE":
             if(!isset($requestUrlPart[$urlIndex + 1]))
                 exitApi(400, "Enter player");

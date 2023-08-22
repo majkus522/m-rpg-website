@@ -298,6 +298,26 @@
 | `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
 | `Session-Type: ${type}`     | `string` | **Required**. Session type. |
 
+#### Toggle skill :
+
+```http
+  PATCH /api/endpoints/skills/${username}/${skill}
+```
+
+| Parameter       | Type     | Description                       |
+| :-------------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. Username of player. |
+| `skill`         | `string` | **Required**. Skill to toggle.    |
+
+| Headers                     | Type     | Description                 |
+| :-------------------------- | :------- | :-------------------------- |
+| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
+| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
+
+| Body (bool) | Type     | Description                           |
+| :---------- | :------- | :------------------------------------ |
+| `${value}`  | `bool`   | **Required**. New skill toggle value. |
+
 #### Remove skill from player :
 
 ```http
