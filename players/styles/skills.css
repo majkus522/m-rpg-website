@@ -142,7 +142,7 @@ content inspector
     align-items: center;
     justify-content: flex-start;
     padding: 10px;
-    gap: 10px;
+    gap: 15px;
 }
 
 content inspector img
@@ -161,4 +161,31 @@ content inspector p
 {
     text-align: center;
     font-size: 18px;
+}
+
+content inspector button
+{
+    font-size: 20px;
+    padding: 5px 20px;
+    border: 2px solid var(--color);
+    color: var(--color);
+    background-color: transparent;
+    display: none;
+}
+
+content inspector button:hover
+{
+    background-color: rgba(100, 100, 100, 0.5);
+}
+
+content inspector button.enabled
+{
+    --color: #62a806;
+    display: flex;
+}
+
+content inspector button.disabled
+{
+    --color: #cf0707;
+    display: flex;
 }

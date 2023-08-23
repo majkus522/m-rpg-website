@@ -30,6 +30,7 @@
                         <img>
                         <h2></h2>
                         <p></p>
+                        <button></button>
                     </inspector>
                 </result>
             </content>
