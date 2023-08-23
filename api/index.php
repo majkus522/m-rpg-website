@@ -8,6 +8,9 @@
     header("Content-Type: application/json");
     $requestUrlPart = explode("/", clearRequestUrl());
     $requestMethod = strtoupper($_SERVER["REQUEST_METHOD"]);
+    $methodHeader = getHeader("X-HTTP-Method-Override");
+    if($methodHeader != false)
+        $requestMethod = strtoupper($methodHeader);
 
     for($index = 0; $index < sizeof($requestUrlPart); $index++)
     {
