@@ -121,6 +121,6 @@
     {
         if($level == 0)
             return 0;
-        return (int)(log($level + 1) * 3750) + levelExp($level - 1);
+        return (int)(log($level + 1) * 1500) + levelExp($level - 1);
     }
 ?>
