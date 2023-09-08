@@ -2,7 +2,7 @@
     require "../imports/loginCheck.php";
     if($validLogin)
     {
-        header("Location: ../players/" . $_COOKIE["username"]);
+        header("Location: ../players/");
         exit();
     }
 ?>

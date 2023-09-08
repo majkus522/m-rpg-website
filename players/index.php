@@ -11,20 +11,6 @@
                 header("Location: ../login/");
                 exit();
             }
-            $part = explode("/", $_SERVER["REDIRECT_URL"]);
-            for($index = 0; $index < sizeof($part); $index++)
-            {
-                if($part[$index] == "players")
-                {
-                    $urlIndex = $index + 1;
-                    break;
-                }
-            }
-            if($_COOKIE["username"] != $part[$urlIndex])
-            {
-                header("Location: " . $_COOKIE["username"]);
-                exit();
-            }
             $file = "panel";
             if(isset($_GET["tab"]))
             {
@@ -39,7 +25,7 @@
                         break;
 
                     case "statusFake":
-                        $apiResult = callApi("../api/endpoints/skills/$part[$urlIndex]/statusFake", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+                        $apiResult = callApi("../api/endpoints/skills/$_COOKIE[username]/statusFake", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
                         if($apiResult->code >= 200 && $apiResult->code < 300)
                             $file = "statusFake";
                         break;

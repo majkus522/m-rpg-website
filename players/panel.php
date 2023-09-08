@@ -1,5 +1,5 @@
 <?php
-    $result = callApi("../api/endpoints/players/$part[$urlIndex]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+    $result = callApi("../api/endpoints/players/$_COOKIE[username]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
 ?>
         <title>M-RPG - <?php echo $result->content->username; ?></title>
     </head>

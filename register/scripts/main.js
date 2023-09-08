@@ -17,7 +17,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
             error.textContent = "";
             document.cookie = "session=" + this.responseText + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
             document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
-            location.replace("../players/" + username);
+            location.reload();
         }
         else
             error.textContent = JSON.parse(this.responseText).message;

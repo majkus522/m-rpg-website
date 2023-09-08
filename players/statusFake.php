@@ -1,13 +1,13 @@
 <?php
-    $result = callApi("../api/endpoints/players/$part[$urlIndex]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
-    $fake = callApi("../api/endpoints/fake-status/$part[$urlIndex]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+    $result = callApi("../api/endpoints/players/$_COOKIE[username]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+    $fake = callApi("../api/endpoints/fake-status/$_COOKIE[username]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
     $fakeExists = $fake->code >= 200 && $fake->code < 300;
     if($fakeExists)
         $fake = $fake->content;
     else
         $fake = $result->content;
 ?>        
-        <title>M-RPG - <?php echo $part[$urlIndex]; ?> - Fake Status</title>
+        <title>M-RPG - <?php echo $_COOKIE["username"]; ?> - Fake Status</title>
     </head>
     <body>
         <?php
