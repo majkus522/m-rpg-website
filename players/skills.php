@@ -29,7 +29,8 @@
                     <inspector>
                         <img>
                         <h2></h2>
-                        <p></p>
+                        <p class="rarity"></p>
+                        <p class="desc"></p>
                         <button></button>
                     </inspector>
                 </result>

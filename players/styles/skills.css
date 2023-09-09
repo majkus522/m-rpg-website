@@ -113,22 +113,22 @@ content skills p
     color: #efefef;
 }
 
-content skill.common
+content skill[data-rarity="common"]
 {
     --border: #efefef;
 }
 
-content skill.extra
+content skill[data-rarity="extra"]
 {
     --border: #62a806;
 }
 
-content skill.unique
+content skill[data-rarity="unique"]
 {
     --border: #1e4bc7;
 }
 
-content skill.ultimate
+content skill[data-rarity="ultimate"]
 {
     --border: #a7129a;
 }
@@ -188,4 +188,9 @@ content inspector button.disabled
 {
     --color: #cf0707;
     display: flex;
+}
+
+p.rarity
+{
+    font-size: 21px;
 }

@@ -12,3 +12,8 @@ function getCookie(name)
     });
     return placeholder;
 }
+
+function toPrettyString(input)
+{
+    return input[0].toUpperCase() + input.substring(1);
+}

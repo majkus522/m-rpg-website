@@ -24,7 +24,7 @@ async function getSkills(url)
                 let skill = document.createElement("skill");
                 skill.dataset.skill = element.skill;
                 let data = (await (await fetch("../api/data/skills/" + element.skill + ".json")).json());
-                skill.classList.add(data.rarity);
+                skill.dataset.rarity = data.rarity;
                 if(data.toggle)
                     skill.dataset.toggle = element.toggle;
                 let img = document.createElement("img");
@@ -39,7 +39,8 @@ async function getSkills(url)
                     let data = await(await fetch("../api/data/skills/" + target.dataset.skill + ".json")).json();
                     inspector.querySelector("img").src = "../img/skills/" + target.dataset.skill + ".png";
                     inspector.querySelector("h2").textContent = data.label;
-                    inspector.querySelector("p").textContent = data.description;
+                    inspector.querySelector("p.desc").textContent = data.description;
+                    inspector.querySelector("p.rarity").textContent = "Rarity: " + toPrettyString(target.dataset.rarity);
                     inspector.style.display = "flex";
                     let button = inspector.querySelector("button");
                     button.classList.remove("enabled");
