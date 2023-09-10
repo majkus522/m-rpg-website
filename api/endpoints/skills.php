@@ -50,9 +50,12 @@
                             break;
 
                         case "search":
-                            $query .= ' and (LOWER(`skill`) like ? or LOWER(skill_label("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`)) like ?)';
-                            array_push($parameters, "%" . strtolower($value) . "%", "%" . strtolower($value) . "%");
-                            $types .= "ss";
+                            foreach(explode(" ", $value) as $element)
+                            {
+                                $query .= ' and (LOWER(`skill`) like ? or LOWER(skill_label("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`)) like ?)';
+                                array_push($parameters, "%" . strtolower($element) . "%", "%" . strtolower($element) . "%");
+                                $types .= "ss";
+                            }
                             break;
     
                         case "order":
