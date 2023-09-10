@@ -142,6 +142,12 @@
                                     exitApi(400, "Unknown order parameter ({$value})");
                             }
                             break;
+
+                        case "search":
+                            $query .= ' and LOWER(`username`) like ?';
+                            array_push($parameters, "%" . strtolower($value) . "%");
+                            $types .= "s";
+                            break;
                     }
                 }
                 require "headerItems.php";
