@@ -109,19 +109,6 @@
             http_response_code(204);
             break;
 
-        case "DELETE":
-            if(!isset($requestUrlPart[$urlIndex + 1]))
-                exitApi(400, "Enter player");
-            isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            if(!isset($requestUrlPart[$urlIndex + 2]))
-                exitApi(400, "Enter skill");
-            if(!file_exists("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))
-                exitApi(404, "Skill doesn't exists");
-            $query = 'delete from `skills` where `player` = (select `id` from `players` where `username` = ? limit 1) and `skill` = ?';
-            connectToDatabase($query, array("is", $requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 2]));
-            http_response_code(204);
-            break;
-
         default:
             exitApi(501, "Method not implemented");
             return;

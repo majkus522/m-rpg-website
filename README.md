@@ -318,22 +318,6 @@
 | :---------- | :------- | :------------------------------------ |
 | `${value}`  | `bool`   | **Required**. New skill toggle value. |
 
-#### Remove skill from player :
-
-```http
-  DELETE /api/endpoints/skills/${username}/${skill}
-```
-
-| Parameter       | Type     | Description                       |
-| :-------------- | :------- | :-------------------------------- |
-| `username`      | `string` | **Required**. Username of player. |
-| `skill`         | `string` | **Required**. Skill to check.     |
-
-| Headers                     | Type     | Description                 |
-| :-------------------------- | :------- | :-------------------------- |
-| `Session-Key: ${key}`       | `string` | **Required**. Session key.  |
-| `Session-Type: ${type}`     | `string` | **Required**. Session type. |
-
 ---
 &nbsp;
 ## Fake status
