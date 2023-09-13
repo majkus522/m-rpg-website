@@ -2,5 +2,8 @@
     "label": "Ultra fast learning",
     "toggle": false,
     "description": "Greatly increase amount of exp you gain after killing enemy",
-    "rarity": "unique"
+    "rarity": "unique",
+    "evolution": [
+        "superFastLearning"
+    ]
 }
