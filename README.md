@@ -92,10 +92,10 @@
 | :-------------- | :------- | :----------------------------------------- |
 | `username`      | `string` | **Required**. Username of player to fetch. |
 
-| Headers                 | Type     | Description                   |
-| :---------------------- | :------- | :---------------------------- |
-| `Session-Type: ${type}` | `string` | **Required**. Session type.   |
-| `Session-Key: ${key}`   | `string` | **Required**. Session key. |
+| Headers                 | Type     | Description                 |
+| :---------------------- | :------- | :-------------------------- |
+| `Session-Type: ${type}` | `string` | **Required**. Session type. |
+| `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
 
 #### Add new player :
 
@@ -157,6 +157,21 @@
 		</tr>
 	</tbody>
 </table>
+
+#### Delete player :
+
+```http
+  DELETE /api/endpoints/players/${username}
+```
+
+| Parameter       | Type     | Description                                 |
+| :-------------- | :------- | :------------------------------------------ |
+| `username`      | `string` | **Required**. Username of player to delete. |
+
+| Headers                 | Type     | Description                 |
+| :---------------------- | :------- | :-------------------------- |
+| `Session-Type: ${type}` | `string` | **Required**. Session type. |
+| `Session-Key: ${key}`   | `string` | **Required**. Session key.  |
 
 ---
 &nbsp;
