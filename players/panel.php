@@ -47,13 +47,7 @@
                         <graph>
                             <svg>
                                 <polygon/>
-                                <line/>
-                                <line/>
                             </svg>
-                            <p>STR</p>
-                            <p>AGL</p>
-                            <p>CHR</p>
-                            <p>INT</p>
                         </graph>
                     </div>
                     <stat>
@@ -86,9 +80,9 @@
     </body>
 </html>
 <script>
-    let str = <?php echo $result->content->str; ?>;
-    let agl = <?php echo $result->content->agl; ?>;
-    let chr = <?php echo $result->content->chr; ?>;
-    let intl = <?php echo $result->content->intl; ?>;
+    let stats = [<?php
+        echo $result->content->str . ", " . $result->content->agl . ", " . $result->content->chr . ", " . $result->content->intl;
+    ?>];
+    let labels = ["STR", "AGL", "CHR", "INTL"];
 </script>
 <script src="scripts/panel.js"></script>
