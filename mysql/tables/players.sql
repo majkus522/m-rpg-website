@@ -1,6 +1,6 @@
 CREATE TABLE `players`
 (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` text NOT NULL,
   `email` text NOT NULL,
   `password` longtext NOT NULL,
@@ -11,9 +11,8 @@ CREATE TABLE `players`
   `str` int(11) NOT NULL DEFAULT 0,
   `agl` int(11) NOT NULL DEFAULT 0,
   `chr` int(11) NOT NULL DEFAULT 0,
-  `intl` int(11) NOT NULL DEFAULT 0
+  `intl` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `players` ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `players` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE `players` AUTO_INCREMENT=0;
