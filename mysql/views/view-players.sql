@@ -9,5 +9,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
     `players`.`str` AS `str`,
     `players`.`agl` AS `agl`,
     `players`.`chr` AS `chr`,
-    `players`.`intl` AS `intl`
+    `players`.`intl` AS `intl`,
+    `players`.`def` AS `def`,
+    `players`.`vtl` AS `vtl`
 FROM `players`;

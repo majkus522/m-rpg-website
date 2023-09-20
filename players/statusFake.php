@@ -25,7 +25,9 @@
                     <p>STR: <?php echo $result->content->str ?></p>
                     <p>AGL: <?php echo $result->content->agl ?></p>
                     <p>CHR: <?php echo $result->content->chr ?></p>
-                    <p>INT: <?php echo $result->content->intl ?></p>
+                    <p>INTL: <?php echo $result->content->intl ?></p>
+                    <p>DEF: <?php echo $result->content->def ?></p>
+                    <p>VTL: <?php echo $result->content->vtl ?></p>
                 </div>
                 <div class="fake">
                     <h2>Fake</h2>
@@ -50,8 +52,16 @@
                         <input type="number" value="<?php echo $fake->chr ?>" data-stat="chr" data-init="<?php echo $fake->chr ?>">
                     </stat>
                     <stat>
-                        INT:
+                        INTL:
                         <input type="number" value="<?php echo $fake->intl ?>" data-stat="intl" data-init="<?php echo $fake->intl ?>">
+                    </stat>
+                    <stat>
+                        DEF:
+                        <input type="number" value="<?php echo $fake->def ?>" data-stat="def" data-init="<?php echo $fake->def ?>">
+                    </stat>
+                    <stat>
+                        VTL:
+                        <input type="number" value="<?php echo $fake->vtl ?>" data-stat="vtl" data-init="<?php echo $fake->vtl ?>">
                     </stat>
                     <div>
                         <p class="error"></p>

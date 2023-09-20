@@ -1,6 +1,6 @@
 <?php
     require "playerLogged.php";
-    $allowedParams = array("level", "money", "str", "agl", "chr", "intl");
+    $allowedParams = array("level", "money", "str", "agl", "chr", "intl", "def", "vtl");
 
     switch($requestMethod)
     {
@@ -71,9 +71,10 @@
                         exitApi(400, "Incorect value " . $element);
                     if(!$first)
                         $query .= ', ';
-                    $query .= "`$element` = ?";
+                    $query .= "`$element` = ? ";
                     array_push($parameters, $data->$element);
                     $types .= "i";
+                    $first = false;
                 }
             }
             if(empty($parameters))

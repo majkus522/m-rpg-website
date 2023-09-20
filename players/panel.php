@@ -43,6 +43,18 @@
                                     echo $result->content->intl;
                                 ?></p>
                             </stat>
+                            <stat>
+                                <p>Defence</p>
+                                <p><?php
+                                    echo $result->content->def;
+                                ?></p>
+                            </stat>
+                            <stat>
+                                <p>Vitality</p>
+                                <p><?php
+                                    echo $result->content->vtl;
+                                ?></p>
+                            </stat>
                         </div>
                         <graph>
                             <svg>
@@ -81,8 +93,8 @@
 </html>
 <script>
     let stats = [<?php
-        echo $result->content->str . ", " . $result->content->agl . ", " . $result->content->chr . ", " . $result->content->intl;
+        echo $result->content->str . ", " . $result->content->agl . ", " . $result->content->chr . ", " . $result->content->intl . ", " . $result->content->def . ", " . $result->content->vtl;
     ?>];
-    let labels = ["STR", "AGL", "CHR", "INTL"];
+    let labels = ["STR", "AGL", "CHR", "INTL", "DEF", "VTL"];
 </script>
 <script src="scripts/panel.js"></script>

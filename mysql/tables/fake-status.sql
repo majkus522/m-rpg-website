@@ -8,6 +8,8 @@ CREATE TABLE `fake-status`
   `agl` int(11) NOT NULL DEFAULT 0,
   `chr` int(11) NOT NULL DEFAULT 0,
   `intl` int(11) NOT NULL DEFAULT 0,
+  `def` int(11) NOT NULL DEFAULT 0,
+  `vtl` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`player`) REFERENCES `players`(id) 
     ON DELETE CASCADE
