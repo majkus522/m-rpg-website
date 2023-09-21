@@ -1,0 +1,26 @@
+[
+    {
+        "label": "Strength",
+        "short": "str"
+    },
+    {
+        "label": "Agility",
+        "short": "agl"
+    },
+    {
+        "label": "Charisma",
+        "short": "chr"
+    },
+    {
+        "label": "Intelligence",
+        "short": "intl"
+    },
+    {
+        "label": "Defence",
+        "short": "def"
+    },
+    {
+        "label": "Vitality",
+        "short": "vtl"
+    }
+]

@@ -83,7 +83,9 @@
             {
                 $query = 'select `id`, `username` from `view-players` where 1 = 1';
                 $order = "";
-                $allowedParams = array("level", "money", "str", "agl", "chr", "intl", "def", "vtl");
+                $allowedParams = array("level", "money");
+                foreach(json_decode(file_get_contents("data/playerStats.json")) as $element)
+                    array_push($allowedParams, $element->short);
                 $parameters = array();
                 $types = "";
                 foreach($_GET as $key => $value)
@@ -99,7 +101,7 @@
                                     if(!is_numeric($value) || $value < ($element == "level" ? 1 : 0))
                                         exitApi(400, "Incorect query string (min" . ucfirst($element) . ")");
                                     $types .= "i";
-                                    $query .= ' and `intelligence` >= ?';
+                                    $query .= ' and `' . $element . '` >= ?';
                                     array_push($parameters, $value);
                                     $unknown = false;
                                     break;
@@ -109,7 +111,7 @@
                                     if(!is_numeric($value) || $value < ($element == "level" ? 1 : 0))
                                         exitApi(400, "Incorect query string (max" . ucfirst($element) . ")");
                                     $types .= "i";
-                                    $query .= ' and `intelligence` <= ?';
+                                    $query .= ' and `' . $element . '` <= ?';
                                     array_push($parameters, $value);
                                     $unknown = false;
                                     break;

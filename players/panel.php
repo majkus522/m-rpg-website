@@ -1,5 +1,6 @@
 <?php
     $result = callApi("../api/endpoints/players/$_COOKIE[username]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+    $playerStats = json_decode(file_get_contents("../api/data/playerStats.json"));
 ?>
         <title>M-RPG - <?php echo $result->content->username; ?></title>
     </head>
@@ -19,42 +20,32 @@
                     ?></h3>
                     <div>
                         <div>
+<?php
+                                $shortLabels = "";
+                                $values = "";
+                                $first = true;
+
+                                foreach($playerStats as $element)
+                                {
+                                    if(!$first)
+                                    {
+                                        $shortLabels .= ", ";
+                                        $values .= ", ";
+                                    }
+                                    $short = $element->short;
+                                    $shortLabels .= '"' . strtoupper($short) . '"';
+                                    $value = $result->content->$short;
+                                    $values .= $value;
+                                    $first = false;
+                                    echo <<< END
                             <stat>
-                                <p>Strength</p>
-                                <p><?php
-                                    echo $result->content->str;
-                                ?></p>
+                                <p>$element->label</p>
+                                <p>$value</p>
                             </stat>
-                            <stat>
-                                <p>Agility</p>
-                                <p><?php
-                                    echo $result->content->agl;
-                                ?></p>
-                            </stat>
-                            <stat>
-                                <p>Charisma</p>
-                                <p><?php
-                                    echo $result->content->chr;
-                                ?></p>
-                            </stat>
-                            <stat>
-                                <p>Intelligence</p>
-                                <p><?php
-                                    echo $result->content->intl;
-                                ?></p>
-                            </stat>
-                            <stat>
-                                <p>Defence</p>
-                                <p><?php
-                                    echo $result->content->def;
-                                ?></p>
-                            </stat>
-                            <stat>
-                                <p>Vitality</p>
-                                <p><?php
-                                    echo $result->content->vtl;
-                                ?></p>
-                            </stat>
+
+END;
+                                }
+                            ?>
                         </div>
                         <graph>
                             <svg>
@@ -92,9 +83,7 @@
     </body>
 </html>
 <script>
-    let stats = [<?php
-        echo $result->content->str . ", " . $result->content->agl . ", " . $result->content->chr . ", " . $result->content->intl . ", " . $result->content->def . ", " . $result->content->vtl;
-    ?>];
-    let labels = ["STR", "AGL", "CHR", "INTL", "DEF", "VTL"];
+    let stats = [<?php echo $values; ?>];
+    let labels = [<?php echo $shortLabels; ?>];
 </script>
 <script src="scripts/panel.js"></script>
