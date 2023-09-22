@@ -10,6 +10,7 @@ CREATE TABLE `fake-status`
   `intl` int(11) NOT NULL DEFAULT 0,
   `def` int(11) NOT NULL DEFAULT 0,
   `vtl` int(11) NOT NULL DEFAULT 0,
+  `dex` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`player`) REFERENCES `players`(id) 
     ON DELETE CASCADE

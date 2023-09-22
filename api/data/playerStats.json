@@ -22,5 +22,9 @@
     {
         "label": "Vitality",
         "short": "vtl"
+    },
+    {
+        "label": "Dexterity",
+        "short": "dex"
     }
 ]

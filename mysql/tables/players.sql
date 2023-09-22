@@ -14,6 +14,7 @@ CREATE TABLE `players`
   `intl` int(11) NOT NULL DEFAULT 0,
   `def` int(11) NOT NULL DEFAULT 0,
   `vtl` int(11) NOT NULL DEFAULT 0,
+  `dex` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 );
 
