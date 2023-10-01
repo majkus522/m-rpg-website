@@ -42,33 +42,8 @@ async function getSkills(url)
                     inspector.querySelector("p.desc").textContent = data.description;
                     inspector.querySelector("p.rarity").textContent = "Rarity: " + toPrettyString(target.dataset.rarity);
                     inspector.style.display = "flex";
-                    let button = inspector.querySelector("button");
-                    button.classList.remove("enabled");
-                    button.classList.remove("disabled");
-                    button.style.visibility = "visible";
                     if("toggle" in target.dataset)
-                    {
-                        let toggle = target.dataset.toggle == 1 ? true : false;
-                        button.classList.add(toggle ? "enabled" : "disabled");
-                        button.textContent = (toggle ? "Enabled" : "Disabled");
-                        button.addEventListener("click", () =>
-                        {
-                            button.style.visibility = "hidden";
-                            let request = new XMLHttpRequest();
-                            request.open("PATCH", "../api/endpoints/skills/" + getCookie("username") + "/" + target.dataset.skill, true);
-                            request.onload = function ()
-                            {
-                                if(this.status >= 200 && this.status < 300)
-                                {
-                                    target.dataset.toggle = ((!toggle) ? 1 : 0);
-                                    target.click();
-                                }
-                            };
-                            request.setRequestHeader("Session-Key", getCookie("session"));
-                            request.setRequestHeader("Session-Type", "website");
-                            request.send((!toggle) ? "true" : "false");
-                        })
-                    }
+                        skillToggle(target);
                 })
             });
         }
@@ -96,3 +71,29 @@ document.querySelector("content filters .search").addEventListener("click", func
     });
     getSkills(url);
 });
+
+function skillToggle(target)
+{
+    let toggle = target.dataset.toggle == 1 ? true : false;
+    let button = inspector.querySelector("button");
+    button.dataset.status = toggle ? "enabled" : "disabled";
+    button.textContent = (toggle ? "Enabled" : "Disabled");
+    button.style.visibility = "visible";
+    button.onclick = () =>
+    {
+        button.style.visibility = "hidden";
+        let request = new XMLHttpRequest();
+        request.open("PATCH", "../api/endpoints/skills/" + getCookie("username") + "/" + target.dataset.skill, true);
+        request.onload = function ()
+        {
+            if(this.status >= 200 && this.status < 300)
+            {
+                target.dataset.toggle = ((!toggle) ? 1 : 0);
+                skillToggle(target, button);
+            }
+        };
+        request.setRequestHeader("Session-Key", getCookie("session"));
+        request.setRequestHeader("Session-Type", "website");
+        request.send((!toggle) ? "true" : "false");
+    }
+}

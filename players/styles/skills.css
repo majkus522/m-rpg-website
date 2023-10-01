@@ -178,13 +178,13 @@ content inspector button:hover
     background-color: rgba(100, 100, 100, 0.5);
 }
 
-content inspector button.enabled
+content inspector button[data-status="enabled"]
 {
     --color: #62a806;
     display: flex;
 }
 
-content inspector button.disabled
+content inspector button[data-status="disabled"]
 {
     --color: #cf0707;
     display: flex;
