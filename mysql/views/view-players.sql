@@ -11,6 +11,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
     `players`.`chr` AS `chr`,
     `players`.`intl` AS `intl`,
     `players`.`def` AS `def`,
-    `players`.`vtl` AS `vtl`
+    `players`.`vtl` AS `vtl`,
     `players`.`dex` AS `dex`
 FROM `players`;
