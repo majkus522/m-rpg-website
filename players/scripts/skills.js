@@ -41,6 +41,7 @@ async function getSkills(url)
                     inspector.querySelector("h2").textContent = data.label;
                     inspector.querySelector("p.desc").textContent = data.description;
                     inspector.querySelector("p.rarity").textContent = "Rarity: " + toPrettyString(target.dataset.rarity);
+                    inspector.querySelector("button").style.visibility = "hidden";
                     inspector.style.display = "flex";
                     if("toggle" in target.dataset)
                         skillToggle(target);
