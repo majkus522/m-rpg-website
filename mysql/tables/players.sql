@@ -4,7 +4,6 @@ CREATE TABLE `players`
   `username` text NOT NULL,
   `email` text NOT NULL,
   `password` longtext NOT NULL,
-  `world` text NOT NULL DEFAULT '',
   `level` int(11) NOT NULL DEFAULT 1,
   `exp` int(11) NOT NULL DEFAULT 0,
   `money` float NOT NULL DEFAULT 0,

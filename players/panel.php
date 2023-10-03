@@ -74,6 +74,12 @@ END;
                             echo $result->content->money;
                         ?> $</p>
                     </stat>
+                    <stat>
+                        <p>Max mana</p>
+                        <p><?php
+                            echo $result->content->intl * 3 + 10;
+                        ?></p>
+                    </stat>
                 </info>
             </content>
         </main>
