@@ -1,6 +1,7 @@
 {
     "label": "Hide Status",
     "toggle": true,
+    "usable": false,
     "description": "Allows you to hide your status from other players",
     "rarity": "extra"
 }

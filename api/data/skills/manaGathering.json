@@ -1,0 +1,7 @@
+{
+    "label": "Mana gathering",
+    "toggle": false,
+    "usable": true,
+    "description": "Allows you to gather surrounding mana",
+    "rarity": "extra"
+}

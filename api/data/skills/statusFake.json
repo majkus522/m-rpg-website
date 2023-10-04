@@ -1,6 +1,7 @@
 {
     "label": "Fake Status",
     "toggle": true,
+    "usable": false,
     "description": "Allows you to fake your status to other players",
     "rarity": "unique"
 }
