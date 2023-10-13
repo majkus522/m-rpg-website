@@ -1,7 +1,7 @@
 {
     "label": "Mana gathering",
-    "toggle": false,
     "usable": true,
+    "cooldown": 10,
     "description": "Allows you to gather surrounding mana",
     "rarity": "extra"
 }

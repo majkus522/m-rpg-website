@@ -1,7 +1,6 @@
 {
     "label": "Mana sense",
     "toggle": true,
-    "usable": false,
     "description": "Allows you to sense surrounding mana",
     "rarity": "common"
 }

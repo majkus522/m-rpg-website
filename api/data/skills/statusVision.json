@@ -1,7 +1,5 @@
 {
     "label": "Status Vision",
-    "toggle": false,
-    "usable": false,
     "description": "Allows you to see your and other players status",
     "rarity": "extra"
 }
