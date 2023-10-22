@@ -54,6 +54,15 @@ END;
                         </graph>
                     </div>
                     <stat>
+                        <p>Class</p>
+                        <p><?php
+                            if($result->content->clazz == null)
+                                echo "None";
+                            else
+                                echo json_decode(file_get_contents("../api/data/" . $result->content->clazz . ".json"))->label;
+                        ?></p>
+                    </stat>
+                    <stat>
                         <p>Level</p>
                         <p><?php
                             echo $result->content->level;

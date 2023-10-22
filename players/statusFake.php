@@ -22,6 +22,12 @@
                 <div class="real">
                     <h2>Real</h2>
                     <p>Level: <?php echo $result->content->level ?></p>
+                    <p>Class: <?php
+                        if($result->content->clazz == null)
+                            echo "None";
+                        else
+                            echo json_decode(file_get_contents("../api/data/classes/" . $result->content->clazz . ".json"))->label;
+                    ?></p>
                     <p>Money: <?php echo $result->content->money ?> $</p>
 <?php
                         foreach($playerStats as $element)
@@ -40,6 +46,25 @@
                     <stat>
                         Money:
                         <input type="number" value="<?php echo $fake->money ?>" data-stat="money" data-init="<?php echo $fake->money ?>">
+                    </stat>
+                    <stat>
+                        Class:
+                        <select>
+                            <option value="none"<?php
+                                if($fake->clazz == null)
+                                    echo " selected";
+                            ?>>None</option>
+<?php
+                                foreach(glob("../api/data/classes/*.json") as $element)
+                                {
+                                    $simple = str_replace(".json", "", explode("/", $element)[4]);
+                                    echo "\t\t\t\t\t\t\t" . '<option value="' . $simple . '"';
+                                    if($fake->clazz == $simple)
+                                        echo " selected";
+                                    echo ">" . json_decode(file_get_contents($element))->label . "</option>\r\n";
+                                }
+                            ?>
+                        </select>
                     </stat>
 <?php
                         foreach($playerStats as $element)

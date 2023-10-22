@@ -7,6 +7,7 @@ document.querySelector(".fake button").addEventListener("click", () =>
         if(element.dataset.init != element.value || !fakeExists)
             changes[element.dataset.stat] = Number(element.value);
     });
+    changes["clazz"] = document.querySelector(".fake select").value;
     let request = new XMLHttpRequest();
     request.open(fakeExists ? "PATCH" : "POST", "../api/endpoints/fake-status/" + getCookie("username"), true);
     request.onload = function ()

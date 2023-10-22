@@ -1,8 +1,9 @@
 <?php
     require "playerLogged.php";
-    $allowedParams = array("level", "money");
+    $allowedParams = array("level" => "i", "money" => "i");
     foreach(json_decode(file_get_contents("data/playerStats.json")) as $element)
-        array_push($allowedParams, $element->short);
+        $allowedParams[$element->short] = "i";
+    $allowedParams["clazz"] = "s";
 
     switch($requestMethod)
     {
@@ -36,16 +37,24 @@
             $queryParameters = ') values (?';
             $types = "i";
             $parameters = array($queryResult[0]->id);
-            foreach($allowedParams as $element)
+            foreach($allowedParams as $key => $value)
             {
-                if(!(is_numeric($data->$element) && $data->$element >= 0))
-                    exitApi(400, "Incorect value " . $element);
-                if(!isset($data->$element))
-                    exitApi(400, "Enter " . $element);
-                $query .= ", `$element`";
+                if(!isset($data->$key))
+                    exitApi(400, "Enter " . $key);
+                if($key == "clazz")
+                {
+                    if(!(file_exists("data/classes/" . $data->$key . ".json") || $data->$key === "none"))
+                        exitApi(400, "Incorect value: " . $key);
+                }
+                else
+                {
+                    if(!(is_numeric($data->$key) && $data->$key >= 0))
+                        exitApi(400, "Incorect value: " . $key);
+                }
+                $query .= ", `$key`";
                 $queryParameters .= ', ?';
-                $types .= "i";
-                array_push($parameters, $data->$element);
+                $types .= $value;
+                array_push($parameters, $data->$key === "none" ? null : $data->$key);
             }
             connectToDatabase($query . $queryParameters . ')', array_merge(array($types), $parameters));
             http_response_code(201);
@@ -65,17 +74,25 @@
             $parameters = array();
             $query = 'update `fake-status` set ';
             $first = true;
-            foreach($allowedParams as $element)
+            foreach($allowedParams as $key => $value)
             {
-                if(isset($data->$element))
+                if(isset($data->$key))
                 {
-                    if(!(is_numeric($data->$element) && $data->$element >= 0))
-                        exitApi(400, "Incorect value " . $element);
+                    if($key == "clazz")
+                    {
+                        if(!(file_exists("data/classes/" . $data->$key . ".json") || $data->$key === "none"))
+                            exitApi(400, "Incorect value: " . $key);
+                    }
+                    else
+                    {
+                        if(!(is_numeric($data->$key) && $data->$key >= 0))
+                            exitApi(400, "Incorect value: " . $key);
+                    }
                     if(!$first)
                         $query .= ', ';
-                    $query .= "`$element` = ? ";
-                    array_push($parameters, $data->$element);
-                    $types .= "i";
+                    $query .= "`$key` = ? ";
+                    array_push($parameters, $data->$key === "none" ? null : $data->$key);
+                    $types .= $value;
                     $first = false;
                 }
             }

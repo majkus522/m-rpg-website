@@ -118,7 +118,7 @@
                                 }
                             }
                             if($unknown)
-                                exitApi(400, "Unknown query string parameter ({$key})");
+                                exitApi(400, "Unknown query string parameter ($key)");
                             break;
 
                         case "order":
@@ -149,6 +149,17 @@
                             $query .= ' and LOWER(`username`) like ?';
                             array_push($parameters, "%" . strtolower($value) . "%");
                             $types .= "s";
+                            break;
+
+                        case "clazz":
+                            if($value == "none")
+                                $query .= ' and `clazz` is null';
+                            else
+                            {
+                                $query .= ' and `clazz` = ?';
+                                array_push($parameters, strtolower($value));
+                                $types .= "s";
+                            }
                             break;
                     }
                 }

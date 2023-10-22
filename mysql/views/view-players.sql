@@ -5,6 +5,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
     `players`.`level` AS `level`,
     `players`.`exp` AS `exp`,
     `players`.`money` AS `money`,
+    `players`.`clazz` AS `clazz`,
     `players`.`str` AS `str`,
     `players`.`agl` AS `agl`,
     `players`.`chr` AS `chr`,

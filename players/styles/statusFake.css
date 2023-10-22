@@ -35,7 +35,8 @@ content
     gap: 20px;
 }
 
-.fake input
+.fake input,
+.fake select
 {
     font-size: 19px;
     background-color: transparent;
@@ -47,6 +48,12 @@ content
     text-align: center;
 }
 
+.fake select
+{
+    background-color: #6e6e6e;
+    width: 200px;
+}
+
 .fake input::-webkit-outer-spin-button,
 .fake input::-webkit-inner-spin-button
 {
@@ -54,7 +61,8 @@ content
     margin: 0;
 }
 
-.fake input:hover
+.fake input:hover,
+.fake select:hover
 {
     background-color: #898989;
 }
