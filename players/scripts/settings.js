@@ -43,7 +43,7 @@ del.querySelector("input[type='button']").addEventListener("click", () =>
 function send(body, onload, method = "PATCH")
 {
     let request = new XMLHttpRequest();
-    request.open(method, "../api/endpoints/players/" + getCookie("username"), true);
+    request.open(method, "../api/players/" + getCookie("username"), true);
     request.onload = onload;
     request.setRequestHeader("Session-Key", getCookie("session"));
     request.setRequestHeader("Session-Type", "website");

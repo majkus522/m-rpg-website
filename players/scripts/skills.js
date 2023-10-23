@@ -57,11 +57,11 @@ async function getSkills(url)
     request.setRequestHeader("Session-Type", "website");
     request.send();
 }
-getSkills("../api/endpoints/skills/" + getCookie("username"));
+getSkills("../api/skills/" + getCookie("username"));
 
 document.querySelector("content filters .search").addEventListener("click", function ()
 {
-    let url = "../api/endpoints/skills/" + getCookie("username") + "?";
+    let url = "../api/skills/" + getCookie("username") + "?";
     let order = document.querySelector("content filters select").value;
     if(order != "default")
         url += "order=" + order;
@@ -84,7 +84,7 @@ function skillToggle(target)
     {
         button.style.visibility = "hidden";
         let request = new XMLHttpRequest();
-        request.open("PATCH", "../api/endpoints/skills/" + getCookie("username") + "/" + target.dataset.skill, true);
+        request.open("PATCH", "../api/skills/" + getCookie("username") + "/" + target.dataset.skill, true);
         request.onload = function ()
         {
             if(this.status >= 200 && this.status < 300)

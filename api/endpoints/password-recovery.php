@@ -21,6 +21,7 @@
             $message = str_replace("$[code]", $code, $message);
             require "mailer.php";
             sendMail($queryResult->email, "M-RPG Password recovery", $message);
+            http_response_code(204);
             break;
 
         case "PATCH":
@@ -56,6 +57,7 @@
             }
             else
                 exitApi(400, "Enter code");
+            http_response_code(204);
             break;
 
         default:

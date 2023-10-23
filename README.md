@@ -8,7 +8,7 @@
 #### Get all players (only username) :
 
 ```http
-  GET /api/endpoints/players/
+  GET /api/players/
 ```
 
 | Headers                     | Type     | Description                                 | Accepted values             |
@@ -35,7 +35,7 @@
 #### Get player (only username) :
 
 ```http
-  GET /api/endpoints/players/${username}
+  GET /api/players/${username}
 ```
 
 | Parameter       | Type     | Description                                |
@@ -69,7 +69,7 @@
 #### Login player (recive session key) :
 
 ```http
-  GET /api/endpoints/players/${username}/logged
+  GET /api/players/${username}/logged
 ```
 
 | Parameter       | Type     | Description                                |
@@ -85,7 +85,7 @@
 #### Check player session :
 
 ```http
-  GET /api/endpoints/players/${username}/session
+  GET /api/players/${username}/session
 ```
 
 | Parameter       | Type     | Description                                |
@@ -100,7 +100,7 @@
 #### Add new player :
 
 ```http
-  POST /api/endpoints/players/
+  POST /api/players/
 ```
 
 | Body (JSON Object)          | Type     | Description                     |
@@ -112,7 +112,7 @@
 #### Edit player data :
 
 ```http
-  PATCH /api/endpoints/players/${username}
+  PATCH /api/players/${username}
 ```
 
 | Parameter       | Type     | Description                               |
@@ -161,7 +161,7 @@
 #### Delete player :
 
 ```http
-  DELETE /api/endpoints/players/${username}
+  DELETE /api/players/${username}
 ```
 
 | Parameter       | Type     | Description                                 |
@@ -175,108 +175,12 @@
 
 ---
 &nbsp;
-## Circles
-
-#### Get all circles (only public ones) :
-
-```http
-  GET /api/endpoints/circles/
-```
-
-<table>
-	<thead>
-		<tr>
-			<th>Headers</th>
-			<th>Type</th>
-			<th>Description</th>
-			<th>Notes</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>Items: ${offset}-${limit}</code></td>
-			<td><code>int</code></td>
-			<td><strong>Optional</strong>. Number of players and offset.</td>
-			<td><strong>Value:</strong> [0 - &infin;]-[1 - &infin;]</td>
-		</tr>
-		<tr>
-			<td><code>Items: ${limit}</code></td>
-			<td><code>int</code></td>
-			<td><strong>Optional</strong>. Number of players.</td>
-			<td><strong>Value:</strong> 1 - &infin;</td>
-		</tr>
-		<tr>
-			<td><code>Session-Key: ${key}</code></td>
-			<td><code>string</code></td>
-			<td><strong>Optional</strong>. Session key.</td>
-			<td rowspan="3">Needed to access players private circles.</td>
-		</tr>
-		<tr>
-			<td><code>Session-Type: ${type}</code></td>
-			<td><code>string</code></td>
-			<td><strong>Optional</strong>. Session type.</td>
-		</tr>
-		<tr>
-			<td><code>Player: ${limit}</code></td>
-			<td><code>string</code></td>
-			<td><strong>Optional</strong>. Players username.</td>
-		</tr>
-	</tbody>
-</table>
-
-| Query string     | Type     | Description                                        | Accepted values         |
-| :--------------- | :------- | :------------------------------------------------- | :---------------------- |
-| `minMana=${min}` | `int`    | **Optional**. Minimal mana usage.                  | 0 - &infin;             |
-| `maxMana=${max}` | `int`    | **Optional**. Maximal mana usage.                  | 0 - &infin;             |
-| `order=${order}` | `string` | **Optional**. Order circles by mana usage and etc. | `"mana-desc"`, `"mana"` |
-
-#### Get circle (only public ones) :
-
-```http
-  GET /api/endpoints/circles/${slug}
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `slug`    | `string` | **Required**. Circle slug. |
-
-<table>
-	<thead>
-		<tr>
-			<th>Headers</th>
-			<th>Type</th>
-			<th>Description</th>
-			<th>Notes</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>Session-Key: ${key}</code></td>
-			<td><code>string</code></td>
-			<td><strong>Optional</strong>. Session key.</td>
-			<td rowspan="3">Needed to access players private circles.</td>
-		</tr>
-		<tr>
-			<td><code>Session-Type: ${type}</code></td>
-			<td><code>string</code></td>
-			<td><strong>Optional</strong>. Session type.</td>
-		</tr>
-		<tr>
-			<td><code>Player: ${limit}</code></td>
-			<td><code>string</code></td>
-			<td><strong>Optional</strong>. Players username.</td>
-		</tr>
-	</tbody>
-</table>
-
----
-&nbsp;
 ## Skills
 
 #### Get all players skills :
 
 ```http
-  GET /api/endpoints/skills/${username}
+  GET /api/skills/${username}
 ```
 
 | Parameter       | Type     | Description                                     |
@@ -300,7 +204,7 @@
 #### Check if player has skill :
 
 ```http
-  GET /api/endpoints/skills/${username}/${skill}
+  GET /api/skills/${username}/${skill}
 ```
 
 | Parameter       | Type     | Description                       |
@@ -316,7 +220,7 @@
 #### Toggle skill :
 
 ```http
-  PATCH /api/endpoints/skills/${username}/${skill}
+  PATCH /api/skills/${username}/${skill}
 ```
 
 | Parameter       | Type     | Description                       |
@@ -340,7 +244,7 @@
 #### Get player fake status :
 
 ```http
-  GET /api/endpoints/fake-status/${username}
+  GET /api/fake-status/${username}
 ```
 
 | Parameter       | Type     | Description                       |
@@ -355,7 +259,7 @@
 #### Create players fake status :
 
 ```http
-  POST /api/endpoints/fake-status/${username}
+  POST /api/fake-status/${username}
 ```
 
 | Parameter       | Type     | Description                       |
@@ -379,7 +283,7 @@
 #### Change players fake status :
 
 ```http
-  PATCH /api/endpoints/fake-status/${username}
+  PATCH /api/fake-status/${username}
 ```
 
 | Parameter       | Type     | Description                       |
@@ -442,7 +346,7 @@
 #### Send password recovery email :
 
 ```http
-  GET /api/controllers/password-recovery/
+  GET /api/password-recovery/
 ```
 
 <table>
@@ -469,7 +373,7 @@
 #### Set players new password :
 
 ```http
-  PATCH /api/controllers/password-recovery/${code}
+  PATCH /api/password-recovery/${code}
 ```
 
 | Parameter   | Type     | Description                          |

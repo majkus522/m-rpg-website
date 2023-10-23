@@ -9,7 +9,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     let password = btoa(passwordField[0].value);
     let remember = document.querySelector("form label.remember input").value;
     let request = new XMLHttpRequest();
-    request.open("POST", "../api/endpoints/players", true);
+    request.open("POST", "../api/players", true);
     request.onload = function ()
     {
         if(this.status >= 200 && this.status < 300)

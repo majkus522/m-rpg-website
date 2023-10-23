@@ -40,14 +40,6 @@
         return false;
     }
 
-    function clearRequestUrl():string
-    {
-        $url = $_SERVER["REDIRECT_URL"];
-        if(str_ends_with($url, "/"))
-            return substr($url, 0, strlen($url) - 1);
-        return $url;
-    }
-
     function callApi(string $url, string $method, array $headers = [], string $body = ""):object
     {
         $ch = curl_init("http://127.0.0.1/m-rpg/api/" . $url);

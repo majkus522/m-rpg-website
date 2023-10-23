@@ -25,7 +25,7 @@
                         break;
 
                     case "statusFake":
-                        $apiResult = callApi("../api/endpoints/skills/$_COOKIE[username]/statusFake", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+                        $apiResult = callApi("../api/skills/$_COOKIE[username]/statusFake", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
                         if($apiResult->code >= 200 && $apiResult->code < 300)
                             $file = "statusFake";
                         break;

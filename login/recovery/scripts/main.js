@@ -2,7 +2,7 @@ let result = document.querySelector("form p");
 document.querySelector("form input[type='button']").addEventListener("click", () =>
 {
     let input = document.querySelector("form input[type='text']").value;
-    let url = "../../api/controllers/password-recovery?";
+    let url = "../../api/password-recovery?";
     if(input.includes("@"))
         url += "email";
     else

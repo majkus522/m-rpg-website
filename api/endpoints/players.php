@@ -200,7 +200,7 @@
             connectToDatabase($query, array("sss", $data->username, $data->email, encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT))));
             http_response_code(201);
 
-            $apiResult = callApi("endpoints/players/{$data->username}/logged", "GET", ["Password: {$data->password}", "Session-Type: website"]);
+            $apiResult = callApi("players/{$data->username}/logged", "GET", ["Password: {$data->password}", "Session-Type: website"]);
             echo $apiResult->content;
             break;
 

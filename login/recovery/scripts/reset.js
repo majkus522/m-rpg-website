@@ -5,7 +5,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     if(inputs[0].value != inputs[1].value)
         return;
     let request = new XMLHttpRequest();
-    request.open("PATCH", "../../api/controllers/password-recovery/" + code, true);
+    request.open("PATCH", "../../api/password-recovery/" + code, true);
     request.onload = function ()
     {
         if(this.status >= 200 && this.status < 300)

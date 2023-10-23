@@ -1,5 +1,5 @@
 <?php
-    $result = callApi("../api/endpoints/players/$_COOKIE[username]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+    $result = callApi("../api/players/$_COOKIE[username]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
     $playerStats = json_decode(file_get_contents("../api/data/playerStats.json"));
 ?>
         <title>M-RPG - <?php echo $result->content->username; ?></title>
@@ -59,7 +59,7 @@ END;
                             if($result->content->clazz == null)
                                 echo "None";
                             else
-                                echo json_decode(file_get_contents("../api/data/" . $result->content->clazz . ".json"))->label;
+                                echo json_decode(file_get_contents("../api/data/classes/" . $result->content->clazz . ".json"))->label;
                         ?></p>
                     </stat>
                     <stat>

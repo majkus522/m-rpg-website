@@ -9,7 +9,7 @@ document.querySelector(".fake button").addEventListener("click", () =>
     });
     changes["clazz"] = document.querySelector(".fake select").value;
     let request = new XMLHttpRequest();
-    request.open(fakeExists ? "PATCH" : "POST", "../api/endpoints/fake-status/" + getCookie("username"), true);
+    request.open(fakeExists ? "PATCH" : "POST", "../api/fake-status/" + getCookie("username"), true);
     request.onload = function ()
     {
         if(this.status >= 200 && this.status < 300)

@@ -2,7 +2,6 @@
     require "errorHandler.php";
     require "../imports/common.php";
     require "databaseController.php";
-    require "logger.php";
     require "hasher.php";
 
     header("Content-Type: application/json");
@@ -16,16 +15,23 @@
     {
         if(strtolower($requestUrlPart[$index]) == "api")
         {
-            $urlIndex = $index + 2;
+            $urlIndex = $index + 1;
             break;
         }
     }
 
-    if($requestUrlPart[$urlIndex - 1] != "controllers" && $requestUrlPart[$urlIndex - 1] != "endpoints")
-        exitApi(404, "Unknown option for url " . clearRequestUrl());
-
-    if(in_array($requestUrlPart[$urlIndex] . ".php", scandir($requestUrlPart[$urlIndex - 1])))
-        require $requestUrlPart[$urlIndex - 1] . "/" . $requestUrlPart[$urlIndex] . ".php";
+    $endpoints = glob("endpoints/*.php");
+    if(!isset($requestUrlPart[$urlIndex]))
+    {
+        for($index = 0; $index < sizeof($endpoints); $index++)
+            $endpoints[$index] = str_replace("endpoints/", "", str_replace(".php", "", $endpoints[$index]));
+        $obj = new stdClass();
+        $obj->avaliableEndpoints = $endpoints;
+        echo json_encode($obj);
+        exit();
+    }
+    if(in_array("endpoints/" . $requestUrlPart[$urlIndex] . ".php", $endpoints))
+        require "endpoints/" . $requestUrlPart[$urlIndex] . ".php";
     else
         exitApi(404, "Unknown endpoint");
 
@@ -41,5 +47,13 @@
         else
             header("Content-Length: " . strlen(json_encode(array_combine(["message", "file", "line"], [$message, $data["file"], $data["line"]]))));
         die();
+    }
+
+    function clearRequestUrl():string
+    {
+        $url = str_replace("?" . $_SERVER["QUERY_STRING"], "", $_SERVER["REQUEST_URI"]);
+        if(str_ends_with($url, "/"))
+            return substr($url, 0, strlen($url) - 1);
+        return $url;
     }
 ?>
