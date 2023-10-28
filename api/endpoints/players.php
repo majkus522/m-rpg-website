@@ -11,7 +11,7 @@
                 {
                     switch(strtolower($requestUrlPart[$urlIndex + 2]))
                     {
-                        case "logged":
+                        case "login":
                             $headerPassword = getHeader("Password");
                             if($headerPassword === false)
                                 exitApi(400, "Enter player password");
@@ -56,6 +56,10 @@
                             if(empty(connectToDatabase($query, array("ssi", $headerType, $headerKey, $queryResult[0]->id))))
                                 exitApi(401, "Incorect session key");
                             http_response_code(204);
+                            break;
+
+                        default:
+                            exitApi(400, "Unknown option");
                             break;
                     }
                 }
@@ -200,7 +204,7 @@
             connectToDatabase($query, array("sss", $data->username, $data->email, encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT))));
             http_response_code(201);
 
-            $apiResult = callApi("players/{$data->username}/logged", "GET", ["Password: {$data->password}", "Session-Type: website"]);
+            $apiResult = callApi("players/{$data->username}/login", "GET", ["Password: {$data->password}", "Session-Type: website"]);
             echo $apiResult->content;
             break;
 

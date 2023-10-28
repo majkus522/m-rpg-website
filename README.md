@@ -69,7 +69,7 @@
 #### Login player (recive session key) :
 
 ```http
-  GET /api/players/${username}/logged
+  GET /api/players/${username}/login
 ```
 
 | Parameter       | Type     | Description                                |

@@ -17,7 +17,7 @@ button.addEventListener("click", () =>
 
     let remember = document.querySelector("form label.remember input").checked;
     let request = new XMLHttpRequest();
-    request.open("GET", "../api/players/" + username + "/logged", true);
+    request.open("GET", "../api/players/" + username + "/login", true);
     request.onload = function ()
     {
         if(this.status >= 200 && this.status < 300)
