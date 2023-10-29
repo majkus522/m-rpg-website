@@ -82,7 +82,7 @@
                 $queryResult = connectToDatabase($query, array_merge(array($types . $rarityTypes), $parameters, $rarityParameters));
                 if(empty($queryResult))
                     exitApi(404, "Can't find any skill matching conditions");
-                header("Items-Count: " . sizeof($queryResult));
+                header("Result-Count: " . sizeof($queryResult));
                 if($requestMethod != "HEAD")
                     echo json_encode($queryResult);
                 else
