@@ -185,6 +185,12 @@
 
         case "POST":
             $data = json_decode(file_get_contents("php://input"));
+            if(!isset($data->username))
+                exitApi(400, "Enter username");
+            if(!isset($data->email))
+                exitApi(400, "Enter email");
+            if(!isset($data->password))
+                exitApi(400, "Enter password");
             $validUsername = validUsername($data->username);
             if($validUsername !== true)
                 exitApi(400, $validUsername);
