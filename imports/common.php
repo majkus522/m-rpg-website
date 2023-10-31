@@ -93,9 +93,9 @@
     {
         $username = trim($username);
         if(strlen($username) < 3)
-            return "Username is to short";
+            return "Username is too short";
         if(strlen($username) > 16)
-            return "Username is to long";
+            return "Username is too long";
         if(preg_match("@[^a-zA-Z0-9_]@", $username))
             return "Username can only contain letters, numbers and underscore";
         return true;
@@ -105,7 +105,7 @@
     {
         $email = trim($email);
         if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-            return "Incorect email";
+            return "Incorrect email";
         return true;
     }
 

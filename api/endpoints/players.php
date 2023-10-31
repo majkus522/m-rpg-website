@@ -54,7 +54,7 @@
                                 exitApi(404, "Player doesn't exists");
                             $query = 'select `players-sessions`.`id` from `players-sessions` where `type` = ? and `key` = ? and `player` = ? limit 1';
                             if(empty(connectToDatabase($query, array("ssi", $headerType, $headerKey, $queryResult[0]->id))))
-                                exitApi(401, "Incorect session key");
+                                exitApi(401, "Incorrect session key");
                             http_response_code(204);
                             break;
 
@@ -103,7 +103,7 @@
                                 if($key == ("min" . ucfirst($element)))
                                 {
                                     if(!is_numeric($value) || $value < ($element == "level" ? 1 : 0))
-                                        exitApi(400, "Incorect query string (min" . ucfirst($element) . ")");
+                                        exitApi(400, "Incorrect query string (min" . ucfirst($element) . ")");
                                     $types .= "i";
                                     $query .= ' and `' . $element . '` >= ?';
                                     array_push($parameters, $value);
@@ -113,7 +113,7 @@
                                 else if($key == ("max" . ucfirst($element)))
                                 {
                                     if(!is_numeric($value) || $value < ($element == "level" ? 1 : 0))
-                                        exitApi(400, "Incorect query string (max" . ucfirst($element) . ")");
+                                        exitApi(400, "Incorrect query string (max" . ucfirst($element) . ")");
                                     $types .= "i";
                                     $query .= ' and `' . $element . '` <= ?';
                                     array_push($parameters, $value);

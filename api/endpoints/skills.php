@@ -45,7 +45,7 @@
 
                         case "toggle":
                             if(strtolower($value) != "true" && strtolower($value) != "false")
-                                exitApi(400, "Incorect query string (toggle)");
+                                exitApi(400, "Incorrect query string (toggle)");
                             $query .= " and `toggle` = " . strtolower($value);
                             break;
 

@@ -44,12 +44,12 @@
                 if($key == "clazz")
                 {
                     if(!(file_exists("data/classes/" . $data->$key . ".json") || $data->$key === "none"))
-                        exitApi(400, "Incorect value: " . $key);
+                        exitApi(400, "Incorrect value: " . $key);
                 }
                 else
                 {
                     if(!(is_numeric($data->$key) && $data->$key >= 0))
-                        exitApi(400, "Incorect value: " . $key);
+                        exitApi(400, "Incorrect value: " . $key);
                 }
                 $query .= ", `$key`";
                 $queryParameters .= ', ?';
@@ -81,12 +81,12 @@
                     if($key == "clazz")
                     {
                         if(!(file_exists("data/classes/" . $data->$key . ".json") || $data->$key === "none"))
-                            exitApi(400, "Incorect value: " . $key);
+                            exitApi(400, "Incorrect value: " . $key);
                     }
                     else
                     {
                         if(!(is_numeric($data->$key) && $data->$key >= 0))
-                            exitApi(400, "Incorect value: " . $key);
+                            exitApi(400, "Incorrect value: " . $key);
                     }
                     if(!$first)
                         $query .= ', ';
