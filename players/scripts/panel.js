@@ -16,7 +16,10 @@ for(let index = 0; index < stats.length; index++)
 let points = "";
 for(let index = 0; index < stats.length; index++)
 {
-    points += (radius + (linePoints[index].x - radius) * (stats[index] / max * 0.95)) + "," + (radius + (linePoints[index].y - radius) * (stats[index] / max * 0.95)) + " ";
+    let x = radius + (linePoints[index].x - radius) * (stats[index] / max);
+    let y = radius + (linePoints[index].y - radius) * (stats[index] / max);
+    points += x + "," + y + " ";
+    createDot(x, y);
 }
 svg.querySelector("polygon").setAttribute("points", points);
 
@@ -35,11 +38,20 @@ function createText(content, angle)
 {
     let text = document.createElementNS('http://www.w3.org/2000/svg', "text");
     text.textContent = content;
-    svg.appendChild(text);
     text.setAttribute("x", circleX(angle, radius / 2.25));
     text.setAttribute("y", circleY(angle, radius / 2.25));
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("fill", "#121212");
+    svg.appendChild(text);
+}
+
+function createDot(x, y)
+{
+    let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
+    dot.setAttribute("cx", x);
+    dot.setAttribute("cy", y);
+    dot.setAttribute("r", 2);
+    svg.appendChild(dot);
 }
 
 function circleX(angle, radius)

@@ -87,8 +87,8 @@ info graph svg
 
 info graph svg polygon
 {
-    fill: rgba(65, 65, 65, 0.3);
-    stroke: white;
+    fill: rgba(30, 42, 94, 0.3);
+    stroke: #d3d6da;
     stroke-width: 1;
 }
 
@@ -102,6 +102,11 @@ info graph svg text
 {
     font-size: 20px;
     background-color: #565656;
-    z-index: 10;
     display: block;
+}
+
+info graph svg circle
+{
+    fill: #010101;
+    stroke: #010110;
 }
