@@ -1,0 +1,4 @@
+{
+  "password": "new password", //Must be encoded using BASE64
+  "email": "new email"
+}

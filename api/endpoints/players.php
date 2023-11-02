@@ -122,7 +122,7 @@
                                 }
                             }
                             if($unknown)
-                                exitApi(400, "Unknown query string parameter ($key)");
+                                exitApi(400, "Unknown query string parameter $key");
                             break;
 
                         case "order":
@@ -145,7 +145,7 @@
                                     }
                                 }
                                 if($unknown)
-                                    exitApi(400, "Unknown order parameter ({$value})");
+                                    exitApi(400, "Unknown order parameter $value");
                             }
                             break;
 

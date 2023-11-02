@@ -1,0 +1,5 @@
+{
+  "username": "username1",
+  "password": "UEBzc3cwcmQ=", //Must be encoded using BASE64
+  "email": "example@mail.com"
+}

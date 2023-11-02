@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+<instance-profile id="structure" name="M-RPG docs" start-page="reference.md">
+	<toc-element topic="reference.md">
+        <toc-element toc-title="Players">
+            <toc-element topic="getAllPlayers.md"/>
+            <toc-element topic="getPlayer.md"/>
+            <toc-element topic="loginPlayer.md"/>
+            <toc-element topic="checkPlayerSession.md"/>
+            <toc-element topic="createPlayer.md"/>
+            <toc-element topic="editPlayer.md"/>
+            <toc-element topic="deletePlayer.md" href="fgfhgfhgf"/>
+        </toc-element>
+    </toc-element>
+</instance-profile>

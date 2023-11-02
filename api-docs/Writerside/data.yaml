@@ -1,0 +1,375 @@
+openapi: 3.0.2
+servers:
+  - url: /v3
+paths:
+  /players:
+    get:
+      summary: Get all players
+      description: Get all players. Returns only usernames.
+      parameters:
+        - name: order
+          in: query
+          description: Sort players
+          required: false
+          schema:
+            type: string
+            enum:
+              - level
+              - level-desc
+              - money
+              - money-desc
+              - str
+              - str-desc
+              - agl
+              - agl-desc
+              - chr
+              - chr-desc
+              - intl
+              - intl-desc
+              - def
+              - def-desc
+              - vtl
+              - vtl-desc
+              - dex
+              - dex-desc
+        - name: search
+          in: query
+          description: Search players by username
+          required: false
+          schema:
+            type: string
+        - name: clazz
+          in: query
+          description: Filter players by their class
+          required: false
+          schema:
+            type: string
+            enum:
+              - archer
+              - mage
+              - sorcerer
+              - tank
+              - warlock
+              - warrior
+        - name: Items-Count
+          in: header
+          description: Maximal number of objects returned
+          required: false
+          schema:
+            type: int
+            format: "Default: 50"
+        - name: Items-Offset
+          in: header
+          description: Offset of objects
+          required: false
+          schema:
+            type: int
+            format: "Default: 0"
+      responses:
+        '206':
+          description: Successful operation
+          headers:
+            Result-Count:
+              description: Number of objects returned.
+              schema:
+                type: int
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePlayerSimple'
+        '400':
+          description: Incorrect request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Can't find players matching conditions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      summary: Register new player
+      description: Register new player. Automatically logins player and returns session key.
+      requestBody:
+        description: Register a new player.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPlayer'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            int:
+              schema:
+                type: key
+        '400':
+          description: Incorrect request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /players/{$username}:
+    get:
+      summary: Get single player
+      description: Get player full data. Return only simple data if session is incorrect or isn't entered.
+      parameters:
+        - name: username
+          in: path
+          description: Username of player
+          required: true
+          schema:
+            type: string
+        - name: Session-Type
+          in: header
+          description: Type of session
+          required: false
+          schema:
+            type: string
+            enum:
+              - website
+              - game
+        - name: Session-Key
+          in: header
+          description: Key of session
+          required: false
+          schema:
+            type: int
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePlayer'
+        '206':
+          description: Incorrect session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePlayerSimple'
+        '404':
+          description: Player doesn't exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    patch:
+      summary: Change player data
+      description: Change player data.
+      requestBody:
+        description: Changes to player data.
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPlayerUpdate'
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          description: Incorrect request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    delete:
+      summary: Delete player
+      description: Delete player and all related data.
+      parameters:
+        - name: username
+          in: path
+          description: Username of player
+          required: true
+          schema:
+            type: string
+        - name: Session-Type
+          in: header
+          description: Type of session
+          required: true
+          schema:
+            type: string
+            enum:
+              - website
+              - game
+        - name: Session-Key
+          in: header
+          description: Key of session
+          required: true
+          schema:
+            type: int
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          description: Incorrect request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /players/{$username}/login:
+    get:
+      summary: Login player
+      description: Login player and get session key.
+      parameters:
+        - name: username
+          in: path
+          description: Username of player
+          required: true
+          schema:
+            type: string
+        - name: Session-Type
+          in: header
+          description: Type of session
+          required: true
+          schema:
+            type: string
+            enum:
+              - website
+              - game
+        - name: Password
+          in: header
+          description: Player password. Must be encoded using BASE64
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            int:
+              schema:
+                type: key
+        '400':
+          description: Incorrect request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Incorrect password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Player doesn't exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /players/{$username}/session:
+    get:
+      summary: Check player session
+      description: Check if player session is correct.
+      parameters:
+        - name: username
+          in: path
+          description: Username of player
+          required: true
+          schema:
+            type: string
+        - name: Session-Type
+          in: header
+          description: Type of session
+          required: true
+          schema:
+            type: string
+            enum:
+              - website
+              - game
+        - name: Session-Key
+          in: header
+          description: Key of session
+          required: true
+          schema:
+            type: int
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          description: Incorrect request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Incorrect session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Player doesn't exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+components:
+  schemas:
+    responsePlayerSimple:
+      properties:
+        id:
+          type: int
+        username:
+          type: string
+    responsePlayer:
+      properties:
+        id:
+          type: int
+        username:
+          type: string
+        email:
+          type: string
+        level:
+          type: int
+        exp:
+          type: int
+        money:
+          type: float
+        clazz:
+          type: string
+          enum:
+            - warrior
+            - mage
+            - tank
+            - archer
+            - sorcerer
+            - warlock
+        str:
+          type: int
+        agl:
+          type: int
+        chr:
+          type: int
+        intl:
+          type: int
+        def:
+          type: int
+        vtl:
+          type: int
+        dex:
+          type: int
+    requestPlayer:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+    requestPlayerUpdate:
+      type: object
+      properties:
+        password:
+          type: string
+        email:
+          type: string
+    error:
+      properties:
+        message:
+          type: string
