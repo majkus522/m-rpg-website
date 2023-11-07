@@ -36,7 +36,7 @@
                             {
                                 if(!$first)
                                     $rarity .= " or";
-                                $rarity .= ' skill_rarity("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`) = ?';
+                                $rarity .= ' json_property("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`, "rarity") = ?';
                                 $first = false;
                                 $rarityTypes .= "s";
                                 array_push($rarityParameters, $element);
@@ -52,7 +52,7 @@
                         case "search":
                             foreach(explode(" ", $value) as $element)
                             {
-                                $query .= ' and (LOWER(`skill`) like ? or LOWER(skill_label("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`)) like ?)';
+                                $query .= ' and (LOWER(`skill`) like ? or LOWER(json_property("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`, "label")) like ?)';
                                 array_push($parameters, "%" . strtolower($element) . "%", "%" . strtolower($element) . "%");
                                 $types .= "ss";
                             }
