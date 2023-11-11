@@ -11,9 +11,6 @@
         case "HEAD":
             if(!isSingleGet())
                 exitApi(400, "Enter player");
-            $queryResult = connectToDatabase('select `id` from `players` where `username` = ? limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
-            if(empty($queryResult))
-                exitApi(404, "Player doesn't exists");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
             $queryResult = connectToDatabase('select * from `fake-status` where `player` = ? limit 1', array("i", $queryResult[0]->id));
             if(empty($queryResult))
@@ -26,9 +23,6 @@
         case "POST":
             if(!isSingleGet())
                 exitApi(400, "Enter player");
-            $queryResult = connectToDatabase('select `id` from `players` where `username` = ? limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
-            if(empty($queryResult))
-                exitApi(404, "Player doesn't exists");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
             if(!empty(connectToDatabase('select `id` from `fake-status` where `player` = ?', array("i", $queryResult[0]->id))))
                 exitApi(400, "Player already have a fake status");
@@ -63,9 +57,6 @@
         case "PATCH":
             if(!isSingleGet())
                 exitApi(400, "Enter player");
-            $queryResult = connectToDatabase('select `id` from `players` where `username` = ? limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
-            if(empty($queryResult))
-                exitApi(404, "Player doesn't exists");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
             if(empty(connectToDatabase('select `id` from `fake-status` where `player` = ?', array("i", $queryResult[0]->id))))
                 exitApi(400, "Player doesn't have fake status");

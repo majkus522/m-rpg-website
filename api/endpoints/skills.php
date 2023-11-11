@@ -32,8 +32,11 @@
                     {
                         case "rarity":
                             $first = true;
+                            $allowedRarity = ["common", "extra", "unique", "ultimate", "unknown"];
                             foreach($value as $element)
                             {
+                                if(!in_array(strtolower($element), $allowedRarity))
+                                    exitApi(400, "Unknown rarity parameter $element");
                                 if(!$first)
                                     $rarity .= " or";
                                 $rarity .= ' json_property("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`, "rarity") = ?';
@@ -45,7 +48,7 @@
 
                         case "toggle":
                             if(strtolower($value) != "true" && strtolower($value) != "false")
-                                exitApi(400, "Incorrect query string (toggle)");
+                                exitApi(400, "Incorrect query string (toggle) value");
                             $query .= " and `toggle` = " . strtolower($value);
                             break;
 
@@ -70,9 +73,15 @@
                                     case "rarity-desc":
                                         $order = ' order by `rarity` desc';
                                         break;
+
+                                    default:
+                                        exitApi(400, "Unknown order parameter $value");
                                 }
                             }
                             break;
+
+                        default:
+                            exitApi(400, "Unknown query string parameter $key");
                     }
                 }
                 require "headerItems.php";
