@@ -12,7 +12,7 @@
             if(!isSingleGet())
                 exitApi(400, "Enter player");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            $queryResult = connectToDatabase('select * from `fake-status` where `player` = ? limit 1', array("i", $queryResult[0]->id));
+            $queryResult = connectToDatabase('select * from `fake-status` where `player` = (select `id` from `players` where `username` = ? limit 1) limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
             if(empty($queryResult))
                 exitApi(404, "Player doesn't have fake status");
             if($requestMethod == "GET")
@@ -24,8 +24,9 @@
             if(!isSingleGet())
                 exitApi(400, "Enter player");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            if(!empty(connectToDatabase('select `id` from `fake-status` where `player` = ?', array("i", $queryResult[0]->id))))
-                exitApi(400, "Player already have a fake status");
+            $queryResult = connectToDatabase('select `id` from `players` where `username` = ? limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
+            if(!empty(connectToDatabase('select `id` from `fake-status` where `player` = ? limit 1', array("i", $queryResult[0]->id))))
+                exitApi(404, "Player already have a fake status");
             $data = json_decode(file_get_contents("php://input"));
             $query = 'insert into `fake-status` (`player`';
             $queryParameters = ') values (?';
@@ -59,7 +60,7 @@
                 exitApi(400, "Enter player");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
             if(empty(connectToDatabase('select `id` from `fake-status` where `player` = ?', array("i", $queryResult[0]->id))))
-                exitApi(400, "Player doesn't have fake status");
+                exitApi(404, "Player doesn't have fake status");
             $data = json_decode(file_get_contents("php://input"));
             $types = "";
             $parameters = array();
@@ -90,6 +91,7 @@
             if(empty($parameters))
                 exitApi(400, "Enter some changes");
             connectToDatabase($query . ' where `player` = ?', array_merge(array($types . "i"), $parameters, array($queryResult[0]->id)));
+            http_response_code(204);
             break;
 
         default:
