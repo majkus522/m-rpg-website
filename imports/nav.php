@@ -4,6 +4,7 @@
 ?>
 <nav>
             <div><a href="<?php echo $extraPath; ?>../">Home</a></div>
+            <div><a href="<?php echo $extraPath; ?>../leaderboard">Leaderboard</a></div>
             <?php
                 if($validLogin)
                 {

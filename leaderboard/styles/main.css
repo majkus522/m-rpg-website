@@ -1,0 +1,43 @@
+main
+{
+    background-color: #565656;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    padding: 30px;
+    width: 1400px;
+}
+
+h1
+{
+    width: 100%;
+    text-align: center;
+    font-weight: 400;
+    margin-bottom: -25px;
+}
+
+h2
+{
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+table, td
+{
+    border: 2px solid #efefef;
+    border-collapse: collapse;
+}
+
+td
+{
+    padding: 6px 30px;
+    font-size: 23px;
+    text-align: center;
+}
+
+tr.selected
+{
+    background-color: #7d9179;
+}
