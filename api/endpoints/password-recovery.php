@@ -14,7 +14,7 @@
                 exitApi(404, "Player doesn't exists");
             $queryResult = $queryResult[0];
             $code = generateCode($queryResult->id);
-            $query = 'insert into `password-recovery` (`player`, `code`, `date`) values (?, ?)';
+            $query = 'insert into `password-recovery` (`player`, `code`) values (?, ?)';
             connectToDatabase($query, ["is", $queryResult->id, $code]);
             $message = file_get_contents("messages/password-recovery.html");
             $message = str_replace("$[username]", $queryResult->username, $message);
