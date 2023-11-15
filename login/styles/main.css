@@ -2,7 +2,7 @@ main
 {
     margin-top: auto;
     width: 40%;
-    background-color: var(--background);
+    background-color: #565656;
 }
 
 form
@@ -67,19 +67,29 @@ label.remember input:checked ~ span div
     height: 100%;
 }
 
-input
+input,
+form a
 {
     font-size: var(--fontSize);
     font-weight: 100;
     padding: 8px;
-    border: var(--border);
+    border: 2px solid var(--color);
     color: var(--color);
-    background-color: var(--background);
+    background-color: var(--inputBackground);
+    --inputBackground: #565656
 }
 
 input[type='button']
 {
     cursor: pointer;
+}
+
+input:hover,
+input:focus,
+form a:hover,
+form a:focus
+{
+    --inputBackground: #707070;
 }
 
 p.error
@@ -88,14 +98,4 @@ p.error
     font-size: 28px;
     text-align: center;
     font-weight: 300;
-}
-
-form a
-{
-    font-size: var(--fontSize);
-    font-weight: 100;
-    padding: 8px;
-    border: var(--border);
-    color: var(--color);
-    background-color: var(--background);
 }

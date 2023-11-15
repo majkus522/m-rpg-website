@@ -39,12 +39,19 @@ input
     padding: 8px;
     border: var(--border);
     color: var(--color);
-    background-color: var(--background);
+    background-color: var(--inputBackground);
+    --inputBackground: #565656
 }
 
 input[type='button']
 {
     cursor: pointer;
+}
+
+input:hover,
+input:focus
+{
+    --inputBackground: #707070;
 }
 
 p

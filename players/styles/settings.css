@@ -25,24 +25,26 @@ content div:first-child
     border-top: 2px solid #efefef;
 }
 
-content div input
+input
 {
     font-size: var(--fontSize);
     font-weight: 100;
     padding: 8px;
     border: var(--border);
     color: var(--color);
-    background-color: var(--background);
+    background-color: var(--inputBackground);
+    --inputBackground: #565656
 }
 
-content div input:hover::placeholder
-{
-    color: #ababab;
-}
-
-content div input[type='button']
+input[type='button']
 {
     cursor: pointer;
+}
+
+input:hover,
+input:focus
+{
+    --inputBackground: #707070;
 }
 
 p.error

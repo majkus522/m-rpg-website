@@ -35,36 +35,38 @@ content
     gap: 20px;
 }
 
-.fake input,
-.fake select
+input,
+select
 {
     font-size: 19px;
-    background-color: transparent;
     border: 2px solid #efefef;
     padding: 5px;
     margin-left: 10px;
     max-width: 190px;
     color: #efefef;
     text-align: center;
+    background-color: var(--inputBackground);
+    --inputBackground: #676767
 }
 
-.fake select
+select
 {
-    background-color: #6e6e6e;
     width: 200px;
 }
 
-.fake input::-webkit-outer-spin-button,
-.fake input::-webkit-inner-spin-button
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
 {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.fake input:hover,
-.fake select:hover
+input:hover,
+input:focus,
+select:hover,
+select:focus
 {
-    background-color: #898989;
+    --inputBackground: #808080;
 }
 
 .fake div
