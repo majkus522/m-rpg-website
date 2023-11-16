@@ -27,7 +27,7 @@
                 $params = array_merge($params, json_decode(file_get_contents("../api/data/playerStats.json")));
                 foreach($params as $element)
                 {
-                    $apiResult = callApi("../api/players?order=" . $element->short . "-desc", "GET", ["Items-Count: 10"]);
+                    $apiResult = callApi("../api/players?order=" . $element->short . "-desc", "GET", ["Result-Count: 10"]);
                     echo <<< END
             <div>
                 <h2>$element->label</h2>

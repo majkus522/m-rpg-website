@@ -174,7 +174,7 @@
                 $queryResult = connectToDatabase($query, array_merge(array($types), $parameters));
                 if(empty($queryResult))
                     exitApi(404, "Can't find any player matching conditions");
-                header("Result-Count: " . sizeof($queryResult));
+                header("Return-Count: " . sizeof($queryResult));
                 http_response_code(206);
                 if($requestMethod != "HEAD")
                     echo json_encode($queryResult);
