@@ -15,7 +15,7 @@ button.addEventListener("click", () =>
         return;
     }
 
-    let remember = document.querySelector("form label.remember input").checked;
+    let remember = document.querySelector("mrpg-checkbox.remember").value;
     let request = new XMLHttpRequest();
     request.open("GET", "../api/players/" + username + "/login", true);
     request.onload = function ()

@@ -12,6 +12,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>M-RPG - Login</title>
+        <script src="scripts/main.js" defer></script>
+        <script src="../imports/passwordHide.js" defer></script>
+        <script src="../imports/elements/MrpgCheckbox.js" defer></script>
         <?php
             $first = true;
             foreach(array_merge(glob("../styles/*.css"), glob("styles/*.css")) as $file)
@@ -36,15 +39,8 @@
                     Password
                     <input type="password">
                 </label>
-                <label class="show">
-                    Show password
-                    <input type="checkbox">
-                </label>
-                <label class="remember">
-                    <input type="checkbox">
-                    <span><div></div></span>
-                    Remember me
-                </label>
+                <mrpg-checkbox class="show">Show password</mrpg-checkbox>
+                <mrpg-checkbox class="remember">Remember me</mrpg-checkbox>
                 <input type="button" value="Login">
                 <p class="error"></p>
                 <a href="recovery">Reset password</a>
@@ -55,5 +51,3 @@
         ?>
     </body>
 </html>
-<script src="scripts/main.js"></script>
-<script src="scripts/passwordHide.js"></script>

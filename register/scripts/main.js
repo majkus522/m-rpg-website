@@ -7,7 +7,7 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     let username = document.querySelector("form label.username input").value;
     let email = document.querySelector("form input[type='email']").value;
     let password = btoa(passwordField[0].value);
-    let remember = document.querySelector("form label.remember input").value;
+    let remember = document.querySelector("mrpg-checkbox.remember").value;
     let request = new XMLHttpRequest();
     request.open("POST", "../api/players", true);
     request.onload = function ()

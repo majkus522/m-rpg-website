@@ -2,77 +2,44 @@ main
 {
     margin-top: auto;
     width: 40%;
-    background-color: var(--background);
+    background-color: #565656;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
 }
 
 form
 {
     display: flex;
     flex-direction: column;
-    padding: 50px;
     align-items: center;
     gap: 20px;
+    width: 300px;
 }
 
 label
 {
+    width: 100%;
     font-size: 18px;
     gap: 8px;
     color: var(--color);
     display: flex;
     flex-direction: column;
-    width: 280px;
 }
 
-label.show
+mrpg-checkbox
 {
-    flex-direction: row;
-    justify-content: flex-end;
-    margin-top: -15px;
-    cursor: pointer;
+    align-self: flex-start;
 }
 
-label.remember
-{
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    cursor: pointer;
-}
-  
-label.remember input
-{
-    display: none;
-}
-  
-label.remember span
-{
-    height: 27px;
-    width: 27px;
-    background-color: transparent;
-    border: 2px solid var(--color);
-    padding: 4px;
-}
-
-label.remember:hover input ~ span
-{
-    background-color: rgba(255, 255, 255, 0.15);
-    border: 2px solid #efefef;
-}
-
-label.remember input:checked ~ span div
-{
-    background-color: #efefef;
-    width: 100%;
-    height: 100%;
-}
-
-input
+input,
+form a
 {
     font-size: var(--fontSize);
     font-weight: 100;
     padding: 8px;
-    border: var(--border);
+    border: 2px solid var(--color);
     color: var(--color);
     background-color: var(--inputBackground);
     --inputBackground: #565656
@@ -84,7 +51,9 @@ input[type='button']
 }
 
 input:hover,
-input:focus
+input:focus,
+form a:hover,
+form a:focus
 {
     --inputBackground: #707070;
 }
@@ -95,14 +64,4 @@ p.error
     font-size: 28px;
     text-align: center;
     font-weight: 300;
-}
-
-form a
-{
-    font-size: var(--fontSize);
-    font-weight: 100;
-    padding: 8px;
-    border: var(--border);
-    color: var(--color);
-    background-color: var(--background);
 }

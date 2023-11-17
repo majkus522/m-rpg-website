@@ -2,6 +2,10 @@
     $result = callApi("../api/players/$_COOKIE[username]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
 ?>
         <title>M-RPG - <?php echo $result->content->username; ?> - Settings</title>
+        <script src="scripts/settings.js" defer></script>
+        <script src="../imports/passwordHide.js" defer></script>
+        <script src="../imports/scripts.js" defer></script>
+        <script src="../imports/elements/MrpgCheckbox.js" defer></script>
     </head>
     <body>
         <?php
@@ -21,10 +25,7 @@
                 <div class="password">
                     Password
                     <input type="password" placeholder="Password">
-                    <label class="show">
-                        Show password
-                        <input type="checkbox">
-                    </label>
+                    <mrpg-checkbox class="show">Show password</mrpg-checkbox>
                     <input type="button" value="Update">
                     <p class="error"></p>
                 </div>
@@ -40,6 +41,3 @@
         ?>
     </body>
 </html>
-<script src="scripts/settings.js"></script>
-<script src="scripts/passwordHide.js"></script>
-<script src="../imports/scripts.js"></script>

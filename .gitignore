@@ -2,4 +2,4 @@ api/databaseConfig.php
 api/hasher.php
 api/endpoints/test.php
 api/mailerConfig.php
-test.php
+test/*

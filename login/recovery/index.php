@@ -9,9 +9,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>M-RPG - Login</title>
+        <script src="../../imports/elements/MrpgCheckbox.js" defer></script>
         <?php
             $first = true;
-            foreach(array_merge(glob($extraPath . "../styles/*.css"), glob("styles/*.css")) as $file)
+            foreach(array_merge(glob($extraPath . "../styles/*.css"), glob("../styles/*.css")) as $file)
             {
                 if(!$first)
                     echo "\t";
@@ -31,18 +32,15 @@
                 let code = "<?php echo $_GET["code"]; ?>";
             </script>
             <form>
-                <label>
+                <label class="password">
                     Password
                     <input type="password">
                 </label>
-                <label>
+                <label class="password">
                     Repeat password
                     <input type="password">
                 </label>
-                <label class="show">
-                    Show password
-                    <input type="checkbox">
-                </label>
+                <mrpg-checkbox class="show">Show password</mrpg-checkbox>
                 <input type="button" value="Send">
                 <p class="error"></p>
             </form>
@@ -72,7 +70,7 @@
     {
         ?>
 <script src="scripts/reset.js"></script>
-<script src="scripts/passwordHide.js"></script>
+<script src="../../imports/passwordHide.js"></script>
         <?php
     }
     else
