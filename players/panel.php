@@ -3,6 +3,8 @@
     $playerStats = json_decode(file_get_contents("../api/data/playerStats.json"));
 ?>
         <title>M-RPG - <?php echo $result->content->username; ?></title>
+        <script src="../imports/elements/MrpgBar.js" defer></script>
+        <script src="scripts/panel.js" defer></script>
     </head>
     <body>
         <?php
@@ -69,9 +71,7 @@ END;
                         ?></p>
                     </stat>
                     <stat>
-                        <bar><fill style="width: <?php
-                            echo round($result->content->exp / levelExp($result->content->level) * 100, 2);
-                        ?>%;"></fill></bar>
+                        <mrpg-bar><?php echo round($result->content->exp / levelExp($result->content->level) * 100, 2); ?></mrpg-bar>
                         <p>Exp</p>
                         <p><?php
                             echo $result->content->exp . " / " . levelExp($result->content->level);
@@ -101,4 +101,3 @@ END;
     let stats = [<?php echo $values; ?>];
     let labels = [<?php echo $shortLabels; ?>];
 </script>
-<script src="scripts/panel.js"></script>
