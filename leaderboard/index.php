@@ -6,6 +6,7 @@
         <title>M-RPG - Login</title>
         <link href="../styles/main.css" rel="stylesheet" type="text/css">
         <?php
+            $extraPath = "../";
             require "../imports/loginCheck.php";
             $first = true;
             foreach(glob("styles/*.css") as $file)

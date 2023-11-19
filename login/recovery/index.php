@@ -1,6 +1,6 @@
 <?php
-    $extraPath = "../";
-    require $extraPath . "../imports/loginCheck.php";
+    $extraPath = "../../";
+    require $extraPath . "imports/loginCheck.php";
     $codePresent = isset($_GET["code"]);
 ?>
 <!DOCTYPE html>
@@ -9,20 +9,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>M-RPG - Login</title>
-        <script src="../../imports/elements/MrpgCheckbox.js" defer></script>
-        <?php
-            $first = true;
-            foreach(array_merge(glob($extraPath . "../styles/*.css"), glob("../styles/*.css")) as $file)
-            {
-                if(!$first)
-                    echo "\t";
-                echo '<link href="' . $file . '" rel="stylesheet" type="text/css">' . "\r\n\t";
-                $first = false;
-            }
-        ?></head>
+        <script src="imports/elements/MrpgCheckbox.js" defer></script>
+        <link href="../../styles/main.css" rel="stylesheet" type="text/css">
+        <link href="../styles/main.css" rel="stylesheet" type="text/css">
+    </head>
     <body>
         <?php
-            require $extraPath . "../imports/nav.php";
+            require $extraPath . "imports/nav.php";
         ?>
         <main>
             <?php
@@ -61,7 +54,7 @@
                 }            
             ?></main>
         <?php
-            require $extraPath . "../imports/footer.html";
+            require $extraPath . "imports/footer.html";
         ?>
     </body>
 </html>
