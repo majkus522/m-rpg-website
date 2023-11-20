@@ -19,6 +19,7 @@
                 <div class="email">
                     Email
                     <input type="email" value="<?php echo $result->content->email; ?>">
+                    <div class="loading"><div></div></div>
                     <input type="button" value="Update">
                     <p class="error"></p>
                 </div>
@@ -26,11 +27,13 @@
                     Password
                     <input type="password" placeholder="Password">
                     <mrpg-checkbox class="show">Show password</mrpg-checkbox>
+                    <div class="loading"><div></div></div>
                     <input type="button" value="Update">
                     <p class="error"></p>
                 </div>
                 <div class="delete">
                     Delete account
+                    <div class="loading"><div></div></div>
                     <input type="button" value="Delete">
                     <p class="error"></p>
                 </div>

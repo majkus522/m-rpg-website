@@ -1,6 +1,10 @@
-let result = document.querySelector("form p");
-document.querySelector("form input[type='button']").addEventListener("click", () =>
+let button = document.querySelector("form input[type='button']");
+let loading = document.querySelector("div.loading");
+let error = document.querySelector("form p");
+button.onclick = () =>
 {
+    loading.style.display = "block";
+    button.style.display = "none";
     let input = document.querySelector("form input[type='text']").value;
     let url = "../../api/password-recovery?";
     if(input.includes("@"))
@@ -12,16 +16,18 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
     request.open("GET", url, true);
     request.onload = function ()
     {
+        loading.style.display = "none";
+        button.style.display = "block";
         if(this.status >= 200 && this.status < 300)
         {
-            result.classList.remove("error");
-            result.textContent = "Mail has been sent";
+            error.classList.remove("error");
+            error.textContent = "Mail has been sent";
         }
         else
         {
-            result.classList.add("error");
-            result.textContent = JSON.parse(this.responseText).message;
+            error.classList.add("error");
+            error.textContent = JSON.parse(this.responseText).message;
         }
     }
     request.send();
-});
+}

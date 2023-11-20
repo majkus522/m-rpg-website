@@ -7,7 +7,7 @@ content
     padding: 40px;
 }
 
-content div
+content > div
 {
     display: flex;
     flex-direction: row;
@@ -20,7 +20,7 @@ content div
     padding: 30px 50px;
 }
 
-content div:first-child
+content > div:first-child
 {
     border-top: 2px solid #efefef;
 }
@@ -53,4 +53,10 @@ p.error
     font-weight: 300;
     color: #ce3b3b;
     font-size: 20px;
+}
+
+div.loading
+{
+    --size: 0.4;
+    margin-left: 20px;
 }

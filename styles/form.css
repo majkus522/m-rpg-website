@@ -1,0 +1,43 @@
+div.loading
+{
+    --size: 1;
+    width: calc(150px * var(--size));
+    height: calc(150px * var(--size));
+    border-radius: 100%;
+    padding: calc(15px * var(--size));
+    --color: #efefef;
+    background: conic-gradient(
+        var(--color) 60deg,
+        transparent 60deg,
+        transparent 120deg,
+        var(--color) 120deg,
+        var(--color) 180deg,
+        transparent 180deg,
+        transparent 240deg,
+        var(--color) 240deg,
+        var(--color) 300deg,
+        transparent 300deg
+    );
+    animation: loading 1.75s infinite linear;
+    display: none;
+}
+
+div.loading > div
+{
+    background-color: #565656;
+    width: calc(120px * var(--size));
+    height: calc(120px * var(--size));
+    border-radius: 100%;
+}
+
+@keyframes loading
+{
+    from
+    {
+        transform: rotate(0deg);
+    }
+    to
+    {
+        transform: rotate(360deg);
+    }
+}

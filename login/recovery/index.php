@@ -9,7 +9,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>M-RPG - Login</title>
-        <script src="imports/elements/MrpgCheckbox.js" defer></script>
+        <script src="../../imports/elements/MrpgCheckbox.js" defer></script>
         <link href="../../styles/main.css" rel="stylesheet" type="text/css">
         <link href="../styles/main.css" rel="stylesheet" type="text/css">
     </head>
@@ -34,6 +34,7 @@
                     <input type="password">
                 </label>
                 <mrpg-checkbox class="show">Show password</mrpg-checkbox>
+                <div class="loading"><div></div></div>
                 <input type="button" value="Send">
                 <p class="error"></p>
             </form>
@@ -47,6 +48,7 @@
                     Username or email
                     <input type="text">
                 </label>
+                <div class="loading"><div></div></div>
                 <input type="button" value="Send">
                 <p class="error"></p>
             </form>

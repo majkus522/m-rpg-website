@@ -1,7 +1,10 @@
 let button = document.querySelector("form input[type='button']");
-let error = document.querySelector("form p.error");
-button.addEventListener("click", () =>
+let loading = document.querySelector("div.loading");
+let error = document.querySelector("form p");
+button.onclick = () =>
 {
+    loading.style.display = "block";
+    button.style.display = "none";
     let username = document.querySelector("form label.username input").value;
     if(username.length == 0)
     {
@@ -20,6 +23,8 @@ button.addEventListener("click", () =>
     request.open("GET", "../api/players/" + username + "/login", true);
     request.onload = function ()
     {
+        loading.style.display = "none";
+        button.style.display = "block";
         if(this.status >= 200 && this.status < 300)
         {
             document.cookie = "session=" + this.responseText + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
@@ -33,4 +38,4 @@ button.addEventListener("click", () =>
     request.setRequestHeader("Session-Type", "website");
     request.setRequestHeader("Temp", !remember);
     request.send();
-});
+}

@@ -16,16 +16,9 @@
         <script src="scripts/main.js" defer></script>
         <script src="../imports/passwordHide.js" defer></script>
         <script src="../imports/elements/MrpgCheckbox.js" defer></script>
-        <?php
-            $first = true;
-            foreach(array_merge(glob("../styles/*.css"), glob("styles/*.css")) as $file)
-            {
-                if(!$first)
-                    echo "\t";
-                echo '<link href="' . $file . '" rel="stylesheet" type="text/css">' . "\r\n\t";
-                $first = false;
-            }
-        ?></head>
+        <link href="styles/main.css" rel="stylesheet" type="text/css">
+        <link href="../styles/main.css" rel="stylesheet" type="text/css">
+    </head>
     <body>
         <?php
             require "../imports/nav.php";
@@ -50,6 +43,7 @@
                 </label>
                 <mrpg-checkbox class="show">Show password</mrpg-checkbox>
                 <mrpg-checkbox class="remember">Remember me</mrpg-checkbox>
+                <div class="loading"><div></div></div>
                 <input type="button" value="Register">
                 <p class="error"></p>
             </form>
