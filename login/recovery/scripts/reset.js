@@ -1,7 +1,7 @@
 let button = document.querySelector("form input[type='button']");
 let loading = document.querySelector("div.loading");
 let error = document.querySelector("form p");
-button.onclick = () =>
+button.addEventListener("click", () =>
 {
     loading.style.display = "block";
     button.style.display = "none";
@@ -28,4 +28,4 @@ button.onclick = () =>
     request.send(JSON.stringify({
         password: btoa(inputs[0].value)
     }));
-}
+});

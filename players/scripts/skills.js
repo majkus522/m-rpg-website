@@ -1,4 +1,5 @@
 let inspector = document.querySelector("content inspector");
+let skillSelected;
 
 document.querySelectorAll("content filters rarities div").forEach(element => element.addEventListener("click", (event) =>
 {
@@ -38,13 +39,16 @@ async function getSkills(url)
                         target = target.parentElement;
                     let data = await(await fetch("../api/data/skills/" + target.dataset.skill + ".json")).json();
                     inspector.querySelector("img").src = "../img/skills/" + target.dataset.skill + ".png";
+                    skillSelected = target.dataset.skill;
                     inspector.querySelector("h2").textContent = data.label;
                     inspector.querySelector("p.desc").textContent = data.description;
                     inspector.querySelector("p.rarity").textContent = "Rarity: " + toPrettyString(target.dataset.rarity);
-                    inspector.querySelector("button").style.visibility = "hidden";
+                    let button = inspector.querySelector("button");
+                    button.style.visibility = "hidden";
+                    button.removeEventListener("click", toggleSkill);
                     inspector.style.display = "flex";
                     if("toggle" in target.dataset)
-                        skillToggle(target);
+                        createButtonToggle(target);
                 })
             });
         }
@@ -73,28 +77,32 @@ document.querySelector("content filters .search").addEventListener("click", func
     getSkills(url);
 });
 
-function skillToggle(target)
+function createButtonToggle(target)
 {
     let toggle = target.dataset.toggle == 1 ? true : false;
     let button = inspector.querySelector("button");
     button.dataset.status = toggle ? "enabled" : "disabled";
     button.textContent = (toggle ? "Enabled" : "Disabled");
     button.style.visibility = "visible";
-    button.onclick = () =>
+    button.addEventListener("click", toggleSkill);
+}
+
+function toggleSkill(event)
+{
+    event.target.style.visibility = "hidden";
+    let target = document.querySelector('skills skill[data-skill="' + skillSelected + '"]');
+    let toggle = target.dataset.toggle == 1 ? true : false;
+    let request = new XMLHttpRequest();
+    request.open("PATCH", "../api/skills/" + getCookie("username") + "/" + skillSelected, true);
+    request.onload = function ()
     {
-        button.style.visibility = "hidden";
-        let request = new XMLHttpRequest();
-        request.open("PATCH", "../api/skills/" + getCookie("username") + "/" + target.dataset.skill, true);
-        request.onload = function ()
+        if(this.status >= 200 && this.status < 300)
         {
-            if(this.status >= 200 && this.status < 300)
-            {
-                target.dataset.toggle = ((!toggle) ? 1 : 0);
-                skillToggle(target, button);
-            }
-        };
-        request.setRequestHeader("Session-Key", getCookie("session"));
-        request.setRequestHeader("Session-Type", "website");
-        request.send((!toggle) ? "true" : "false");
-    }
+            target.dataset.toggle = ((!toggle) ? 1 : 0);
+            createButtonToggle(target);
+        }
+    };
+    request.setRequestHeader("Session-Key", getCookie("session"));
+    request.setRequestHeader("Session-Type", "website");
+    request.send((!toggle) ? "true" : "false");
 }
