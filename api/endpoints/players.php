@@ -276,6 +276,18 @@
             http_response_code(204);
             break;
 
+        case "OPTIONS":
+            echo json_encode(["available-endpoints" => [
+                'GET /players',
+                'GET /players/{$username}',
+                'GET /players/{$username}/login',
+                'GET /players/{$username}/session',
+                'POST /players',
+                'PATCH /players/{$username}',
+                'DELETE /players/{$username}'
+            ]]);
+            break;
+
         default:
             exitApi(501, "Method not implemented");
             return;

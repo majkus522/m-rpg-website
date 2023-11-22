@@ -46,6 +46,13 @@
             http_response_code(204);
             break;
 
+        case "OPTIONS":
+            echo json_encode(["available-endpoints" => [
+                'GET /password-recovery',
+                'PATCH /password-recovery/{$code}'
+            ]]);
+            break;
+
         default:
             exitApi(501, "Method not implemented");
             return;

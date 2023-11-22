@@ -94,6 +94,14 @@
             http_response_code(204);
             break;
 
+        case "OPTIONS":
+            echo json_encode(["available-endpoints" => [
+                'GET /fake-status/${username}',
+                'POST /fake-status/${username}',
+                'PATCH /fake-status/${username}'
+            ]]);
+            break;
+
         default:
             exitApi(501, "Method not implemented");
             return;

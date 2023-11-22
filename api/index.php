@@ -25,9 +25,7 @@
     {
         for($index = 0; $index < sizeof($endpoints); $index++)
             $endpoints[$index] = str_replace("endpoints/", "", str_replace(".php", "", $endpoints[$index]));
-        $obj = new stdClass();
-        $obj->avaliableEndpoints = $endpoints;
-        echo json_encode($obj);
+       echo json_encode(["available-endpoints" => $endpoints]);
         exit();
     }
     if(in_array("endpoints/" . $requestUrlPart[$urlIndex] . ".php", $endpoints))

@@ -118,6 +118,14 @@
             http_response_code(204);
             break;
 
+        case "OPTIONS":
+            echo json_encode(["available-endpoints" => [
+                'GET /skills/{$username}',
+                'GET /skills/{$username}/{$skill}',
+                'PATCH /skills/{$username}/{$skill}'
+            ]]);
+            break;
+
         default:
             exitApi(501, "Method not implemented");
             return;
