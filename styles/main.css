@@ -16,7 +16,7 @@ body
     background-color: var(--background);
     color: var(--color);
     width: 100%;
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -53,4 +53,19 @@ select:-webkit-autofill:active
 {
     box-shadow: 0 0 0 100px var(--inputBackground) inset !important;
     -webkit-text-fill-color: var(--color);
+}
+
+main
+{
+    max-width: 1400px;
+    margin: 20px;
+    min-width: 1200px;
+}
+
+@media (max-width: 1200px)
+{
+    main
+    {
+        min-width: 90%;
+    }
 }

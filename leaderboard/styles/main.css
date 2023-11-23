@@ -1,12 +1,11 @@
 main
 {
-    background-color: #565656;
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
     justify-content: center;
     padding: 30px;
-    width: 1400px;
+    background-color: #565656;
 }
 
 h1

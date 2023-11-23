@@ -1,26 +1,36 @@
-body > nav
+header
 {
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    background-color: var(--background);
     position: sticky;
     top: 0;
     left: 0;
-    gap: 5px;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     width: 100%;
+    height: 50px;
+    padding: 5px;
 }
 
-body > nav div
+header > nav
+{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-left: auto;
+}
+
+header > nav div
 {
     background-color: var(--background);
     color: var(--color);
     width: 120px;
     text-align: center;
     position: relative;
+    border: 2px solid #efefef;
 }
 
-body > nav a
+header > nav a
 {
     width: 100%;
     height: 100%;
@@ -29,24 +39,75 @@ body > nav a
     cursor: pointer;
 }
 
-body > nav > div:hover
+header > nav > div:hover
 {
     background-color: var(--backgroundHover);
 }
 
-body > nav > div > div
+header > nav > div > div
 {
     position: absolute; 
     display: none;
     right: 0;
 }
 
-body > nav > div:hover > div
+header > nav > div:hover > div
 {
     display: block;
 }
 
-body > nav > div > div > a:hover
+header > nav > div > div > a:hover
 {
     background-color: var(--backgroundHover);
+}
+
+header div.ham
+{
+    border: 2px solid #efefef;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    display: none;
+    margin-left: auto;
+}
+
+@media (max-width: 767px)
+{
+    header
+    {
+        flex-wrap: wrap;
+    }
+
+    header nav
+    {
+        display: none;
+        margin: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        font-size: 2em;
+        background-color: rgba(86, 86, 86, 0.8);
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    header nav div
+    {
+        width: auto;
+    }
+
+    header > div.ham
+    {
+        display: flex;
+    }
+
+    header > nav > div > div
+    {
+        display: block;
+    }
+}
+    
+@media (max-width: 479px)
+{
+    
 }
