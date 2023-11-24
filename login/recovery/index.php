@@ -1,6 +1,6 @@
 <?php
-    $extraPath = "../../";
-    require $extraPath . "imports/loginCheck.php";
+    $extraPath = "../..";
+    require $extraPath . "/imports/loginCheck.php";
     $codePresent = isset($_GET["code"]);
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
     </head>
     <body>
         <?php
-            require $extraPath . "imports/nav.php";
+            require $extraPath . "/imports/nav.php";
         ?>
         <main>
             <?php
@@ -56,7 +56,7 @@
                 }            
             ?></main>
         <?php
-            require $extraPath . "imports/footer.html";
+            require $extraPath . "/imports/footer.html";
         ?>
     </body>
 </html>

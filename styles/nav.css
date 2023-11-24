@@ -6,59 +6,53 @@ header
     background-color: var(--background);
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     height: 50px;
     padding: 5px;
 }
 
-header > nav
+header nav
 {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 10px;
     margin-left: auto;
 }
 
-header > nav div
+header nav > div
 {
-    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    background-color: #676767;
     color: var(--color);
-    width: 120px;
+    width: 150px;
     text-align: center;
-    position: relative;
     border: 2px solid #efefef;
+    height: 100%;
 }
 
-header > nav a
+header nav > div > a
 {
     width: 100%;
     height: 100%;
     padding: 10px;
-    display: block;
     cursor: pointer;
 }
 
-header > nav > div:hover
+header nav > div:hover > a:hover
 {
-    background-color: var(--backgroundHover);
+    background-color: #7d7d7d;
 }
 
-header > nav > div > div
+header nav > div > a:not(:first-child)
 {
-    position: absolute; 
+    border-top: 2px solid #efefef;
+}
+
+header nav > div:not(:hover) > a:not(:first-child)
+{
     display: none;
-    right: 0;
-}
-
-header > nav > div:hover > div
-{
-    display: block;
-}
-
-header > nav > div > div > a:hover
-{
-    background-color: var(--backgroundHover);
 }
 
 header div.ham
@@ -69,6 +63,18 @@ header div.ham
     border-radius: 5px;
     display: none;
     margin-left: auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+}
+
+header div.ham span
+{
+    height: 4px;
+    width: 100%;
+    background-color: #efefef;
 }
 
 @media (max-width: 767px)
@@ -85,25 +91,19 @@ header div.ham
         width: 100%;
         flex-direction: column;
         align-items: center;
-        font-size: 2em;
         background-color: rgba(86, 86, 86, 0.8);
-        padding-top: 20px;
-        padding-bottom: 10px;
+        padding: 20px;
+        overflow: hidden;
     }
 
-    header nav div
+    header nav > div > a
     {
-        width: auto;
+        display: block !important;
     }
 
     header > div.ham
     {
         display: flex;
-    }
-
-    header > nav > div > div
-    {
-        display: block;
     }
 }
     

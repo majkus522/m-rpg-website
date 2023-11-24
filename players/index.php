@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../styles/main.css" rel="stylesheet" type="text/css">
         <?php
-            $extraPath = "../";
+            $extraPath = "..";
             require "../imports/loginCheck.php";
             if(!$validLogin)
             {
@@ -26,7 +26,7 @@
                         break;
 
                     case "statusFake":
-                        $apiResult = callApi("../api/skills/$_COOKIE[username]/statusFake", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+                        $apiResult = callApi("skills/$_COOKIE[username]/statusFake", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
                         if($apiResult->code >= 200 && $apiResult->code < 300)
                             $file = "statusFake";
                         break;

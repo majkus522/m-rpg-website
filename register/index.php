@@ -1,5 +1,5 @@
 <?php
-    $extraPath = "../";
+    $extraPath = "..";
     require "../imports/loginCheck.php";
     if($validLogin)
     {

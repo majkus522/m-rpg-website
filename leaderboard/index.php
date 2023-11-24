@@ -6,7 +6,7 @@
         <title>M-RPG - Login</title>
         <link href="../styles/main.css" rel="stylesheet" type="text/css">
         <?php
-            $extraPath = "../";
+            $extraPath = "..";
             require "../imports/loginCheck.php";
             $first = true;
             foreach(glob("styles/*.css") as $file)
@@ -28,7 +28,7 @@
                 $params = array_merge($params, json_decode(file_get_contents("../api/data/playerStats.json")));
                 foreach($params as $element)
                 {
-                    $apiResult = callApi("../api/players?order=" . $element->short . "-desc", "GET", ["Result-Count: 10"]);
+                    $apiResult = callApi("players?order=" . $element->short . "-desc", "GET", ["Result-Count: 10"]);
                     echo <<< END
             <div>
                 <h2>$element->label</h2>
