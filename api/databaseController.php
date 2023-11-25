@@ -1,5 +1,5 @@
 <?php
-    function connectToDatabase(string $query, string $types = "", array $parameters = []):array
+    function connectToDatabase(string $query, string $types = "", array $parameters = [], &$insertId = 0):array
     {
         require "databaseConfig.php";
         $mysqli = new mysqli($host, $user, $password, $database);
@@ -9,6 +9,8 @@
         $stmt->execute();
         $result = [];
         $stmtResult = $stmt->get_result();
+        if(str_starts_with($query, "insert"))
+            $insertId = $stmt->insert_id;
         if($stmtResult === false)
             return [];
 		while($row = $stmtResult->fetch_assoc())
