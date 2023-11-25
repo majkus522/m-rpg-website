@@ -19,7 +19,7 @@
                             if($headerType === false)
                                 exitApi(400, "Enter session type");
                             $query = 'select `password`, `id` from `players` where `username` = ? limit 1';
-                            $queryResult = connectToDatabase($query, array("s", $requestUrlPart[$urlIndex + 1]));
+                            $queryResult = connectToDatabase($query, "s", [$requestUrlPart[$urlIndex + 1]]);
                             if(empty($queryResult))
                                 exitApi(404, "Player doesn't exists");
                             if(!password_verify(base64_decode($headerPassword), decode($queryResult[0]->password)))
@@ -32,8 +32,8 @@
                             $query .= ') values (?, ?, ?';
                             if($headerTemp)
                                 $query .= ', 1, now()';
-                            connectToDatabase('delete from `players-sessions` where `player` = ? and `type` = ?', array("is", $queryResult[0]->id, $headerType));
-                            connectToDatabase($query . ')', array("sis", $key, $queryResult[0]->id, $headerType));
+                            connectToDatabase('delete from `players-sessions` where `player` = ? and `type` = ?', "is", [$queryResult[0]->id, $headerType]);
+                            connectToDatabase($query . ')', "sis", [$key, $queryResult[0]->id, $headerType]);
                             if($requestMethod != "HEAD")
                                 echo $key;
                             else
@@ -49,11 +49,11 @@
                             if($headerType === false)
                                 exitApi(400, "Enter session type");
                             $query = 'select `id` from `players` where `username` = ? limit 1';
-                            $queryResult = connectToDatabase($query, array("s", $requestUrlPart[$urlIndex + 1]));
+                            $queryResult = connectToDatabase($query, "s", [$requestUrlPart[$urlIndex + 1]]);
                             if(empty($queryResult))
                                 exitApi(404, "Player doesn't exists");
                             $query = 'select `players-sessions`.`id` from `players-sessions` where `type` = ? and `key` = ? and `player` = ? limit 1';
-                            if(empty(connectToDatabase($query, array("ssi", $headerType, $headerKey, $queryResult[0]->id))))
+                            if(empty(connectToDatabase($query, "ssi", [$headerType, $headerKey, $queryResult[0]->id])))
                                 exitApi(401, "Incorrect session key");
                             http_response_code(204);
                             break;
@@ -74,7 +74,7 @@
                         $query .= '`id`, `username`';
                         http_response_code(206);
                     }
-                    $queryResult = connectToDatabase($query . ' from `view-players` where `username` = ? limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
+                    $queryResult = connectToDatabase($query . ' from `view-players` where `username` = ? limit 1', "s", [$requestUrlPart[$urlIndex + 1]]);
                     if(empty($queryResult))
                         exitApi(404, "Player doesn't exists");
                     if($requestMethod != "HEAD")
@@ -171,7 +171,7 @@
                 array_push($parameters, $limit, $offset);
                 $types .= "ii";
                 $query .= $order . ' limit ? offset ?';
-                $queryResult = connectToDatabase($query, array_merge(array($types), $parameters));
+                $queryResult = connectToDatabase($query, $types, $parameters);
                 if(empty($queryResult))
                     exitApi(404, "Can't find any player matching conditions");
                 header("Return-Count: " . sizeof($queryResult));
@@ -179,7 +179,7 @@
                 if($requestMethod != "HEAD")
                     echo json_encode($queryResult);
                 else
-                    echo header("Content-Length: " . strlen(json_encode($queryResult)));
+                    header("Content-Length: " . strlen(json_encode($queryResult)));
             }
             break;
 
@@ -201,13 +201,13 @@
             if($validPassword !== true)
                 exitApi(400, $validPassword);
             $query = 'select `id` from `players` where `username` = ?';
-            if(!empty(connectToDatabase($query, array("s", $data->username))))
+            if(!empty(connectToDatabase($query, "s", [$data->username])))
                 exitApi(400, "Player already exists");
             $query = 'select `id` from `players` where `email` = ?';
-            if(!empty(connectToDatabase($query, array("s", $data->email))))
+            if(!empty(connectToDatabase($query, "s", [$data->email])))
                 exitApi(400, "Email already taken");
             $query = 'insert into `players`(`username`, `email`, `password`) values (?, ?, ?)';
-            connectToDatabase($query, array("sss", $data->username, $data->email, encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT))));
+            connectToDatabase($query, "sss", [$data->username, $data->email, encode(password_hash(base64_decode($data->password), PASSWORD_DEFAULT))]);
             http_response_code(201);
 
             $apiResult = callApi("players/{$data->username}/login", "GET", ["Password: $data->password", "Session-Type: website"]);
@@ -258,7 +258,7 @@
                     }
                 }
                 $query .= ' where `username` = ?';
-                connectToDatabase($query, array_merge(array($types . "s"), $parameters, array($requestUrlPart[$urlIndex + 1])));
+                connectToDatabase($query, $types . "s", array_merge($parameters, [$requestUrlPart[$urlIndex + 1]]));
             }
             else
                 exitApi(400, "Specify player");
@@ -269,7 +269,7 @@
             if(isSingleGet())
             {
                 isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-                connectToDatabase('delete from `players` where `username` = ?', array("s", $requestUrlPart[$urlIndex + 1]));
+                connectToDatabase('delete from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
             }
             else
                 exitApi(400, "Specify player");

@@ -15,7 +15,7 @@
             $queryResult = $queryResult[0];
             $code = generateCode($queryResult->id);
             $query = 'insert into `password-recovery` (`player`, `code`) values (?, ?)';
-            connectToDatabase($query, ["is", $queryResult->id, $code]);
+            connectToDatabase($query, "is", [$queryResult->id, $code]);
             $message = file_get_contents("messages/password-recovery.html");
             $message = str_replace("$[username]", $queryResult->username, $message);
             $message = str_replace("$[code]", $code, $message);
@@ -31,7 +31,7 @@
             if(!isset($data->password))
                 exitApi(400, "Enter password");
             $query = 'select `player` from `password-recovery` where `code` = ? and hour(timediff(now(), `date`)) < 24 limit 1';
-            $queryResult = connectToDatabase($query, ["s", $requestUrlPart[$urlIndex + 1]]);
+            $queryResult = connectToDatabase($query, "s", [$requestUrlPart[$urlIndex + 1]]);
             if(empty($queryResult))
                 exitApi(404, "Link expired");
             $password = base64_decode($data->password);
@@ -40,9 +40,9 @@
                 exitApi(400, $passTest);
             $password = encode(password_hash($password, PASSWORD_DEFAULT));
             $query = 'update `players` set `password` = ? where `id` = ?';
-            connectToDatabase($query, ["si", $password, $queryResult[0]->player]);
+            connectToDatabase($query, "si", [$password, $queryResult[0]->player]);
             $query = 'delete from `password-recovery` where `player` = ?';
-            connectToDatabase($query, ["i", $queryResult[0]->player]);
+            connectToDatabase($query, "i", [$queryResult[0]->player]);
             http_response_code(204);
             break;
 

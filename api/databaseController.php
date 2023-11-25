@@ -1,15 +1,11 @@
 <?php
-    function connectToDatabase(string $query, array $parameters = []):array
+    function connectToDatabase(string $query, string $types = "", array $parameters = []):array
     {
         require "databaseConfig.php";
         $mysqli = new mysqli($host, $user, $password, $database);
         $stmt = $mysqli->prepare($query);
-        if(!empty($parameters))
-        {
-            $types = $parameters[0];
-            unset($parameters[0]);
+        if((!empty($parameters)) && strlen($types) > 0)
             $stmt->bind_param($types, ...$parameters);
-        }
         $stmt->execute();
         $result = [];
         $stmtResult = $stmt->get_result();

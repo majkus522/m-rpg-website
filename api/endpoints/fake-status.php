@@ -12,7 +12,7 @@
             if(!isSingleGet())
                 exitApi(400, "Enter player");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            $queryResult = connectToDatabase('select * from `fake-status` where `player` = (select `id` from `players` where `username` = ? limit 1) limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
+            $queryResult = connectToDatabase('select * from `fake-status` where `player` = (select `id` from `players` where `username` = ? limit 1) limit 1', "s", [$requestUrlPart[$urlIndex + 1]]);
             if(empty($queryResult))
                 exitApi(404, "Player doesn't have fake status");
             if($requestMethod == "GET")
@@ -24,8 +24,8 @@
             if(!isSingleGet())
                 exitApi(400, "Enter player");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            $queryResult = connectToDatabase('select `id` from `players` where `username` = ? limit 1', array("s", $requestUrlPart[$urlIndex + 1]));
-            if(!empty(connectToDatabase('select `id` from `fake-status` where `player` = ? limit 1', array("i", $queryResult[0]->id))))
+            $queryResult = connectToDatabase('select `id` from `players` where `username` = ? limit 1', "s", [$requestUrlPart[$urlIndex + 1]]);
+            if(!empty(connectToDatabase('select `id` from `fake-status` where `player` = ? limit 1', "i", [$queryResult[0]->id])))
                 exitApi(404, "Player already have a fake status");
             $data = json_decode(file_get_contents("php://input"));
             $query = 'insert into `fake-status` (`player`';
@@ -51,7 +51,7 @@
                 $types .= $value;
                 array_push($parameters, $data->$key === "none" ? null : $data->$key);
             }
-            connectToDatabase($query . $queryParameters . ')', array_merge(array($types), $parameters));
+            connectToDatabase($query . $queryParameters . ')', $types, $parameters);
             http_response_code(201);
             break;
 
@@ -59,7 +59,7 @@
             if(!isSingleGet())
                 exitApi(400, "Enter player");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            if(empty(connectToDatabase('select `id` from `fake-status` where `player` = ?', array("i", $queryResult[0]->id))))
+            if(empty(connectToDatabase('select `id` from `fake-status` where `player` = (select `id` from `players` where `username` = ?)', "s", [$requestUrlPart[$urlIndex + 1]])))
                 exitApi(404, "Player doesn't have fake status");
             $data = json_decode(file_get_contents("php://input"));
             $types = "";
@@ -90,7 +90,7 @@
             }
             if(empty($parameters))
                 exitApi(400, "Enter some changes");
-            connectToDatabase($query . ' where `player` = ?', array_merge(array($types . "i"), $parameters, array($queryResult[0]->id)));
+            connectToDatabase($query . ' where `player` = (select `id` from `players` where `username` = ?)', $types . "s", array_merge($parameters, [$requestUrlPart[$urlIndex + 1]]));
             http_response_code(204);
             break;
 

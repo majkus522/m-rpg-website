@@ -14,7 +14,7 @@
                 if(!file_exists("data/skills/" . $requestUrlPart[$urlIndex + 2] . ".json"))
                     exitApi(404, "Skill doesn't exists");
                 $query .= ' and `skills`.`skill` = ?';
-                if(empty(connectToDatabase($query, array("ss", $requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 2]))))
+                if(empty(connectToDatabase($query, "ss", [$requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 2]])))
                     exitApi(404, "Player doesn't have this skill");
                 http_response_code(204);
             }
@@ -88,7 +88,7 @@
                 if(strlen($rarity) > 2)
                     $query .= ' and ' . $rarity . ")";
                 $query .= $order . ' limit ' . $limit . ' offset ' . $offset;
-                $queryResult = connectToDatabase($query, array_merge(array($types . $rarityTypes), $parameters, $rarityParameters));
+                $queryResult = connectToDatabase($query, $types . $rarityTypes, array_merge($parameters, $rarityParameters));
                 if(empty($queryResult))
                     exitApi(404, "Can't find any skill matching conditions");
                 header("Return-Count: " . sizeof($queryResult));
@@ -114,7 +114,7 @@
                 exitApi(400, "Enter new toggle value");
             $toggle = filter_var($data, FILTER_VALIDATE_BOOLEAN);
             $query = 'update `skills` set `toggle` = ? where `player` = (select `id` from `players` where `username` = ? limit 1) and `skill` = ?';
-            connectToDatabase($query, array("iss", (int) $toggle, $requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 2]));
+            connectToDatabase($query, "iss", [(int) $toggle, $requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 2]]);
             http_response_code(204);
             break;
 
