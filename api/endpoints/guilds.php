@@ -11,11 +11,13 @@
                 $queryResult = connectToDatabase($query, "s", [$requestUrlPart[$urlIndex + 1]]);
                 if(empty($queryResult))
                     exitApi(404, "Guild doesn't exists");
+                $queryResult = $queryResult[0];
             }
             else
             {
                 $query = 'select * from `guilds`';
                 $queryResult = connectToDatabase($query);
+                header("Return-Count: " . sizeof($queryResult));
             }
             if($requestMethod == "HEAD")
                 header("Content-Length: " . strlen(json_encode($queryResult)));
@@ -30,7 +32,7 @@
             if(!isset($data->leader))
                 exitApi(400, "Enter guilds leader");
             if(strlen($data->name) > 100)
-                exitApi(400, "Guilds name is to long");
+                exitApi(400, "Guilds name is too long");
             isPlayerLogged($data->leader);
             $slug = slugify($data->name);
             if(!empty(connectToDatabase('select `id` from `guilds` where `slug` = ?', "s", [$slug])))

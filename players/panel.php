@@ -89,6 +89,19 @@ END;
                             echo $result->content->intl * 3 + 10;
                         ?></p>
                     </stat>
+<?php
+                        if($result->content->guild != null)
+                        {
+                            $guild = callApi("guilds/" . $result->content->guild, "GET")->content->name;
+                            echo <<< END
+                    <stat>
+                        <p>Guild</p>
+                        <p>$guild</p>
+                    </stat>
+
+END;
+                        }
+                    ?>
                 </info>
             </content>
         </main>
