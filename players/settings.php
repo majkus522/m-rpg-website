@@ -18,14 +18,14 @@
             <content>
                 <div class="email">
                     Email
-                    <input type="email" value="<?php echo $result->content->email; ?>">
+                    <input type="email" value="<?php echo $result->content->email; ?>" data-old="<?php echo $result->content->email; ?>">
                     <div class="loading"><div></div></div>
                     <input type="button" value="Update">
                     <p class="error"></p>
                 </div>
                 <div class="password">
                     Password
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="New password" autocomplete="new-password">
                     <mrpg-checkbox class="show">Show password</mrpg-checkbox>
                     <div class="loading"><div></div></div>
                     <input type="button" value="Update">

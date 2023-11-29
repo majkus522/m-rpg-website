@@ -6,7 +6,7 @@ class MrgpBar extends HTMLElement
         this.style = "display: block; width: 100%";
         const shadow = this.attachShadow({mode: "closed"});
         let style = document.createElement("style");
-        style.innerHTML = "div { height: 25px; background-color: #343434; padding: 3px; box-sizing: border-box; } div > div { height: 100%; background-color: #898989; }";
+        style.innerHTML = "div { height: 25px; background-color: #343434; padding: 3px; box-sizing: border-box; } div > div { height: 100%; background-color: #898989; padding: 0; }";
         shadow.append(style);
         let background = document.createElement("div");
         let fill = document.createElement("div");

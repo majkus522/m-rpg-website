@@ -1,6 +1,8 @@
 let email = document.querySelector("main div.email");
 email.querySelector("input[type='button']").addEventListener("click", () =>
 {
+    if(email.querySelector("input").value == email.querySelector("input").dataset.old)
+        return;
     email.querySelector("div.loading").style.display = "block";
     email.querySelector("input[type='button']").style.display = "none";
     send({ email: email.querySelector("input[type='email']").value}, function ()
@@ -17,6 +19,11 @@ email.querySelector("input[type='button']").addEventListener("click", () =>
 let password = document.querySelector("main div.password");
 password.querySelector("input[type='button']").addEventListener("click", () =>
 {
+    if(password.querySelector("input").value.length < 6)
+    {
+        password.querySelector("p").textContent = "Password must be at least 6 characters long";
+        return;
+    }
     password.querySelector("div.loading").style.display = "block";
     password.querySelector("input[type='button']").style.display = "none";
     let newPassword = btoa(password.querySelector("input[type='text'], input[type='password']").value);

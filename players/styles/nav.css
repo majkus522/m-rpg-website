@@ -13,12 +13,11 @@ main nav a
 {
     display: block;
     padding: 10px;
-    background-color: #787878;
     color: #efefef;
     border: 1px solid #efefef;
 }
 
 main nav a:hover
 {
-    background-color: #898989;
+    background-color: #787878;
 }
