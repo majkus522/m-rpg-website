@@ -50,7 +50,14 @@
             $queryResult = connectToDatabase('select `username` from `guilds` left join `players` on `guilds`.`leader` = `players`.`id` where `slug` = ?', "s" , [$requestUrlPart[$urlIndex + 1]]);
             if(empty($queryResult))
                 exitApi(404, "Guild doesn't exists");
-            isPlayerLogged($queryResult[0]->username);
+            $loginResult = isPlayerLogged($queryResult[0]->username, false);
+            if($loginResult !== true)
+            {
+                if($loginResult->code == 401)
+                    exitApi(401, "Only leader can delete guild");
+                else
+                    exitApi($loginResult->code, $loginResult->message);
+            }
             connectToDatabase('delete from `guilds` where `slug` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
             http_response_code(204);
             break;
