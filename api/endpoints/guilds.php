@@ -7,22 +7,39 @@
         case "HEAD":
             if(isSingleGet())
             {
-                $query = 'select * from `guilds` where `slug` = ?';
-                $queryResult = connectToDatabase($query, "s", [$requestUrlPart[$urlIndex + 1]]);
-                if(empty($queryResult))
-                    exitApi(404, "Guild doesn't exists");
-                $queryResult = $queryResult[0];
+                if(isset($requestUrlPart[$urlIndex + 2]))
+                {
+                    switch($requestUrlPart[$urlIndex + 2])
+                    {
+                        case "members":
+                            $queryResult = connectToDatabase('select `username` from `players-sessions` join `players` on `players-sessions`.`player` = `players`.`id` where `key` = ? limit 1', "s", [getHeader("Session-Key")]);
+                            isPlayerLogged($queryResult[0]->username ?? "");
+                            $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`leader` where `slug` = ? union select `username` from `guilds` join `players` on `players`.`guild` = `guilds`.`id` where `slug` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 1]]);
+                            $result = [];
+                            foreach($queryResult as $element)
+                                array_push($result, $element->username);
+                            break;
+                    }
+                }
+                else
+                {
+                    $query = 'select * from `guilds` where `slug` = ?';
+                    $queryResult = connectToDatabase($query, "s", [$requestUrlPart[$urlIndex + 1]]);
+                    if(empty($queryResult))
+                        exitApi(404, "Guild doesn't exists");
+                    $result = $queryResult[0];
+                }
             }
             else
             {
                 $query = 'select * from `guilds`';
-                $queryResult = connectToDatabase($query);
-                header("Return-Count: " . sizeof($queryResult));
+                $result = connectToDatabase($query);
+                header("Return-Count: " . sizeof($result));
             }
             if($requestMethod == "HEAD")
-                header("Content-Length: " . strlen(json_encode($queryResult)));
+                header("Content-Length: " . strlen(json_encode($result)));
             else
-                echo json_encode($queryResult);
+                echo json_encode($result);
             break;
 
         case "POST":
