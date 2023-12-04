@@ -61,6 +61,42 @@
             http_response_code(201);
             break;
 
+        case "PATCH":
+            if(!isSingleGet())
+                exitApi(400, "Enter guilds name");
+            if(!isset($requestUrlPart[$urlIndex + 2]))
+                exitApi(400, "Enter operation");
+            $queryResult = connectToDatabase('select `guilds`.`id`, `players`.`username` from `guilds` left join `players` on `players`.`id` = `guilds`.`leader` where `slug` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
+            if(empty($queryResult))
+                exitApi(404, "Guild doesn't exists");
+            $player = file_get_contents("php://input");
+            if(strlen($player) == 0)
+                exitApi(400, "Enter player");
+            if(empty(connectToDatabase('select `id` from `players` where `username` = ?', "s", [$player])))
+                exitApi(404, "Player doesn't exists");
+            $guildData = $queryResult[0];
+            isPlayerLogged($guildData->username);
+            switch($requestUrlPart[$urlIndex + 2])
+            {
+                case "add":
+                    if(empty(connectToDatabase('select `guild` from `players` where `username` = ? and `guild` is null', "s", [$player])))
+                        exitApi(400, "Player is already part of the guild");
+                    connectToDatabase('update `players` set `guild` = ? where `username` = ?', "is", [$guildData->id, $player]);
+                    break;
+
+                case "kick":
+                    if(empty(connectToDatabase('select `id` from `players` where `username` = ? and `guild` = ?', "si", [$player, $guildData->id])))
+                        exitApi(400, "Player isn't part of your guild");
+                    connectToDatabase('update `players` set `guild` = null where `username` = ?', "s", [$player]);
+                    break;
+
+                default:
+                    exitApi(400, "Unknown option");
+                    break;
+            }
+            http_response_code(204);
+            break;
+
         case "DELETE":
             if(!isSingleGet())
                 exitApi(400, "Enter guilds name");
@@ -83,7 +119,10 @@
             echo json_encode(["available-endpoints" => [
                 'GET /guilds',
                 'GET /guilds/{$slug}',
+                'GET /guilds/{$slug}/members',
                 'POST /guilds',
+                'PATCH /guilds/{$slug}/add',
+                'PATCH /guilds/{$slug}/kick',
                 'DELETE /guilds/{$slug}'
             ]]);
             break;

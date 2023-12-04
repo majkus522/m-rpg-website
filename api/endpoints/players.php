@@ -215,9 +215,26 @@
             break;
 
         case "PATCH":
-            if(isSingleGet())
+            if(!isSingleGet())
+                exitApi(400, "Enter player");
+            isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+            if(isset($requestUrlPart[$urlIndex + 2]))
             {
-                isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+                switch($requestUrlPart[$urlIndex + 2])
+                {
+                    case "leave":
+                        if(empty(connectToDatabase('select `guild` from `players` where `username` = ? and `guild` is not null limit 1', "s", [$requestUrlPart[$urlIndex + 1]])))
+                            exitApi(400, "You are not part of any guild");
+                        connectToDatabase('update `players` set `guild` = null where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
+                        break;
+
+                    default:
+                        exitApi(400, "Unknown option");
+                        break;
+                }
+            }
+            else
+            {
                 $vars = get_object_vars(json_decode(file_get_contents("php://input")));
                 if(empty($vars))
                     exitApi(400, "Enter some changes");
@@ -260,8 +277,6 @@
                 $query .= ' where `username` = ?';
                 connectToDatabase($query, $types . "s", array_merge($parameters, [$requestUrlPart[$urlIndex + 1]]));
             }
-            else
-                exitApi(400, "Specify player");
             http_response_code(204);
             break;
 
@@ -284,6 +299,7 @@
                 'GET /players/{$username}/session',
                 'POST /players',
                 'PATCH /players/{$username}',
+                'PATCH /players/{$username}/leave',
                 'DELETE /players/{$username}'
             ]]);
             break;
