@@ -18,6 +18,7 @@
                             $result = [];
                             foreach($queryResult as $element)
                                 array_push($result, $element->username);
+                            header("Return-Count: " . sizeof($result));
                             break;
                     }
                 }

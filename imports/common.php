@@ -52,7 +52,7 @@
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $result = json_decode(substr($response , $headerSize));
-        if(gettype($result) != "object")
+        if(gettype($result) != "object" && gettype($result) != "array")
             $result = substr($response , $headerSize);
         return new ApiResult($code, $result, headersToArray(substr($response, 0, $headerSize)));
     }

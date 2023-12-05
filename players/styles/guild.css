@@ -1,0 +1,77 @@
+@import "main.css";
+@import "nav.css";
+@import "vars.css";
+
+content
+{
+    display: flex;
+    gap: 200px;
+    padding: 30px;
+    align-items: flex-start;
+}
+
+table
+{
+    padding: 30px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr
+{
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 2px solid #efefef;;
+}
+
+td
+{
+    padding: 12px 20px;
+}
+
+td:nth-child(2)
+{
+    width: 100%;
+}
+
+button
+{
+    background-color: transparent;
+    color: white;
+    border: 2px solid #efefef;
+    padding: 6px 20px;
+    font-size: 20px;
+}
+
+button:hover
+{
+    background-color: #787878;
+    cursor: pointer;
+}
+
+content div
+{
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    align-items: center;
+    border: 2px solid #efefef;
+    padding: 25px;
+    max-width: 350px;
+}
+
+content div h2
+{
+    font-size: 30px;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+content div p
+{
+    font-size: 24px;
+    white-space: nowrap;
+}

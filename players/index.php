@@ -18,11 +18,14 @@
                 switch($_GET["tab"])
                 {
                     case "settings":
-                        $file = "settings";
-                        break;
-
                     case "skills":
-                        $file = "skills";
+                        $file = $_GET["tab"];
+                        break;
+                        
+                    case "guild":
+                        $apiResult = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
+                        if($apiResult->content->guild != null)
+                            $file = "guild";
                         break;
 
                     case "statusFake":
