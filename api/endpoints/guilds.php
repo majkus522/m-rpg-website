@@ -7,27 +7,37 @@
         case "HEAD":
             if(isSingleGet())
             {
+                $queryResult = connectToDatabase('select * from `guilds` where `slug` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
+                if(empty($queryResult))
+                    exitApi(404, "Guild doesn't exists");
                 if(isset($requestUrlPart[$urlIndex + 2]))
                 {
                     switch($requestUrlPart[$urlIndex + 2])
                     {
                         case "members":
-                            $queryResult = connectToDatabase('select `username` from `players-sessions` join `players` on `players-sessions`.`player` = `players`.`id` where `key` = ? limit 1', "s", [getHeader("Session-Key")]);
-                            isPlayerLogged($queryResult[0]->username ?? "");
+                            $headerKey = getHeader("Session-Key");
+                            if($headerKey === false)
+                                exitApi(400, "Enter player session key");
+                            $queryResult = connectToDatabase('select `username` from `players-sessions` join `players` on `players-sessions`.`player` = `players`.`id` where `key` = ? limit 1', "s", [$headerKey]);
+                            if(empty($queryResult))
+                                exitApi(401, "Incorrect session key");
+                            if(empty(connectToDatabase('select `players`.`id` from `players` left join `guilds` on `guilds`.`id` = `players`.`guild` where `slug` = ? and `username` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $queryResult[0]->username])))
+                                exitApi(400, "You are not part of this guild");
+                            isPlayerLogged($queryResult[0]->username);
                             $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`leader` where `slug` = ? union select `username` from `guilds` join `players` on `players`.`guild` = `guilds`.`id` where `slug` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 1]]);
                             $result = [];
                             foreach($queryResult as $element)
                                 array_push($result, $element->username);
                             header("Return-Count: " . sizeof($result));
                             break;
+
+                        default:
+                            exitApi(400, "Unknown option");
+                            break;
                     }
                 }
                 else
                 {
-                    $query = 'select * from `guilds` where `slug` = ?';
-                    $queryResult = connectToDatabase($query, "s", [$requestUrlPart[$urlIndex + 1]]);
-                    if(empty($queryResult))
-                        exitApi(404, "Guild doesn't exists");
                     $result = $queryResult[0];
                 }
             }
