@@ -44,6 +44,7 @@ button
     border: 2px solid #efefef;
     padding: 6px 20px;
     font-size: 20px;
+    white-space: nowrap;
 }
 
 button:hover

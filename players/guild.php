@@ -34,7 +34,7 @@
                         <td>
 END;
                             if($isLeader && $element != $resultPlayer->username)
-                                echo "<button data-kick=\"$element\">Kick</button>";
+                                echo "<button data-player=\"$element\">Kick</button>";
                             echo <<< END
 </td>
                     </tr>
@@ -53,6 +53,7 @@ END;
                         if($isLeader)
                         {
                             echo "\t\t\t\t\t<button>Delete guild</button>\r\n";
+                            echo "\t\t\t\t\t<button>Select new leader</button>\r\n";
                         }
                     ?>
                     <p class="error"></p>
