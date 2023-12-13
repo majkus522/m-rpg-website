@@ -29,9 +29,14 @@
         exit();
     }
     if(in_array("endpoints/" . $requestUrlPart[$urlIndex] . ".php", $endpoints))
+    {
+        databaseOpen();
         require "endpoints/" . $requestUrlPart[$urlIndex] . ".php";
+    }
     else
         exitApi(404, "Unknown endpoint");
+
+    databaseClose();
 
     function exitApi(int $code, string|object $message):void
     {
@@ -44,6 +49,7 @@
             echo json_encode(array_combine(["message", "file", "line"], [$message, $data["file"], $data["line"]]));
         else
             header("Content-Length: " . strlen(json_encode(array_combine(["message", "file", "line"], [$message, $data["file"], $data["line"]]))));
+        databaseClose();
         die();
     }
 

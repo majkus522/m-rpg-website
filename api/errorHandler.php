@@ -17,6 +17,7 @@
                 echo $result;
             die();
         }
+        databaseClose();
     }
 
     function parseHandler():void
@@ -41,6 +42,7 @@
         header("Content-Length: " . strlen($result));
         if($requestMethod != "HEAD")
             echo $result;
+        databaseClose();
         die();
     }
 
