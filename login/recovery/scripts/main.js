@@ -6,14 +6,14 @@ button.addEventListener("click", () =>
     loading.style.display = "block";
     button.style.display = "none";
     let input = document.querySelector("form input[type='text']").value;
-    let url = "../../api/password-recovery?";
+    let url = "../../api/password-recovery";
+    let body = {};
     if(input.includes("@"))
-        url += "email";
+        body.email = input;
     else
-        url += "username";
-    url += "=" + input;
+        body.username = input;
     let request = new XMLHttpRequest();
-    request.open("GET", url, true);
+    request.open("POST", url, true);
     request.onload = function ()
     {
         loading.style.display = "none";
@@ -29,5 +29,5 @@ button.addEventListener("click", () =>
             error.textContent = JSON.parse(this.responseText).message;
         }
     }
-    request.send();
+    request.send(JSON.stringify(body));
 });

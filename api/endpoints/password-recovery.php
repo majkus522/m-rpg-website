@@ -1,12 +1,13 @@
 <?php
     switch($requestMethod)
     {
-        case "GET":
+        case "POST":
+            $data = json_decode(file_get_contents("php://input"));
             $query = 'select `id`, `username`, `email` from `players` where ';
-            if(isset($_GET["username"]))
-                $query .= '`username` = "' . $_GET["username"] . '"';
-            else if(isset($_GET["email"]))
-                $query .= '`email` = "' . $_GET["email"] . '"';
+            if(isset($data->username))
+                $query .= '`username` = "' . $data->username . '"';
+            else if(isset($data->email))
+                $query .= '`email` = "' . $data->email . '"';
             else
                 exitApi(400, "Enter username or email");
             $queryResult = connectToDatabase($query . ' limit 1');
@@ -21,7 +22,7 @@
             $message = str_replace("$[code]", $code, $message);
             require "mailer.php";
             sendMail($queryResult->email, "M-RPG Password recovery", $message);
-            http_response_code(204);
+            http_response_code(201);
             break;
 
         case "PATCH":
