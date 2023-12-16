@@ -10,13 +10,13 @@
         $stmt->execute();
         $result = [];
         $stmtResult = $stmt->get_result();
-        $stmt->close();
         if(str_starts_with($query, "insert"))
             $insertId = $stmt->insert_id;
         if($stmtResult === false)
             return [];
 		while($row = $stmtResult->fetch_assoc())
 			array_push($result, (object)$row);
+        $stmt->close();
         return $result;
     }
 

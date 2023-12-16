@@ -49,7 +49,7 @@
 
         case "OPTIONS":
             echo json_encode(["available-endpoints" => [
-                'GET /password-recovery',
+                'POST /password-recovery',
                 'PATCH /password-recovery/{$code}'
             ]]);
             break;

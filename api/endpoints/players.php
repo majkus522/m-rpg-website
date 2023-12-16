@@ -287,7 +287,7 @@
                 connectToDatabase('delete from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
             }
             else
-                exitApi(400, "Specify player");
+                exitApi(400, "Enter player");
             http_response_code(204);
             break;
 
