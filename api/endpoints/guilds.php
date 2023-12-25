@@ -43,8 +43,12 @@
             }
             else
             {
-                $query = 'select * from `guilds`';
-                $result = connectToDatabase($query);
+                require "headerItems.php";
+                $query = 'select * from `guilds` limit ? offset ?';
+                $types = "ii";
+                $result = connectToDatabase($query, $types, [$limit, $offset]);
+                if(empty($result))
+                    exitApi(404, "Can't find any guild matching conditions");
                 header("Return-Count: " . sizeof($result));
             }
             if($requestMethod == "HEAD")
@@ -143,6 +147,7 @@
                 'GET /guilds/{$slug}',
                 'GET /guilds/{$slug}/members',
                 'POST /guilds',
+                'PATCH /guilds/{$slug}',
                 'PATCH /guilds/{$slug}/add',
                 'PATCH /guilds/{$slug}/kick',
                 'DELETE /guilds/{$slug}'
