@@ -59,7 +59,7 @@
 
     function headersToArray(string $input):array
     {
-        $headers = array();
+        $headers = [];
         $part = explode("\r\n", $input);
         for ($index = 0; $index < sizeof($part); $index++)
         {

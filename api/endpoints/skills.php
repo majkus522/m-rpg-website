@@ -24,8 +24,8 @@
                 $order = "";
                 $types = "s";
                 $rarityTypes = "";
-                $parameters = array($requestUrlPart[$urlIndex + 1]);
-                $rarityParameters = array();
+                $parameters = [$requestUrlPart[$urlIndex + 1]];
+                $rarityParameters = [];
                 foreach($_GET as $key => $value)
                 {
                     switch($key)

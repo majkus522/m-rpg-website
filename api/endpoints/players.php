@@ -87,10 +87,10 @@
             {
                 $query = 'select `id`, `username` from `view-players` where 1 = 1';
                 $order = "";
-                $allowedParams = array("level", "money");
+                $allowedParams = ["level", "money"];
                 foreach(json_decode(file_get_contents("data/playerStats.json")) as $element)
                     array_push($allowedParams, $element->short);
-                $parameters = array();
+                $parameters = [];
                 $types = "";
                 foreach($_GET as $key => $value)
                 {
@@ -240,7 +240,7 @@
                     exitApi(400, "Enter some changes");
                 $query = 'update `players` set';
                 $first = true;
-                $parameters = array();
+                $parameters = [];
                 $types = "";
                 foreach($vars as $key => $value)
                 {

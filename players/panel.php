@@ -1,5 +1,5 @@
 <?php
-    $result = callApi("players/$_COOKIE[username]", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+    $result = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
     $playerStats = json_decode(file_get_contents("../api/data/playerStats.json"));
 ?>
         <title>M-RPG - <?php echo $result->content->username; ?></title>

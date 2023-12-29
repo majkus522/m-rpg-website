@@ -1,6 +1,6 @@
 <?php
     require "playerLogged.php";
-    $allowedParams = array("level" => "i", "money" => "i");
+    $allowedParams = ["level" => "i", "money" => "i"];
     foreach(json_decode(file_get_contents("data/playerStats.json")) as $element)
         $allowedParams[$element->short] = "i";
     $allowedParams["clazz"] = "s";
@@ -15,9 +15,10 @@
             $queryResult = connectToDatabase('select * from `fake-status` where `player` = (select `id` from `players` where `username` = ? limit 1) limit 1', "s", [$requestUrlPart[$urlIndex + 1]]);
             if(empty($queryResult))
                 exitApi(404, "Player doesn't have fake status");
-            if($requestMethod == "GET")
+            if($requestMethod == "HEAD")
+                header("Content-Length: " . strlen(json_encode($queryResult[0])));
+            else
                 echo json_encode($queryResult[0]);
-            echo header("Content-Length: " . strlen(json_encode($queryResult[0])));
             break;
 
         case "POST":
@@ -31,7 +32,7 @@
             $query = 'insert into `fake-status` (`player`';
             $queryParameters = ') values (?';
             $types = "i";
-            $parameters = array($queryResult[0]->id);
+            $parameters = [$queryResult[0]->id];
             foreach($allowedParams as $key => $value)
             {
                 if(!isset($data->$key))
@@ -63,7 +64,7 @@
                 exitApi(404, "Player doesn't have fake status");
             $data = json_decode(file_get_contents("php://input"));
             $types = "";
-            $parameters = array();
+            $parameters = [];
             $query = 'update `fake-status` set ';
             $first = true;
             foreach($allowedParams as $key => $value)

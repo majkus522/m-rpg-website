@@ -29,7 +29,7 @@
                         break;
 
                     case "statusFake":
-                        $apiResult = callApi("skills/$_COOKIE[username]/statusFake", "GET", array("Session-Key: $_COOKIE[session]", "Session-Type: website"));
+                        $apiResult = callApi("skills/$_COOKIE[username]/statusFake", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
                         if($apiResult->code >= 200 && $apiResult->code < 300)
                             $file = "statusFake";
                         break;

@@ -36,7 +36,7 @@
 
 END;
                     $index = 1;
-                    foreach(json_decode($apiResult->content) as $line)
+                    foreach($apiResult->content as $line)
                     {
                         $selected = ((isset($_COOKIE["username"]) && $_COOKIE["username"] == $line->username) ? ' class="selected"' : "");
                         echo <<< END
