@@ -284,7 +284,11 @@
             if(isSingleGet())
             {
                 isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+                $queryResult = connectToDatabase('select `guild` from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
+                $guild = $queryResult[0]->guild;
                 connectToDatabase('delete from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
+                if($guild != null)
+                    connectToDatabase('update `guilds` set `leader` = (select `id` from `players` where `guild` = ? limit 1)', "s", [$guild]);
             }
             else
                 exitApi(400, "Enter player");
