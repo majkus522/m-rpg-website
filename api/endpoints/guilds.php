@@ -24,10 +24,13 @@
                             if(empty(connectToDatabase('select `players`.`id` from `players` left join `guilds` on `guilds`.`id` = `players`.`guild` where `slug` = ? and `username` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $queryResult[0]->username])))
                                 exitApi(400, "You are not part of this guild");
                             isPlayerLogged($queryResult[0]->username);
-                            $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`leader` where `slug` = ? union select `username` from `guilds` join `players` on `players`.`guild` = `guilds`.`id` where `slug` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 1]]);
-                            $result = [];
+                            $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`leader` where `slug` = ? union select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`vice_leader` where `slug` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 1]]);
+                            $result = [["username" => $queryResult[0]->username, "type" => "leader"]];
+                            if(sizeof($queryResult) > 1)
+                                array_push($result, ["username" => $queryResult[1]->username, "type" => "vice_leader"]);
+                            $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`guild` = `guilds`.`id` where `slug` = ? and `players`.`id` != `guilds`.`leader` and (`players`.`id` != `guilds`.`vice_leader` or `guilds`.`vice_leader` is null)', "s", [$requestUrlPart[$urlIndex + 1]]);
                             foreach($queryResult as $element)
-                                array_push($result, $element->username);
+                                array_push($result, ["username" => $element->username, "type" => "member"]);
                             header("Return-Count: " . sizeof($result));
                             break;
 
@@ -113,12 +116,22 @@
             else
             {
                 $data = json_decode(file_get_contents("php://input"));
-                if(!isset($data->leader))
-                    exitApi(400, "Enter new leader");
-                $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$data->leader]);
-                if(empty($queryResult))
-                    exitApi(404, "Player doesn't exists");
-                connectToDatabase('update `guilds` set `leader` = ?', "i", [$queryResult[0]->id]);
+                if(empty((array)$data))
+                    exitApi(400, "Enter some changes");
+                if(isset($data->leader))
+                {
+                    $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$data->leader]);
+                    if(empty($queryResult))
+                        exitApi(404, "Player doesn't exists (leader)");
+                    connectToDatabase('update `guilds` set `leader` = ?', "i", [$queryResult[0]->id]);
+                }
+                if(isset($data->vice_leader))
+                {
+                    $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$data->vice_leader]);
+                    if(empty($queryResult))
+                        exitApi(404, "Player doesn't exists (vice leader)");
+                    connectToDatabase('update `guilds` set `vice_leader` = ?', "i", [$queryResult[0]->id]);
+                }
             }
             http_response_code(204);
             break;
