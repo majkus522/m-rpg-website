@@ -1,6 +1,4 @@
 <?php
-    require "playerLogged.php";
-
     switch($requestMethod)
     {
         case "GET":
@@ -25,15 +23,15 @@
                             if(!password_verify(base64_decode($headerPassword), decode($queryResult[0]->password)))
                                 exitApi(401, "Wrong password");
                             $headerTemp = filter_var(getHeader("Temp"), FILTER_VALIDATE_BOOLEAN);
-                            $key = generateSessionKey($queryResult[0]->id, $headerType);
-                            $query = 'insert into `players-sessions`(`key`, `player`, `type`';
+                            $key = getSessionType($headerType) . generateSessionKey($queryResult[0]->id);
+                            $query = 'insert into `players-sessions`(`key`, `player`';
                             if($headerTemp)
-                                $query .= ', `temp`, `date`';
-                            $query .= ') values (?, ?, ?';
+                                $query .= ', `date`';
+                            $query .= ') values (?, ?';
                             if($headerTemp)
-                                $query .= ', 1, now()';
-                            connectToDatabase('delete from `players-sessions` where `player` = ? and `type` = ?', "is", [$queryResult[0]->id, $headerType]);
-                            connectToDatabase($query . ')', "sis", [$key, $queryResult[0]->id, $headerType]);
+                                $query .= ', now()';
+                            connectToDatabase('delete from `players-sessions` where `player` = ? and `key` like ?', "is", [$queryResult[0]->id, getSessionType($headerType) . "%"]);
+                            connectToDatabase($query . ')', "si", [$key, $queryResult[0]->id]);
                             if($requestMethod != "HEAD")
                                 echo $key;
                             else
@@ -41,19 +39,19 @@
                             break;
 
                         case "session":
-                            connectToDatabase('delete from `players-sessions` where `temp` and hour(timediff(now(), `date`)) > 24');
+                            connectToDatabase('delete from `players-sessions` where `date` is not null and hour(timediff(now(), `date`)) > 24');
                             $headerKey = getHeader("Session-Key");
                             if($headerKey === false)
-                                exitApi(400, "Enter player session");
-                            $headerType = getHeader("Session-Type");
-                            if($headerType === false)
-                                exitApi(400, "Enter session type");
-                            $query = 'select `id` from `players` where `username` = ? limit 1';
-                            $queryResult = connectToDatabase($query, "s", [$requestUrlPart[$urlIndex + 1]]);
+                                exitApi(400, "Enter session key");
+                            $headerId = getHeader("Session-ID");
+                            if($headerId === false)
+                                exitApi(400, "Enter session id");
+                            $queryResult = connectToDatabase('select `username` from `players` where `id` = ? limit 1', "s", [$headerId]);
                             if(empty($queryResult))
                                 exitApi(404, "Player doesn't exists");
-                            $query = 'select `players-sessions`.`id` from `players-sessions` where `type` = ? and `key` = ? and `player` = ? limit 1';
-                            if(empty(connectToDatabase($query, "ssi", [$headerType, $headerKey, $queryResult[0]->id])))
+                            if($requestUrlPart[$urlIndex + 1] != $queryResult[0]->username)
+                                exitApi(401, "Incorrect player");
+                            if(empty(connectToDatabase('select `players-sessions`.`id` from `players-sessions` where `key` = ? and `player` = ? limit 1', "si", [$headerKey, $headerId])))
                                 exitApi(401, "Incorrect session key");
                             http_response_code(204);
                             break;
