@@ -3,6 +3,7 @@
     require "../imports/common.php";
     require "databaseController.php";
     require "hasher.php";
+    require "playerLogged.php";
 
     header("Content-Type: application/json");
     $requestUrlPart = explode("/", clearRequestUrl());

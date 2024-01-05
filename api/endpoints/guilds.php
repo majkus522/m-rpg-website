@@ -1,6 +1,4 @@
 <?php
-    require "playerLogged.php";
-
     switch($requestMethod)
     {
         case "GET":
@@ -18,12 +16,10 @@
                             $headerKey = getHeader("Session-Key");
                             if($headerKey === false)
                                 exitApi(400, "Enter player session key");
-                            $queryResult = connectToDatabase('select `username` from `players-sessions` join `players` on `players-sessions`.`player` = `players`.`id` where `key` = ? limit 1', "s", [$headerKey]);
-                            if(empty($queryResult))
-                                exitApi(401, "Incorrect session key");
-                            if(empty(connectToDatabase('select `players`.`id` from `players` left join `guilds` on `guilds`.`id` = `players`.`guild` where `slug` = ? and `username` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $queryResult[0]->username])))
+                            $player = "";
+                            isPlayerLogged($player);
+                            if(empty(connectToDatabase('select `players`.`id` from `players` left join `guilds` on `guilds`.`id` = `players`.`guild` where `slug` = ? and `username` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $player])))
                                 exitApi(400, "You are not part of this guild");
-                            isPlayerLogged($queryResult[0]->username);
                             $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`leader` where `slug` = ? union select `username` from `guilds` join `players` on `players`.`guild` = `guilds`.`id` where `slug` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 1]]);
                             $result = [];
                             foreach($queryResult as $element)

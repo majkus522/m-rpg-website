@@ -1,6 +1,4 @@
 <?php
-    require "playerLogged.php";
-
     switch($requestMethod)
     {
         case "GET":
