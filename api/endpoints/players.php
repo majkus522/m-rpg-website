@@ -33,7 +33,7 @@
                             connectToDatabase('delete from `players-sessions` where `player` = ? and `key` like ?', "is", [$queryResult[0]->id, getSessionType($headerType) . "%"]);
                             connectToDatabase($query . ')', "si", [$key, $queryResult[0]->id]);
                             if($requestMethod != "HEAD")
-                                echo $key;
+                                echo json_encode(["key" => $key, "id" => $queryResult[0]->id]);
                             else
                                 echo header("Content-Length: " . strlen($key));
                             break;
@@ -209,7 +209,7 @@
             http_response_code(201);
 
             $apiResult = callApi("players/{$data->username}/login", "GET", ["Password: $data->password", "Session-Type: website"]);
-            echo $apiResult->content;
+            echo json_encode($apiResult->content);
             break;
 
         case "PATCH":
