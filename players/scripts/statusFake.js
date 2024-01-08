@@ -23,7 +23,7 @@ document.querySelector(".fake button").addEventListener("click", () =>
             error.classList.add("error");
         }
     };
-    request.setRequestHeader("Session-Key", getCookie("session"));
-    request.setRequestHeader("Session-Type", "website");
+    request.setRequestHeader("Session-ID", getCookie("session-id"));
+    request.setRequestHeader("Session-Key", getCookie("session-key"));
     request.send(JSON.stringify(changes));
 });

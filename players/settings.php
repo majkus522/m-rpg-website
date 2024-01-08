@@ -1,5 +1,5 @@
 <?php
-    $result = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
+    $result = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: " . $_COOKIE["session-key"], "Session-ID: " . $_COOKIE["session-id"]]);
 ?>
         <title>M-RPG - <?php echo $result->content->username; ?> - Settings</title>
         <script src="scripts/settings.js" defer></script>

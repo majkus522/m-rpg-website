@@ -1,6 +1,6 @@
 <?php
-    $result = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
-    $fake = callApi("fake-status/$_COOKIE[username]", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
+    $result = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: " . $_COOKIE["session-key"], "Session-ID: " . $_COOKIE["session-id"]]);
+    $fake = callApi("fake-status/$_COOKIE[username]", "GET", ["Session-Key: " . $_COOKIE["session-key"], "Session-ID: " . $_COOKIE["session-id"]]);
     $playerStats = json_decode(file_get_contents("../api/data/playerStats.json"));
     $fakeExists = $fake->code >= 200 && $fake->code < 300;
     if($fakeExists)

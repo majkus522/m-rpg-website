@@ -1,5 +1,5 @@
 <?php
-    $resultPlayer = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"])->content;
+    $resultPlayer = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: " . $_COOKIE["session-key"], "Session-ID: " . $_COOKIE["session-id"]])->content;
     $resultGuild = callAPi("guilds/$resultPlayer->guild", "GET");
     $isLeader = $resultGuild->content->leader == $resultPlayer->id;
 ?>   
@@ -22,7 +22,7 @@
             <content>
                 <table>
 <?php
-                        $resultMembers = callApi("guilds/$resultPlayer->guild/members", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
+                        $resultMembers = callApi("guilds/$resultPlayer->guild/members", "GET", ["Session-Key: " . $_COOKIE["session-key"], "Session-ID: " . $_COOKIE["session-id"]]);
                         $index = 1;
                         foreach($resultMembers->content as $element)
                         {

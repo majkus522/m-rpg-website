@@ -64,7 +64,7 @@ function send(body, onload, method = "PATCH")
     let request = new XMLHttpRequest();
     request.open(method, "../api/players/" + getCookie("username"), true);
     request.onload = onload;
-    request.setRequestHeader("Session-Key", getCookie("session"));
-    request.setRequestHeader("Session-Type", "website");
+    request.setRequestHeader("Session-ID", getCookie("session-id"));
+    request.setRequestHeader("Session-Key", getCookie("session-key"));
     request.send(JSON.stringify(body));
 }

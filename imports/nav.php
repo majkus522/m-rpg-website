@@ -20,10 +20,10 @@
                     <a href="$extraPath/players/">Player</a>
 
 END;
-                        $apiResult = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
+                        $apiResult = callApi("players/$_COOKIE[username]", "GET", ["Session-Key: " . $_COOKIE["session-key"], "Session-ID: " . $_COOKIE["session-id"]]);
                         if($apiResult->content->guild != null)
                             echo "\t\t\t\t\t<a href=\"$extraPath/players/?tab=guild\">Guild</a>\r\n";
-                        $apiResult = callApi("skills/$_COOKIE[username]/statusFake", "GET", ["Session-Key: $_COOKIE[session]", "Session-Type: website"]);
+                        $apiResult = callApi("skills/$_COOKIE[username]/statusFake", "GET", ["Session-Key: " . $_COOKIE["session-key"], "Session-ID: " . $_COOKIE["session-id"]]);
                         if($apiResult->code >= 200 && $apiResult->code < 300)
                             echo "\t\t\t\t\t<a href=\"$extraPath/players/?tab=statusFake\">Fake Status</a>\r\n";
                         echo <<< END
