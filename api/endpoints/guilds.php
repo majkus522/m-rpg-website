@@ -109,12 +109,22 @@
             else
             {
                 $data = json_decode(file_get_contents("php://input"));
-                if(!isset($data->leader))
-                    exitApi(400, "Enter new leader");
-                $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$data->leader]);
-                if(empty($queryResult))
-                    exitApi(404, "Player doesn't exists");
-                connectToDatabase('update `guilds` set `leader` = ?', "i", [$queryResult[0]->id]);
+                if(empty((array)$data))
+                    exitApi(400, "Enter some changes");
+                if(isset($data->leader))
+                {
+                    $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$data->leader]);
+                    if(empty($queryResult))
+                        exitApi(404, "Player doesn't exists (leader)");
+                    connectToDatabase('update `guilds` set `leader` = ?', "i", [$queryResult[0]->id]);
+                }
+                if(isset($data->vice_leader))
+                {
+                    $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$data->vice_leader]);
+                    if(empty($queryResult))
+                        exitApi(404, "Player doesn't exists (vice leader)");
+                    connectToDatabase('update `guilds` set `vice_leader` = ?', "i", [$queryResult[0]->id]);
+                }
             }
             http_response_code(204);
             break;
