@@ -1,5 +1,4 @@
 <?php
-    require "playerLogged.php";
     $allowedParams = ["level" => "i", "money" => "i"];
     foreach(json_decode(file_get_contents("data/playerStats.json")) as $element)
         $allowedParams[$element->short] = "i";

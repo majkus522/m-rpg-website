@@ -31,8 +31,8 @@ function request(method, url, body = "")
         else
             error.textContent = JSON.parse(this.responseText).message;
     }
-    request.setRequestHeader("Session-Type", "website");
-    request.setRequestHeader("Session-Key", getCookie("session"));
+    request.setRequestHeader("Session-ID", getCookie("session-id"));
+    request.setRequestHeader("Session-Key", getCookie("session-key"));
     request.send(body);
 }
 

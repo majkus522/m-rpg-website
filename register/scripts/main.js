@@ -21,8 +21,10 @@ document.querySelector("form input[type='button']").addEventListener("click", ()
         if(this.status >= 200 && this.status < 300)
         {
             error.textContent = "";
-            document.cookie = "session=" + this.responseText + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
-            document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "");
+            let response = JSON.parse(this.responseText);
+            document.cookie = "session-key=" + response.key + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
+            document.cookie = "session-id=" + response.id + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
+            document.cookie = "username=" + username + ";path=/" + (!remember ? (";max-age=" + (60 * 60 * 24)) : "") + ";secure";
             location.reload();
         }
         else

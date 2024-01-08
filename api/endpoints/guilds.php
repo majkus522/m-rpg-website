@@ -1,6 +1,4 @@
 <?php
-    require "playerLogged.php";
-
     switch($requestMethod)
     {
         case "GET":
@@ -18,19 +16,14 @@
                             $headerKey = getHeader("Session-Key");
                             if($headerKey === false)
                                 exitApi(400, "Enter player session key");
-                            $queryResult = connectToDatabase('select `username` from `players-sessions` join `players` on `players-sessions`.`player` = `players`.`id` where `key` = ? limit 1', "s", [$headerKey]);
-                            if(empty($queryResult))
-                                exitApi(401, "Incorrect session key");
-                            if(empty(connectToDatabase('select `players`.`id` from `players` left join `guilds` on `guilds`.`id` = `players`.`guild` where `slug` = ? and `username` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $queryResult[0]->username])))
+                            $player = "";
+                            isPlayerLogged($player);
+                            if(empty(connectToDatabase('select `players`.`id` from `players` left join `guilds` on `guilds`.`id` = `players`.`guild` where `slug` = ? and `username` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $player])))
                                 exitApi(400, "You are not part of this guild");
-                            isPlayerLogged($queryResult[0]->username);
-                            $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`leader` where `slug` = ? union select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`vice_leader` where `slug` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 1]]);
-                            $result = [["username" => $queryResult[0]->username, "type" => "leader"]];
-                            if(sizeof($queryResult) > 1)
-                                array_push($result, ["username" => $queryResult[1]->username, "type" => "vice_leader"]);
-                            $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`guild` = `guilds`.`id` where `slug` = ? and `players`.`id` != `guilds`.`leader` and (`players`.`id` != `guilds`.`vice_leader` or `guilds`.`vice_leader` is null)', "s", [$requestUrlPart[$urlIndex + 1]]);
+                            $queryResult = connectToDatabase('select `username` from `guilds` join `players` on `players`.`id` = `guilds`.`leader` where `slug` = ? union select `username` from `guilds` join `players` on `players`.`guild` = `guilds`.`id` where `slug` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $requestUrlPart[$urlIndex + 1]]);
+                            $result = [];
                             foreach($queryResult as $element)
-                                array_push($result, ["username" => $element->username, "type" => "member"]);
+                                array_push($result, $element->username);
                             header("Return-Count: " . sizeof($result));
                             break;
 

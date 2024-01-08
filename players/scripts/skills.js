@@ -57,8 +57,8 @@ async function getSkills(url)
             container.innerHTML = "<p>You don't have any skills</p>";
         }
     }
-    request.setRequestHeader("Session-Key", getCookie("session"));
-    request.setRequestHeader("Session-Type", "website");
+    request.setRequestHeader("Session-ID", getCookie("session-id"));
+    request.setRequestHeader("Session-Key", getCookie("session-key"));
     request.send();
 }
 getSkills("../api/skills/" + getCookie("username"));
@@ -102,7 +102,7 @@ function toggleSkill(event)
             createButtonToggle(target);
         }
     };
-    request.setRequestHeader("Session-Key", getCookie("session"));
-    request.setRequestHeader("Session-Type", "website");
+    request.setRequestHeader("Session-ID", getCookie("session-id"));
+    request.setRequestHeader("Session-Key", getCookie("session-key"));
     request.send((!toggle) ? "true" : "false");
 }
