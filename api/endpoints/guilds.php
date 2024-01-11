@@ -13,9 +13,6 @@
                     switch($requestUrlPart[$urlIndex + 2])
                     {
                         case "members":
-                            $headerKey = getHeader("Session-Key");
-                            if($headerKey === false)
-                                exitApi(400, "Enter player session key");
                             $player = "";
                             isPlayerLogged($player);
                             if(empty(connectToDatabase('select `players`.`id` from `players` left join `guilds` on `guilds`.`id` = `players`.`guild` where `slug` = ? and `username` = ?', "ss", [$requestUrlPart[$urlIndex + 1], $player])))
@@ -126,7 +123,7 @@
                         exitApi(401, "You don't have permission to do this (leader)");
                     $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$data->leader]);
                     if(empty($queryResult))
-                        exitApi(404, "Player doesn't exists");
+                        exitApi(404, "Player doesn't exists (leader)");
                     if($queryResult[0]->id == connectToDatabase('select `vice_leader` from `guilds` where `slug` = ?', "s", [$guild])[0]->vice_leader)
                         swapPositions($guild);
                     else
@@ -138,7 +135,7 @@
                         exitApi(401, "You don't have permission to do this (vice leader)");
                     $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$data->vice_leader]);
                     if(empty($queryResult))
-                        exitApi(404, "Player doesn't exists");
+                        exitApi(404, "Player doesn't exists (vice leader)");
                     if(!checkPermission($queryResult[0]->id, $guild, "leader"))
                         exitApi(401, "You can't downgrade your leader");
                     connectToDatabase('update `guilds` set `vice_leader` = ? where `slug` = ?', "is", [$queryResult[0]->id, $guild]);
