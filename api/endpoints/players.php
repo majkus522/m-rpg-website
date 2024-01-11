@@ -216,65 +216,47 @@
             if(!isSingleGet())
                 exitApi(400, "Enter player");
             isPlayerLogged($requestUrlPart[$urlIndex + 1]);
-            if(isset($requestUrlPart[$urlIndex + 2]))
+            $vars = get_object_vars(json_decode(file_get_contents("php://input")));
+            if(empty($vars))
+                exitApi(400, "Enter some changes");
+            $query = 'update `players` set';
+            $first = true;
+            $parameters = [];
+            $types = "";
+            foreach($vars as $key => $value)
             {
-                switch($requestUrlPart[$urlIndex + 2])
+                switch($key)
                 {
-                    case "leave":
-                        if(empty(connectToDatabase('select `guild` from `players` where `username` = ? and `guild` is not null limit 1', "s", [$requestUrlPart[$urlIndex + 1]])))
-                            exitApi(400, "You are not part of any guild");
-                        connectToDatabase('update `players` set `guild` = null where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
+                    case "email":
+                        $valid = validEmail($value);
+                        if($valid !== true)
+                            exitApi(400, $valid);
+                        if(!empty(connectToDatabase('select `id` from `players` where `email` = "' . $value . '"')))
+                            exitApi(400, "Email already taken");
+                        if(!$first)
+                            $query .= ',';
+                        $query .= ' `email` = ?';
+                        $first = false;
+                        $types .= "s";
+                        array_push($parameters, $value);
                         break;
 
-                    default:
-                        exitApi(400, "Unknown option");
+                    case "password":
+                        $password = base64_decode($value);
+                        $valid = validPassword($password);
+                        if($valid !== true)
+                            exitApi(400, $valid);
+                        if(!$first)
+                            $query .= ',';
+                        $query .= ' `password` = ?';
+                        $first = false;
+                        $types .= "s";
+                        array_push($parameters, encode(password_hash($password, PASSWORD_DEFAULT)));
                         break;
                 }
             }
-            else
-            {
-                $vars = get_object_vars(json_decode(file_get_contents("php://input")));
-                if(empty($vars))
-                    exitApi(400, "Enter some changes");
-                $query = 'update `players` set';
-                $first = true;
-                $parameters = [];
-                $types = "";
-                foreach($vars as $key => $value)
-                {
-                    switch($key)
-                    {
-                        case "email":
-                            $valid = validEmail($value);
-                            if($valid !== true)
-                                exitApi(400, $valid);
-                            if(!empty(connectToDatabase('select `id` from `players` where `email` = "' . $value . '"')))
-                                exitApi(400, "Email already taken");
-                            if(!$first)
-                                $query .= ',';
-                            $query .= ' `email` = ?';
-                            $first = false;
-                            $types .= "s";
-                            array_push($parameters, $value);
-                            break;
-
-                        case "password":
-                            $password = base64_decode($value);
-                            $valid = validPassword($password);
-                            if($valid !== true)
-                                exitApi(400, $valid);
-                            if(!$first)
-                                $query .= ',';
-                            $query .= ' `password` = ?';
-                            $first = false;
-                            $types .= "s";
-                            array_push($parameters, encode(password_hash($password, PASSWORD_DEFAULT)));
-                            break;
-                    }
-                }
-                $query .= ' where `username` = ?';
-                connectToDatabase($query, $types . "s", array_merge($parameters, [$requestUrlPart[$urlIndex + 1]]));
-            }
+            $query .= ' where `username` = ?';
+            connectToDatabase($query, $types . "s", array_merge($parameters, [$requestUrlPart[$urlIndex + 1]]));
             http_response_code(204);
             break;
 
