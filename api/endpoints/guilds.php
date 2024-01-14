@@ -104,6 +104,8 @@
                             exitApi(400, "Player isn't part of the guild");
                         if(!checkPermission($member, $guild, "leader"))
                             exitApi(401, "You can't kick guilds leader");
+                        if(!checkPermission($member, $guild, "vice_leader"))
+                            connectToDatabase('update `guilds` set `vice_leader` = null where `slug` = ?', "s", [$guild]);
                         connectToDatabase('update `players` set `guild` = null where `username` = ?', "s", [$member]);
                         break;
     
