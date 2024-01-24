@@ -37,7 +37,7 @@
                                     exitApi(400, "Unknown rarity parameter $element");
                                 if(!$first)
                                     $rarity .= " or";
-                                $rarity .= ' json_property("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`, "rarity") = ?';
+                                $rarity .= ' json_property(concat("skills/", `skill`), "rarity") = ?';
                                 $first = false;
                                 $rarityTypes .= "s";
                                 array_push($rarityParameters, $element);
@@ -53,7 +53,7 @@
                         case "search":
                             foreach(explode(" ", $value) as $element)
                             {
-                                $query .= ' and (LOWER(`skill`) like ? or LOWER(json_property("E:/xampp/htdocs/m-rpg/api/data/skills", `skill`, "label")) like ?)';
+                                $query .= ' and (LOWER(`skill`) like ? or LOWER(json_property(concat("skills/", `skill`), "label")) like ?)';
                                 array_push($parameters, "%" . strtolower($element) . "%", "%" . strtolower($element) . "%");
                                 $types .= "ss";
                             }
