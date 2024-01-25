@@ -10,10 +10,21 @@ content
 
 items
 {
-    display: block;
+    display: flex;
     background-color: #787878;
     width: 100%;
     aspect-ratio: 0.75;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+items img
+{
+    width: 70px;
+    height: 70px;
+    background-color: #565656;
 }
 
 info

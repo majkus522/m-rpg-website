@@ -15,7 +15,24 @@
                 require "nav.php";
             ?>
             <content>
-                <items></items>
+                <items>
+                    <img <?php 
+                        if($result->content->helmet != null)
+                            echo 'src="../img/equipment/' . $result->content->helmet . '.png"';
+                    ?>>
+                    <img <?php 
+                        if($result->content->chestplate != null)
+                            echo 'src="../img/equipment/' . $result->content->chestplate . '.png"';
+                    ?>>
+                    <img <?php 
+                        if($result->content->leggings != null)
+                            echo 'src="../img/equipment/' . $result->content->leggings . '.png"';
+                    ?>>
+                    <img <?php 
+                        if($result->content->boots != null)
+                            echo 'src="../img/equipment/' . $result->content->boots . '.png"';
+                    ?>>
+                </items>
                 <info>
                     <h3><?php
                         echo $result->content->username;
