@@ -1,0 +1,8 @@
+{
+    "material": "DIAMOND_BOOTS",
+    "label": "Helmet",
+    "bonusStats": {
+        "str": 10,
+        "agl": -1
+    }
+}

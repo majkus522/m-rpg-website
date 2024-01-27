@@ -43,7 +43,7 @@
                                 $shortLabels = "";
                                 $values = "";
                                 $first = true;
-
+                                $equipment = ["helmet", "chestplate", "leggings", "boots"];
                                 foreach($playerStats as $element)
                                 {
                                     if(!$first)
@@ -56,10 +56,27 @@
                                     $value = $result->content->$short;
                                     $values .= $value;
                                     $first = false;
+                                    $extra = 0;
+                                    foreach($equipment as $equip)
+                                    {
+                                        if($result->content->$equip == null)
+                                            continue;
+                                        $equipmentData = json_decode(file_get_contents("../api/data/equipment/" . $result->content->$equip . ".json"));
+                                        if(isset($equipmentData->bonusStats->$short))
+                                            $extra += $equipmentData->bonusStats->$short;
+                                    }
+                                    $color = match(true)
+                                    {
+                                        $extra > 0 => "#457fde",
+                                        $extra == 0 => "#efefef",
+                                        $extra < 0 => "#cf252b"
+                                    };
+                                    if($extra >= 0)
+                                        $extra = "+" . $extra;
                                     echo <<< END
                             <stat>
                                 <p>$element->label</p>
-                                <p>$value</p>
+                                <p>$value <span style="color: $color">$extra</span></p>
                             </stat>
 
 END;

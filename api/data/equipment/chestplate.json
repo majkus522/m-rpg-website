@@ -1,0 +1,8 @@
+{
+    "material": "DIAMOND_CHESTPLATE",
+    "label": "Helmet",
+    "bonusStats": {
+        "str": 10,
+        "agl": -1
+    }
+}
