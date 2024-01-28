@@ -49,14 +49,26 @@ info stat
     gap: 15px;
 }
 
-info div stat:not(:last-child)
+info stat:not(:last-of-type),
+info div stat
 {
     border-bottom: 1px solid #eeeeee;
 }
 
-info > stat
+div stat
 {
-    border-top: 1px solid #eeeeee;
+    flex-wrap: nowrap;
+}
+
+div stat p:first-child
+{
+    width: 100%;
+}
+
+div stat p:not(:first-child)
+{
+    width: 60px;
+    text-align: right;
 }
 
 info > div

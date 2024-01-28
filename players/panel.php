@@ -76,7 +76,8 @@
                                     echo <<< END
                             <stat>
                                 <p>$element->label</p>
-                                <p>$value <span style="color: $color">$extra</span></p>
+                                <p>$value</p>
+                                <p style="color: $color">$extra</p>
                             </stat>
 
 END;
