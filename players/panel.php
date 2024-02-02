@@ -54,7 +54,6 @@
                                     $short = $element->short;
                                     $shortLabels .= '"' . strtoupper($short) . '"';
                                     $value = $result->content->$short;
-                                    $values .= $value;
                                     $first = false;
                                     $extra = 0;
                                     foreach($equipment as $equip)
@@ -71,6 +70,7 @@
                                         $extra == 0 => "#efefef",
                                         $extra < 0 => "#cf252b"
                                     };
+                                    $values .= $value + $extra;
                                     if($extra >= 0)
                                         $extra = "+" . $extra;
                                     echo <<< END
