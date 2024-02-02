@@ -27,6 +27,21 @@ items img
     background-color: #565656;
 }
 
+items div
+{
+    border: 2px solid #efefef;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+
+items div p
+{
+    font-size: 22px;
+}
+
 info
 {
     display: block;

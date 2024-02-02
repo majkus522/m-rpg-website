@@ -148,4 +148,5 @@ END;
 <script>
     let stats = [<?php echo $values; ?>];
     let labels = [<?php echo $shortLabels; ?>];
+    let statsData = <?php echo file_get_contents("../api/data/playerStats.json"); ?>;
 </script>
