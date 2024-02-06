@@ -40,21 +40,14 @@
                     <div>
                         <div>
 <?php
-                                $shortLabels = "";
-                                $values = "";
-                                $first = true;
+                                $shortLabels = [];
+                                $stats = [];
                                 $equipment = ["helmet", "chestplate", "leggings", "boots"];
                                 foreach($playerStats as $element)
                                 {
-                                    if(!$first)
-                                    {
-                                        $shortLabels .= ", ";
-                                        $values .= ", ";
-                                    }
                                     $short = $element->short;
-                                    $shortLabels .= '"' . strtoupper($short) . '"';
+                                    array_push($shortLabels, strtoupper($short));
                                     $value = $result->content->$short;
-                                    $first = false;
                                     $extra = 0;
                                     foreach($equipment as $equip)
                                     {
@@ -70,7 +63,7 @@
                                         $extra == 0 => "#efefef",
                                         $extra < 0 => "#cf252b"
                                     };
-                                    $values .= $value + $extra;
+                                    array_push($stats, $value + $extra);
                                     if($extra >= 0)
                                         $extra = "+" . $extra;
                                     echo <<< END
@@ -146,7 +139,7 @@ END;
     </body>
 </html>
 <script>
-    let stats = [<?php echo $values; ?>];
-    let labels = [<?php echo $shortLabels; ?>];
+    let stats = <?php echo json_encode($stats); ?>;
+    let labels = <?php echo json_encode($shortLabels); ?>;
     let statsData = <?php echo file_get_contents("../api/data/playerStats.json"); ?>;
 </script>
