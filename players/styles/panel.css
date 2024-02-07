@@ -108,11 +108,18 @@ info graph svg
     width: 100%;
 }
 
-info graph svg polygon
+info graph svg polygon:not(.marker)
 {
     fill: rgba(30, 42, 94, 0.3);
     stroke: #d3d6da;
+    stroke-width: 2;
+}
+
+info graph svg polygon.marker
+{
+    stroke: #d3d6da;
     stroke-width: 1;
+    fill: rgba(0, 0, 0, 0)
 }
 
 info graph svg line

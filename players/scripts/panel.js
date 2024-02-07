@@ -14,14 +14,29 @@ for(let index = 0; index < stats.length; index++)
     createText(labels[index], degree);
 }
 let points = "";
+let markersCount = 3;
+let markerPoints = [];
 for(let index = 0; index < stats.length; index++)
 {
     let x = radius + (linePoints[index].x - radius) * (stats[index] / max);
     let y = radius + (linePoints[index].y - radius) * (stats[index] / max);
     points += x + "," + y + " ";
+    for(let markerIndex = 0; markerIndex < markersCount; markerIndex++)
+    {
+        if(markerPoints[markerIndex] == null)
+            markerPoints[markerIndex] = "";
+        markerPoints[markerIndex] += (radius + (linePoints[index].x - radius) * (markerIndex + 1) / markersCount) + "," + (radius + (linePoints[index].y - radius) * (markerIndex + 1) / markersCount) + " ";
+    }
     createDot(x, y);
 }
-svg.querySelector("polygon").setAttribute("points", points);
+svg.querySelector("polygon:not(.marker)").setAttribute("points", points);
+for(let index = 0; index < markersCount; index++)
+{
+    let polygon = document.createElementNS('http://www.w3.org/2000/svg', "polygon");
+    polygon.classList.add("marker");
+    polygon.setAttribute("points", markerPoints[index]);
+    svg.insertBefore(polygon, svg.firstChild);
+}
 
 function createLine(x, y)
 {
