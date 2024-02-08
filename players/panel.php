@@ -4,6 +4,7 @@
 ?>
         <title>M-RPG - <?php echo $result->content->username; ?></title>
         <script src="../imports/elements/MrpgBar.js" defer></script>
+        <script src="../imports/elements/MrgpStstaGraph.js" defer></script>
         <script src="scripts/panel.js" defer></script>
     </head>
     <body>
@@ -78,9 +79,7 @@ END;
                             ?>
                         </div>
                         <graph>
-                            <svg>
-                                <polygon/>
-                            </svg>
+                            <mrpg-stats-graph stats="<?php echo json_encode($stats); ?>" labels='<?php echo json_encode($shortLabels); ?>'></mrpg-stats-graph>
                         </graph>
                     </div>
                     <stat>
@@ -139,7 +138,5 @@ END;
     </body>
 </html>
 <script>
-    let stats = <?php echo json_encode($stats); ?>;
-    let labels = <?php echo json_encode($shortLabels); ?>;
     let statsData = <?php echo file_get_contents("../api/data/playerStats.json"); ?>;
 </script>
