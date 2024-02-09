@@ -113,7 +113,7 @@ END;
                     <stat>
                         <p>Max mana</p>
                         <p><?php
-                            echo $result->content->intl * 3 + 10;
+                            echo $stats[array_search("INTL", $shortLabels)] * 3 + 10;
                         ?></p>
                     </stat>
 <?php
