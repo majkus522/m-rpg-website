@@ -103,7 +103,12 @@
                         if(empty(connectToDatabase('select `id` from `players` where `username` = ? and `guild` = ?', "si", [$member, $queryResult[0]->id])))
                             exitApi(400, "Player isn't part of the guild");
                         if(!checkPermission($member, $guild, "leader"))
-                            exitApi(401, "You can't kick guilds leader");
+                        {
+                            if($member != $player)
+                                exitApi(401, "You can't kick guilds leader");
+                            if(empty(connectToDatabase('select `username` from `players` left join `guilds` on `guilds`.`vice_leader` = `players`.`id` where `guilds`.`slug`= ?', "s", [$guild])))
+                                exitApi(401, "First select new leader or vice leader");
+                        }
                         if(!checkPermission($member, $guild, "vice_leader"))
                             connectToDatabase('update `guilds` set `vice_leader` = null where `slug` = ?', "s", [$guild]);
                         connectToDatabase('update `players` set `guild` = null where `username` = ?', "s", [$member]);
