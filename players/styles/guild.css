@@ -76,3 +76,9 @@ content div p
     font-size: 24px;
     white-space: nowrap;
 }
+
+p.error
+{
+    white-space: wrap;
+    text-align: center;
+}
