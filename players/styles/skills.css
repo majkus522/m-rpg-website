@@ -33,44 +33,20 @@ content filters rarities div
 {
     padding: 10px;
     font-size: 20px;
-    background-color: #787878;
+    background-color: transparent;
     border: 3px solid transparent;
     cursor: pointer;
+}
+
+content filters rarities div:hover
+{
+    background-color: #6d6d6d !important;
 }
 
 content filters rarities div.active
 {
     border-color: #efefef;
-}
-
-content filters select
-{
-    padding: 10px;
-    font-size: 20px;
-    color: #efefef;
-    border: 2px solid #efefef;
-    background-color: transparent;
-    cursor: pointer;
-}
-
-content filters button.search
-{
-    padding: 10px;
-    font-size: 20px;
-    color: #efefef;
-    border: 2px solid #efefef;
-    background-color: transparent;
-    cursor: pointer;
-}
-
-content filters button.search:hover
-{
-    background-color: #898989;
-}
-
-content filters select option
-{
-    color: #565656;
+    background-color: #757575;
 }
 
 content result
@@ -99,6 +75,11 @@ content skill
     border: 3px solid var(--border);
     background-color: #676767;
     --border: transparent;
+}
+
+content skill:hover
+{
+    background-color: #6d6d6d;
 }
 
 content skill img
@@ -136,13 +117,13 @@ content skill[data-rarity="ultimate"]
 content inspector
 {
     width: 400px;
-    background-color: #454545;
     display: none;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     padding: 10px;
     gap: 15px;
+    border: 2px solid #efefef;
 }
 
 content inspector img
@@ -165,17 +146,9 @@ content inspector p
 
 content inspector button
 {
-    font-size: 20px;
-    padding: 5px 20px;
     border: 2px solid var(--color);
     color: var(--color);
-    background-color: transparent;
     display: none;
-}
-
-content inspector button:hover
-{
-    background-color: rgba(100, 100, 100, 0.5);
 }
 
 content inspector button[data-status="enabled"]

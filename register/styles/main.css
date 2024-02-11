@@ -32,31 +32,6 @@ mrpg-checkbox
     align-self: flex-start;
 }
 
-input,
-form a
-{
-    font-size: var(--fontSize);
-    font-weight: 100;
-    padding: 8px;
-    border: 2px solid var(--color);
-    color: var(--color);
-    background-color: var(--inputBackground);
-    --inputBackground: #565656
-}
-
-input[type='button']
-{
-    cursor: pointer;
-}
-
-input:hover,
-input:focus,
-form a:hover,
-form a:focus
-{
-    --inputBackground: #707070;
-}
-
 p.error
 {
     color: #ce3b3b;

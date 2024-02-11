@@ -6,13 +6,11 @@ content
 {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    gap: 20px;
     padding: 20px;
 }
 
 .real
 {
-    background-color: #6e6e6e;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -29,44 +27,23 @@ content
 {
     display: flex;
     flex-wrap: wrap;
-    background-color: #6e6e6e;
     padding: 10px 50px;
     justify-content: center;
     gap: 20px;
+    border-left: 2px solid #efefef;
 }
 
 input,
 select
 {
-    font-size: 19px;
-    border: 2px solid #efefef;
-    padding: 5px;
     margin-left: 10px;
     max-width: 190px;
-    color: #efefef;
     text-align: center;
-    background-color: var(--inputBackground);
-    --inputBackground: #676767
 }
 
 select
 {
     width: 200px;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button
-{
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input:hover,
-input:focus,
-select:hover,
-select:focus
-{
-    --inputBackground: #808080;
 }
 
 .fake div
@@ -78,25 +55,12 @@ select:focus
     gap: 20px;
 }
 
-.fake button
-{
-    font-size: 19px;
-    background-color: #343434;
-    border: 2px solid #efefef;
-    padding: 5px 15px;
-    color: #efefef;
-}
-
-.fake button:hover
-{
-    background-color: #565656;
-    cursor: pointer;
-}
-
 h2
 {
     width: 100%;
     text-align: center;
+    font-size: 34px;
+    font-weight: 500;
 }
 
 p

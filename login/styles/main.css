@@ -32,29 +32,24 @@ mrpg-checkbox
     align-self: flex-start;
 }
 
-input,
+input
+{
+    background-color: #565656;
+}
+
 form a
 {
-    font-size: var(--fontSize);
-    font-weight: 100;
-    padding: 8px;
-    border: 2px solid var(--color);
-    color: var(--color);
-    background-color: var(--inputBackground);
-    --inputBackground: #565656
+    font-size: 20px;
+    border: 2px solid #efefef;
+    padding: 6px 20px;
+    color: #efefef;
+    background-color: transparent;
 }
 
-input[type='button']
+form a:hover
 {
+    background-color: #6d6d6d;
     cursor: pointer;
-}
-
-input:hover,
-input:focus,
-form a:hover,
-form a:focus
-{
-    --inputBackground: #707070;
 }
 
 p.error

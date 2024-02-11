@@ -41,3 +41,41 @@ div.loading > div
         transform: rotate(360deg);
     }
 }
+
+input,
+select,
+button
+{
+    font-size: 20px;
+    border: 2px solid #efefef;
+    padding: 6px 20px;
+    color: #efefef;
+    background-color: transparent;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input:hover,
+input:focus,
+select:hover,
+select:focus,
+button:hover
+{
+    background-color: #6d6d6d;
+}
+
+input::placeholder
+{
+    color: #7e7e7e;
+}
+
+button,
+input[type="button"]
+{
+    cursor: pointer;
+}
