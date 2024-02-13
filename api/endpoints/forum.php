@@ -6,7 +6,7 @@
             require "headerItems.php";
             if(isSingleGet())
             {
-                $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`) as (select `id`, `player`, `text`, `master`, `title`, `slug` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, `player`, `text`, `master`, `title` from `cte` limit ? offset ?';
+                $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`) as (select `id`, `player`, `text`, `master`, `title`, `slug` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, `player`, `text`, `master`, `title`, (select count(*) from `forum-likes` where `comment` = `id`) as likes from `cte` limit ? offset ?';
                 $queryResult = connectToDatabase($query, "sii", [$requestUrlPart[$urlIndex + 1], $limit, $offset]);
                 if(empty($queryResult))
                     exitApi(404, "Topic doesn't exists");
@@ -51,6 +51,26 @@
             http_response_code(201);
             break;
 
+        case "PATCH":
+            if(!isset($requestUrlPart[$urlIndex + 1]))
+                exitApi(400, "Enter topic or comment");
+            $player = "";
+            isPlayerLogged($player);
+            $data = json_decode(file_get_contents("php://input"));
+            if(!isset($data->like))
+                exitApi(400, "Enter new like value");
+            if(gettype($data->like) != "boolean")
+                exitApi(400, "Incorrect like value");
+            if($data->like)
+            {
+                if(empty(connectToDatabase('select * from `forum-likes` where `player` = ? and `comment` = ?', "ii", [$player, $requestUrlPart[$urlIndex + 1]])))
+                    connectToDatabase('insert into `forum-likes`(`player`, `comment`) values (?, ?)', "ii", [$player, $requestUrlPart[$urlIndex + 1]]);
+            }
+            else
+                connectToDatabase('delete from `forum-likes` where `player` = ? and `comment` = ?', "ii", [$player, $requestUrlPart[$urlIndex + 1]]);
+            http_response_code(204);
+            break;
+
         case "DELETE":
             if(!isset($requestUrlPart[$urlIndex + 1]))
                 exitApi(400, "Enter topic or comment");
@@ -91,6 +111,7 @@
                 'GET /forum',
                 'GET /forum/${slug}',
                 'POST /forum',
+                'PATCH /forum/${comment}',
                 'DELETE /forum/${slug}'
             ]]);
             break;
