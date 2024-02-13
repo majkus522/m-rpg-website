@@ -6,7 +6,7 @@
             require "headerItems.php";
             if(isSingleGet())
             {
-                $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`) as (select `id`, `player`, `text`, `master`, `title`, `slug` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, `player`, `text`, `master`, `title`, (select count(*) from `forum-likes` where `comment` = `id`) as likes from `cte` limit ? offset ?';
+                $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`, `time`) as (select `id`, `player`, `text`, `master`, `title`, `slug`, `time` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug`, `f`.`time` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, `player`, `text`, `master`, `title`, (select count(*) from `forum-likes` where `comment` = `id`) as likes, `time` from `cte` order by `time` asc limit ? offset ?';
                 $queryResult = connectToDatabase($query, "sii", [$requestUrlPart[$urlIndex + 1], $limit, $offset]);
                 if(empty($queryResult))
                     exitApi(404, "Topic doesn't exists");
