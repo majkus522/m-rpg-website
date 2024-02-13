@@ -8,11 +8,15 @@
             {
                 $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`) as (select `id`, `player`, `text`, `master`, `title`, `slug` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, `player`, `text`, `master`, `title` from `cte` limit ? offset ?';
                 $queryResult = connectToDatabase($query, "sii", [$requestUrlPart[$urlIndex + 1], $limit, $offset]);
+                if(empty($queryResult))
+                    exitApi(404, "Topic doesn't exists");
             }
             else
             {
                 $query = 'select `title`, `slug`, `player` from `forum` where `master` is null limit ? offset ?';
                 $queryResult = connectToDatabase($query, "ii", [$limit, $offset]);
+                if(empty($queryResult))
+                    exitApi(404, "Can't find any topic matching conditions");
             }
             $json = json_encode($queryResult);
             header("Return-Count: " . sizeof($queryResult));
@@ -48,6 +52,8 @@
             break;
 
         case "DELETE":
+            if(!isset($requestUrlPart[$urlIndex + 1]))
+                exitApi(400, "Enter topic or comment");
             $type = strtolower(isset($_GET["type"]) ? $_GET["type"] : "topic");
             switch($type)
             {
@@ -66,6 +72,8 @@
                     break;
             }
             $queryResult = connectToDatabase('select `username` from `forum` left join `players` on `players`.`id` = `forum`.`player` where `' . $finder . '` = ?', $types, [$requestUrlPart[$urlIndex + 1]]);
+            if(empty($queryResult))
+                exitApi(404, "The $type is already deleted or never existed");
             $loginResult = isPlayerLogged($queryResult[0]->username, false);
             if($loginResult !== true)
             {
