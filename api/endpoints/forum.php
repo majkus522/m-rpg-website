@@ -13,8 +13,64 @@
             }
             else
             {
-                $query = 'select `title`, `slug`, `player` from `forum` where `master` is null limit ? offset ?';
-                $queryResult = connectToDatabase($query, "ii", [$limit, $offset]);
+                $query = 'with recursive cte as ( select `id`, `slug`, (select count(*) from `forum-likes` where `comment` = `forum`.`id`) as "likes" from `forum` union all select `f`.`id`, `cte`.`slug`, (select count(*) from `forum-likes` where `comment` = `f`.`id`) as "likes" from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id` ) select `title`, `slug`, `player`, `time`, (select cast(sum(`likes`) as INT) from `cte` where `slug` is not null and `cte`.`slug` = `forum`.`slug` group by `slug`) as "likes", (select count(*) - 1 from `cte` where `slug` is not null and `cte`.`slug` = `forum`.`slug` group by `slug`) as "comments" from `forum` where `slug` is not null ';
+                $parameters = [];
+                $types = "";
+                $order = "";
+                foreach($_GET as $key => $value)
+                {
+                    switch($key)
+                    {
+                        case "author":
+                            $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$value]);
+                            if(empty($queryResult))
+                                exitApi(404, "Player doesn't exists");
+                            array_push($parameters, $queryResult[0]->id);
+                            $query .= ' and `player` = ?';
+                            $types .= "i";
+                            break;
+
+                        case "order":
+                            switch($value)
+                            {
+                                case "likes":
+                                    $order = ' order by `likes` asc';
+                                    break;
+
+                                case "likes-desc":
+                                    $order = ' order by `likes` desc';
+                                    break;
+
+                                case "comments":
+                                    $order = ' order by `comments` asc';
+                                    break;
+    
+                                case "comments-desc":
+                                    $order = ' order by `comments` desc';
+                                    break;
+
+                                case "time":
+                                    $order = ' order by `time` asc';
+                                    break;
+        
+                                case "time-desc":
+                                    $order = ' order by `time` desc';
+                                    break;
+
+                                default:
+                                    exitApi(400, "Unknown order parameter $value");
+                                    break;
+                            }
+                            break;
+
+                        default:
+                            exitApi(400, "Unknown query string parameter $key");
+                            break;
+                    }
+                }
+                $query .= $order . ' limit ? offset ?';
+                $types .= "ii";
+                $queryResult = connectToDatabase($query, $types, array_merge($parameters, [$limit, $offset]));
                 if(empty($queryResult))
                     exitApi(404, "Can't find any topic matching conditions");
             }
