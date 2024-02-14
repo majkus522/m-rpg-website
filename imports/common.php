@@ -115,4 +115,12 @@
             return 0;
         return (int)(log($level + 1) * 1500) + levelExp($level - 1);
     }
+
+    function clearRequestUrl():string
+    {
+        $url = str_replace("?" . $_SERVER["QUERY_STRING"], "", $_SERVER["REQUEST_URI"]);
+        if(str_ends_with($url, "/"))
+            return substr($url, 0, strlen($url) - 1);
+        return $url;
+    }
 ?>

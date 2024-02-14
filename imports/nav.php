@@ -12,6 +12,7 @@
             <nav>
                 <div><a href="<?php echo $extraPath; ?>/">Home</a></div>
                 <div><a href="<?php echo $extraPath; ?>/leaderboard">Leaderboard</a></div>
+                <div><a href="<?php echo $extraPath; ?>/forum">Forum</a></div>
 <?php
                     if($validLogin)
                     {

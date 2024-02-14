@@ -53,12 +53,4 @@
         databaseClose();
         die();
     }
-
-    function clearRequestUrl():string
-    {
-        $url = str_replace("?" . $_SERVER["QUERY_STRING"], "", $_SERVER["REQUEST_URI"]);
-        if(str_ends_with($url, "/"))
-            return substr($url, 0, strlen($url) - 1);
-        return $url;
-    }
 ?>

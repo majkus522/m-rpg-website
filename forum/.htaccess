@@ -1,0 +1,5 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} !.css$
+RewriteCond %{REQUEST_URI} !.js$
+RewriteRule . index.php
