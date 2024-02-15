@@ -6,8 +6,10 @@
             require "headerItems.php";
             if(isSingleGet())
             {
-                $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`, `time`) as (select `id`, `player`, `text`, `master`, `title`, `slug`, `time` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug`, `f`.`time` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, `player`, `text`, `master`, `title`, (select count(*) from `forum-likes` where `comment` = `id`) as likes, `time` from `cte` order by `time` asc limit ? offset ?';
-                $queryResult = connectToDatabase($query, "sii", [$requestUrlPart[$urlIndex + 1], $limit, $offset]);
+                $player = "";
+                isPlayerLogged($player, false);
+                $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`, `time`) as (select `id`, `player`, `text`, `master`, `title`, `slug`, `time` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug`, `f`.`time` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, `player`, `text`, `master`, `title`, (select count(*) from `forum-likes` where `comment` = `id`) as "likes", `time`, (select count(*) > 0 from `forum-likes` where `comment` = `cte`.`id` and `forum-likes`.`player` = (select `id` from `players` where `username` = ? limit 1)) as "liked" from `cte` order by `time` asc limit ? offset ?';
+                $queryResult = connectToDatabase($query, "ssii", [$requestUrlPart[$urlIndex + 1], $player, $limit, $offset]);
                 if(empty($queryResult))
                     exitApi(404, "Topic doesn't exists");
             }
