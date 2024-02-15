@@ -44,7 +44,8 @@ div.loading > div
 
 input,
 select,
-button
+button,
+textarea
 {
     font-size: 20px;
     border: 2px solid #efefef;
@@ -64,7 +65,9 @@ input:hover,
 input:focus,
 select:hover,
 select:focus,
-button:hover
+button:hover,
+textarea:focus,
+textarea:hover
 {
     background-color: #6d6d6d;
 }
@@ -75,7 +78,8 @@ input::placeholder
 }
 
 button,
-input[type="button"]
+input[type="button"],
+textarea
 {
     cursor: pointer;
 }

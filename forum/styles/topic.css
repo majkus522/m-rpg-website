@@ -4,16 +4,22 @@ main
     flex-direction: column;
     background-color: #565656;
     padding: 20px;
-    gap: 20px;
 }
 
-main > div
+div.main
 {
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
-main div.author
+div.main > div.main
+{
+    margin-left: 25px;
+}
+
+div.main > div.author
 {
     width: 150px;
     height: 150px;
@@ -23,7 +29,7 @@ main div.author
     border: 2px solid #efefef;
 }
 
-main div.content
+div.main > div.content
 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -32,15 +38,31 @@ main div.content
     padding: 20px;
     gap: 15px 10px;
     margin-left: -2px;
+    flex: 1;
+}
+
+div.main > div.commenter
+{
+    width: 100%;
+    margin-left: 148px;
+    border: 2px solid #efefef;
+    padding: 10px;
+    display: flex;
+    gap: 30px;
+    margin-top: -2px;
+}
+
+div.main > div.commenter textarea
+{
     width: 100%;
 }
 
-main > div:not(:first-child) div.content
+div.main > div:not(:first-child) div.content
 {
     grid-template-rows: 1fr 30px !important;
 }
 
-main div.content h2
+div.main > div.content h2
 {
     grid-area: 1 / 1 / 2 / 4;
     font-size: 40px;
@@ -48,19 +70,21 @@ main div.content h2
     border-bottom: 2px solid #efefef;
 }
 
-main div.content p
+div.main > div.content p
 {
     grid-column: 1 / -1;
     font-size: 23px;
+    white-space: pre;
+    text-wrap: wrap;
 }
 
-main div.content:first-child p
+div.main > div.content:first-child p
 {
     grid-row: 2 / 3;
 }
 
-main div.content div,
-main div.content button
+div.main > div.content div,
+div.main > div.content button
 {
     font-size: 24px;
     display: flex;
@@ -68,4 +92,10 @@ main div.content button
     gap: 10px;
     border: 0;
     padding: 2px;
+}
+
+div.main > div.content button p,
+div.main > div.content button ion-icon
+{
+    pointer-events: none;
 }

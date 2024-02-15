@@ -1,11 +1,6 @@
 <?php
     $extraPath = "..";
     require "../imports/loginCheck.php";
-    if($validLogin)
-    {
-        header("Location: ../players/");
-        exit();
-    }
 
     $requestUrlPart = explode("/", clearRequestUrl());
     $urlIndex = 0;
@@ -27,6 +22,7 @@
         <title>M-RPG - Forum</title>
         <link href="styles/<?php echo $type; ?>.css" rel="stylesheet" type="text/css">
         <link href="../styles/main.css" rel="stylesheet" type="text/css">
+        <script src="../imports/scripts.js" defer></script>
     </head>
     <body>
         <?php
