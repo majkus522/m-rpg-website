@@ -54,6 +54,9 @@ function createComment(data)
     let p = document.createElement("p");
     p.textContent = data.text;
     content.appendChild(p);
+    let time = document.createElement("div");
+    time.textContent = data.time;
+    content.appendChild(time);
     let button = document.createElement("button");
     button.addEventListener("click", like);
     let icon = document.createElement("ion-icon");
@@ -63,9 +66,6 @@ function createComment(data)
     p.textContent = data.likes;
     button.appendChild(p);
     content.appendChild(button);
-    let time = document.createElement("div");
-    time.textContent = data.time;
-    content.appendChild(time);
     button = document.createElement("button");
     button.addEventListener("click", showCommenter);
     button.textContent = "Comment";
@@ -73,6 +73,25 @@ function createComment(data)
     icon.name = "chatbox-ellipses-outline";
     button.appendChild(icon);
     content.appendChild(button);
+    if(data.player == getCookie("session-id"))
+    {
+        button = document.createElement("button");
+        button.textContent = "Delete";
+        button.addEventListener("click", (event) =>
+        {
+            let request = new XMLHttpRequest();
+            request.open("delete", "../api/forum/" + data.id, true);
+            request.onload = function ()
+            {
+                if(this.status >= 200)
+                    location.reload();
+            }
+            request.setRequestHeader("Session-ID", getCookie("session-id"));
+            request.setRequestHeader("Session-Key", getCookie("session-key"));
+            request.send();
+        });
+        content.appendChild(button);
+    }
     main.appendChild(content);
     return main;
 }

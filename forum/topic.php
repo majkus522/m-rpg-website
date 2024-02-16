@@ -12,14 +12,14 @@
                 <div class="content">
                     <h2><?php echo $apiResult->content[0]->title; ?></h2>
                     <p><?php echo $apiResult->content[0]->text; ?></p>
-                    <button>
-                        <ion-icon name="<?php echo $apiResult->content[0]->liked ? "thumbs-up" : "thumbs-up-outline"; ?>"></ion-icon>
-                        <p><?php echo $apiResult->content[0]->likes; ?></p>
-                    </button>
                     <div>
                         <?php echo $apiResult->content[0]->time; ?>
 
                     </div>
+                    <button>
+                        <ion-icon name="<?php echo $apiResult->content[0]->liked ? "thumbs-up" : "thumbs-up-outline"; ?>"></ion-icon>
+                        <p><?php echo $apiResult->content[0]->likes; ?></p>
+                    </button>
                     <button>
                         Comment
                         <ion-icon role="img" class="md hydrated" name="chatbox-ellipses-outline"></ion-icon>

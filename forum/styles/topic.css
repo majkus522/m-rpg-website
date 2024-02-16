@@ -32,11 +32,11 @@ div.main > div.author
 div.main > div.content
 {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr fit-content(100%) fit-content(100px);
     border: 2px solid #efefef;
     padding: 20px;
-    gap: 15px 10px;
+    gap: 25px 10px;
     margin-left: -2px;
     flex: 1;
 }
@@ -64,7 +64,7 @@ div.main > div:not(:first-child) div.content
 
 div.main > div.content h2
 {
-    grid-area: 1 / 1 / 2 / 4;
+    grid-area: 1 / 1 / 2 / 5;
     font-size: 40px;
     font-weight: 400;
     border-bottom: 2px solid #efefef;
