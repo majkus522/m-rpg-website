@@ -132,35 +132,18 @@
         case "DELETE":
             if(!isset($requestUrlPart[$urlIndex + 1]))
                 exitApi(400, "Enter topic or comment");
-            $type = strtolower(isset($_GET["type"]) ? $_GET["type"] : "topic");
-            switch($type)
-            {
-                case "topic":
-                    $finder = "slug";
-                    $types = "s";
-                    break;
-
-                case "comment":
-                    $finder = "id";
-                    $types = "i";
-                    break;
-
-                default:
-                    exitApi(400, "Incorrect delete type");
-                    break;
-            }
-            $queryResult = connectToDatabase('select `username` from `forum` left join `players` on `players`.`id` = `forum`.`player` where `' . $finder . '` = ?', $types, [$requestUrlPart[$urlIndex + 1]]);
+            $queryResult = connectToDatabase('select `username` from `forum` left join `players` on `players`.`id` = `forum`.`player` where `forum`.`id` = ?', "i", [$requestUrlPart[$urlIndex + 1]]);
             if(empty($queryResult))
-                exitApi(404, "The $type is already deleted or never existed");
+                exitApi(404, "The topic or comment is already deleted or never existed");
             $loginResult = isPlayerLogged($queryResult[0]->username, false);
             if($loginResult !== true)
             {
                 if($loginResult->code == 401)
-                    exitApi(401, "You can't delete someones else " . $type);
+                    exitApi(401, "You can't delete someones else topic or comment");
                 else
                     exitApi($loginResult->code, $loginResult->message);
             }
-            connectToDatabase('delete from `forum` where `' . $finder . '` = ?', $types, [$requestUrlPart[$urlIndex + 1]]);
+            connectToDatabase('delete from `forum` where `id` = ?', "i", [$requestUrlPart[$urlIndex + 1]]);
             http_response_code(204);
             break;
 
