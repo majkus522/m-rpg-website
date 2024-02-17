@@ -46,3 +46,17 @@ END;
                     }
                 ?>
             </div>
+<?php
+                if($validLogin)
+                {
+            ?>
+            <form>
+                <h2>Create new post</h2>
+                <input type="text" placeholder="Title">
+                <textarea placeholder="Content"></textarea>
+                <p class="error"></p>
+                <input type="button" value="Create">
+            </form>
+<?php
+                }
+            ?>

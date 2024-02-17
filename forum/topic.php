@@ -26,7 +26,6 @@
                     </button>
                 </div>
             </div>
-            <script src="scripts/topic.js" defer></script>
             <script>
                 let slug = "<?php echo $requestUrlPart[$urlIndex]; ?>";
             </script>
