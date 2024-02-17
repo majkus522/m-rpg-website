@@ -90,23 +90,26 @@
             $data = json_decode(file_get_contents("php://input"));
             if(!isset($data->text) || strlen($data->text) == 0)
                 exitApi(400, "Enter text content");
+            $insert = 0;
             if(isset($data->master))
             {
                 if(empty(connectToDatabase('select `id` from `forum` where `id` = ?', "i", [$data->master])))
                     exitApi(404, "Comment or topic doesn't exists");
                 $query = 'insert into `forum`(`text`, `player`, `master`) values (?, ?, ?)';
-                connectToDatabase($query, "sii", [$data->text, $player, $data->master]);
+                connectToDatabase($query, "sii", [$data->text, $player, $data->master], $insert);
             }
             else if(isset($data->title))
             {
                 if(strlen($data->title) == 0)
                     exitApi(400, "Enter title");
                 $query = 'insert into `forum`(`title`, `player`, `slug`, `text`) values (?, ?, ?, ?)';
-                connectToDatabase($query, "siss", [$data->title, $player, slugify($data->title), $data->text]);
+                connectToDatabase($query, "siss", [$data->title, $player, slugify($data->title), $data->text], $insert);
+                $insert = connectToDatabase('select `slug` from `forum` where `id` = ?', "i", [$insert])[0]->slug;
             }
             else
                 exitApi(400, "Enter topic or parent comment");
             http_response_code(201);
+            echo $insert;
             break;
 
         case "PATCH":
