@@ -25,10 +25,13 @@ let request = new XMLHttpRequest();
 request.open("GET", "../api/forum/" + slug, true);
 request.onload = async function ()
 {
-    (JSON.parse(this.responseText)).forEach(element =>
+    if(this.status < 300)
     {
-        document.querySelector('div.main[data-id="' + element.master + '"]').appendChild(createComment(element));
-    });
+        (JSON.parse(this.responseText)).forEach(element =>
+        {
+            document.querySelector('div.main[data-id="' + element.master + '"]').appendChild(createComment(element));
+        });
+    }
 }
 request.setRequestHeader("Session-ID", getCookie("session-id"));
 request.setRequestHeader("Session-Key", getCookie("session-key"));
@@ -83,7 +86,7 @@ function createComment(data)
             request.open("delete", "../api/forum/" + data.id, true);
             request.onload = function ()
             {
-                if(this.status >= 200)
+                if(this.status < 300)
                     location.reload();
             }
             request.setRequestHeader("Session-ID", getCookie("session-id"));
@@ -104,7 +107,7 @@ function like(event)
     request.open("PATCH", "../api/forum/" + getId(event.target), true);
     request.onload = function ()
     {
-        if(this.status >= 200)
+        if(this.status < 300)
         {
             icon.name = (!liked) ? "thumbs-up" : "thumbs-up-outline";
             let count = event.target.querySelector("p");
