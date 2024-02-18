@@ -62,7 +62,7 @@
             if(strlen($data->name) > 100)
                 exitApi(400, "Guilds name is too long");
             isPlayerLogged($data->leader);
-            $slug = slugify($data->name);
+            $slug = slugify($data->name, "guilds", "slug");
             if(!empty(connectToDatabase('select `id` from `guilds` where `slug` = ?', "s", [$slug])))
                 exitApi(400, "Guild already exists");
             if(empty(connectToDatabase('select `id` from `players` where `username` = ? and `guild` is null', "s", [$data->leader])))

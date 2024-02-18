@@ -103,7 +103,7 @@
                 if(strlen($data->title) == 0)
                     exitApi(400, "Enter title");
                 $query = 'insert into `forum`(`title`, `player`, `slug`, `text`) values (?, ?, ?, ?)';
-                connectToDatabase($query, "siss", [$data->title, $player, slugify($data->title), $data->text], $insert);
+                connectToDatabase($query, "siss", [$data->title, $player, slugify($data->title, "forum", "slug"), $data->text], $insert);
                 $insert = connectToDatabase('select `slug` from `forum` where `id` = ?', "i", [$insert])[0]->slug;
             }
             else
