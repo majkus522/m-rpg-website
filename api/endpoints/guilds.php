@@ -70,6 +70,7 @@
             connectToDatabase('insert into `guilds` (`name`, `slug`, `leader`) values (?, ?, (select `id` from `players` where `username` = ? limit 1))', "sss", [$data->name, $slug, $data->leader], $insertId);
             connectToDatabase('update `players` set `guild` = ? where `username` = ?', "is", [$insertId, $data->leader]);
             http_response_code(201);
+            echo json_encode(["slug" => connectToDatabase('select `slug` from `guilds` where `id` = ?', "i", [$insertId])[0]->slug]);
             break;
 
         case "PATCH":

@@ -19,7 +19,7 @@ document.querySelector('main form input[type="button"]').addEventListener("click
     request.onload = function ()
     {
         if(this.status < 300)
-            location.href = location.href + this.responseText;
+            location.href = location.href + JSON.parse(this.responseText).slug;
         else
             error.textContent = JSON.parse(this.responseText).message;
     };

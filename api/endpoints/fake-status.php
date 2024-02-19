@@ -51,8 +51,9 @@
                 $types .= $value;
                 array_push($parameters, $data->$key === "none" ? null : $data->$key);
             }
-            connectToDatabase($query . $queryParameters . ')', $types, $parameters);
+            connectToDatabase($query . $queryParameters . ')', $types, $parameters, $insertId);
             http_response_code(201);
+            echo json_encode(["id" => $insertId]);
             break;
 
         case "PATCH":
