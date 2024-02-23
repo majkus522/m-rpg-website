@@ -6,7 +6,7 @@
             require "headerItems.php";
             if(isSingleGet())
             {
-                $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`, `time`) as (select `id`, `player`, `text`, `master`, `title`, `slug`, `time` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug`, `f`.`time` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, `player`, `text`, `master`, `title`, (select count(*) from `forum-likes` where `comment` = `id`) as "likes", `time`';
+                $query = 'with recursive cte(`id`, `player`, `text`, `master`, `title`, `slug`, `time`) as (select `id`, `player`, `text`, `master`, `title`, `slug`, `time` from `forum` where `slug` = ? union all select `f`.`id`, `f`.`player`, `f`.`text`, `f`.`master`, `f`.`title`, `f`.`slug`, `f`.`time` from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id`) select `id`, (select `username` from `players` where `id` = `player`) as "player", `text`, `master`, `title`, (select count(*) from `forum-likes` where `comment` = `id`) as "likes", `time`';
                 $types = "s";
                 $parameters = [$requestUrlPart[$urlIndex + 1]];
                 $player = "";
@@ -23,7 +23,7 @@
             }
             else
             {
-                $query = 'with recursive cte as ( select `id`, `slug`, (select count(*) from `forum-likes` where `comment` = `forum`.`id`) as "likes" from `forum` union all select `f`.`id`, `cte`.`slug`, (select count(*) from `forum-likes` where `comment` = `f`.`id`) as "likes" from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id` ) select `title`, `slug`, `player`, `time`, (select cast(sum(`likes`) as INT) from `cte` where `slug` is not null and `cte`.`slug` = `forum`.`slug` group by `slug`) as "likes", (select count(*) - 1 from `cte` where `slug` is not null and `cte`.`slug` = `forum`.`slug` group by `slug`) as "comments" from `forum` where `slug` is not null ';
+                $query = 'with recursive cte as ( select `id`, `slug`, (select count(*) from `forum-likes` where `comment` = `forum`.`id`) as "likes" from `forum` union all select `f`.`id`, `cte`.`slug`, (select count(*) from `forum-likes` where `comment` = `f`.`id`) as "likes" from `forum` `f` inner join `cte` on `f`.`master` = `cte`.`id` ) select `title`, `slug`, (select `username` from `players` where `id` = `player`) as "player", `time`, (select cast(sum(`likes`) as INT) from `cte` where `slug` is not null and `cte`.`slug` = `forum`.`slug` group by `slug`) as "likes", (select count(*) - 1 from `cte` where `slug` is not null and `cte`.`slug` = `forum`.`slug` group by `slug`) as "comments" from `forum` where `slug` is not null ';
                 $parameters = [];
                 $types = "";
                 $order = "";
@@ -32,12 +32,11 @@
                     switch($key)
                     {
                         case "author":
-                            $queryResult = connectToDatabase('select `id` from `players` where `username` = ?', "s", [$value]);
-                            if(empty($queryResult))
+                            if(empty(connectToDatabase('select `id` from `players` where `username` = ?', "s", [$value])))
                                 exitApi(404, "Player doesn't exists");
-                            array_push($parameters, $queryResult[0]->id);
+                            array_push($parameters, $value);
                             $query .= ' and `player` = ?';
-                            $types .= "i";
+                            $types .= "s";
                             break;
 
                         case "order":
