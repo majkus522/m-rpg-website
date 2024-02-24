@@ -76,10 +76,13 @@ function createComment(data)
     icon.name = "chatbox-ellipses-outline";
     button.appendChild(icon);
     content.appendChild(button);
-    if(data.player == getCookie("session-id"))
+    if(data.player == getCookie("username"))
     {
         button = document.createElement("button");
         button.textContent = "Delete";
+        icon = document.createElement("ion-icon");
+        icon.name = "trash-outline";
+        button.appendChild(icon);
         button.addEventListener("click", (event) =>
         {
             let request = new XMLHttpRequest();
