@@ -17,13 +17,20 @@
 
                     </div>
                     <button>
-                        <ion-icon name="<?php echo $apiResult->content[0]->liked ? "thumbs-up" : "thumbs-up-outline"; ?>"></ion-icon>
+                        <ion-icon name="<?php echo isset($apiResult->content[0]->liked) && $apiResult->content[0]->liked ? "thumbs-up" : "thumbs-up-outline"; ?>"></ion-icon>
                         <p><?php echo $apiResult->content[0]->likes; ?></p>
                     </button>
+<?php
+                        if($validLogin)
+                        {
+                    ?>
                     <button>
                         Comment
                         <ion-icon role="img" class="md hydrated" name="chatbox-ellipses-outline"></ion-icon>
                     </button>
+<?php
+                        }
+                    ?>
                 </div>
             </div>
             <script>

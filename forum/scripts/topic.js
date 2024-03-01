@@ -17,9 +17,12 @@ button.addEventListener("click", (event) =>
 });
 commenter.appendChild(button);
 
-let buttons = document.querySelectorAll("div.main button");
-buttons[0].addEventListener("click", like);
-buttons[1].addEventListener("click", showCommenter);
+if(getCookie("username").length > 0)
+{
+    let buttons = document.querySelectorAll("div.main button");
+    buttons[0].addEventListener("click", like);
+    buttons[1].addEventListener("click", showCommenter);
+}
 
 let request = new XMLHttpRequest();
 request.open("GET", "../api/forum/" + slug, true);
@@ -61,7 +64,8 @@ function createComment(data)
     time.textContent = data.time;
     content.appendChild(time);
     let button = document.createElement("button");
-    button.addEventListener("click", like);
+    if(getCookie("username").length > 0)
+        button.addEventListener("click", like);
     let icon = document.createElement("ion-icon");
     icon.name = data.liked ? "thumbs-up" : "thumbs-up-outline";
     button.appendChild(icon);
@@ -69,34 +73,37 @@ function createComment(data)
     p.textContent = data.likes;
     button.appendChild(p);
     content.appendChild(button);
-    button = document.createElement("button");
-    button.addEventListener("click", showCommenter);
-    button.textContent = "Comment";
-    icon = document.createElement("ion-icon");
-    icon.name = "chatbox-ellipses-outline";
-    button.appendChild(icon);
-    content.appendChild(button);
-    if(data.player == getCookie("username"))
+    if(getCookie("username").length > 0)
     {
         button = document.createElement("button");
-        button.textContent = "Delete";
+        button.addEventListener("click", showCommenter);
+        button.textContent = "Comment";
         icon = document.createElement("ion-icon");
-        icon.name = "trash-outline";
+        icon.name = "chatbox-ellipses-outline";
         button.appendChild(icon);
-        button.addEventListener("click", (event) =>
-        {
-            let request = new XMLHttpRequest();
-            request.open("delete", "../api/forum/" + data.id, true);
-            request.onload = function ()
-            {
-                if(this.status < 300)
-                    location.reload();
-            }
-            request.setRequestHeader("Session-ID", getCookie("session-id"));
-            request.setRequestHeader("Session-Key", getCookie("session-key"));
-            request.send();
-        });
         content.appendChild(button);
+        if(data.player == getCookie("username"))
+        {
+            button = document.createElement("button");
+            button.textContent = "Delete";
+            icon = document.createElement("ion-icon");
+            icon.name = "trash-outline";
+            button.appendChild(icon);
+            button.addEventListener("click", (event) =>
+            {
+                let request = new XMLHttpRequest();
+                request.open("delete", "../api/forum/" + data.id, true);
+                request.onload = function ()
+                {
+                    if(this.status < 300)
+                        location.reload();
+                }
+                request.setRequestHeader("Session-ID", getCookie("session-id"));
+                request.setRequestHeader("Session-Key", getCookie("session-key"));
+                request.send();
+            });
+            content.appendChild(button);
+        }
     }
     main.appendChild(content);
     return main;
