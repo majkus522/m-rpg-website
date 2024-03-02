@@ -39,6 +39,7 @@ async function getSkills(url)
                         target = target.parentElement;
                     let data = await(await fetch("../api/data/skills/" + target.dataset.skill + ".json")).json();
                     inspector.querySelector("img").src = "../img/skills/" + target.dataset.skill + ".png";
+                    inspector.dataset.rarity = data.rarity;
                     skillSelected = target.dataset.skill;
                     inspector.querySelector("h2").textContent = data.label;
                     inspector.querySelector("p.desc").textContent = data.description;
