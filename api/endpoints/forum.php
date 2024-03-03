@@ -92,8 +92,7 @@
             break;
 
         case "POST":
-            $player = "";
-            isPlayerLogged($player);
+            isPlayerLogged();
             $data = json_decode(file_get_contents("php://input"));
             if(!isset($data->text) || strlen($data->text) == 0)
                 exitApi(400, "Enter text content");
@@ -103,14 +102,14 @@
                 if(empty(connectToDatabase('select `id` from `forum` where `id` = ?', "i", [$data->master])))
                     exitApi(404, "Comment or post doesn't exists");
                 $query = 'insert into `forum`(`text`, `player`, `master`) values (?, ?, ?)';
-                connectToDatabase($query, "sii", [$data->text, $player, $data->master], $insertId);
+                connectToDatabase($query, "sii", [$data->text, getHeader("Session-ID"), $data->master], $insertId);
             }
             else if(isset($data->title))
             {
                 if(strlen($data->title) < 3)
                     exitApi(400, "Title is too short");
                 $query = 'insert into `forum`(`title`, `player`, `slug`, `text`) values (?, ?, ?, ?)';
-                connectToDatabase($query, "siss", [$data->title, $player, slugify($data->title, "forum", "slug"), $data->text], $insertId);
+                connectToDatabase($query, "siss", [$data->title, getHeader("Session-ID"), slugify($data->title, "forum", "slug"), $data->text], $insertId);
                 $insertId = connectToDatabase('select `slug` from `forum` where `id` = ?', "i", [$insertId])[0]->slug;
                 $insertType = "slug";
             }
