@@ -19,6 +19,27 @@ div.main > div.main
     margin-left: 25px;
 }
 
+main > div.main
+{
+    border-left: 0 !important;
+}
+
+main > div.main > div.main,
+main > div.main > div.author
+{
+    margin-left: 0 !important;
+}
+
+div.main:has(div.main)
+{
+    border-left: 2px dashed #efefef;
+}
+
+div.main:has(div.main) > div.author
+{
+    margin-left: -2px;
+}
+
 div.main > div.author
 {
     width: 150px;
