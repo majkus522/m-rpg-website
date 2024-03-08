@@ -22,6 +22,7 @@ if(getCookie("username").length > 0)
     let buttons = document.querySelectorAll("div.main button");
     buttons[0].addEventListener("click", like);
     buttons[1].addEventListener("click", showCommenter);
+    buttons[2].addEventListener("click", deleteComment);
 }
 
 let request = new XMLHttpRequest();
@@ -89,19 +90,7 @@ function createComment(data)
             icon = document.createElement("ion-icon");
             icon.name = "trash-outline";
             button.appendChild(icon);
-            button.addEventListener("click", (event) =>
-            {
-                let request = new XMLHttpRequest();
-                request.open("delete", "../api/forum/" + data.id, true);
-                request.onload = function ()
-                {
-                    if(this.status < 300)
-                        location.reload();
-                }
-                request.setRequestHeader("Session-ID", getCookie("session-id"));
-                request.setRequestHeader("Session-Key", getCookie("session-key"));
-                request.send();
-            });
+            button.addEventListener("click", deleteComment);
             content.appendChild(button);
         }
     }
@@ -132,4 +121,18 @@ function like(event)
 function showCommenter(event)
 {
     event.target.parentElement.parentElement.insertBefore(commenter, event.target.parentElement.parentElement.children[2]);
+}
+
+function deleteComment(event)
+{
+    let request = new XMLHttpRequest();
+    request.open("delete", "../api/forum/" + getId(event.target), true);
+    request.onload = function ()
+    {
+        if(this.status < 300)
+            location.reload();
+    }
+    request.setRequestHeader("Session-ID", getCookie("session-id"));
+    request.setRequestHeader("Session-Key", getCookie("session-key"));
+    request.send();
 }

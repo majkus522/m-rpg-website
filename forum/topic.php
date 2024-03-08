@@ -3,6 +3,8 @@
     if($validLogin)
         $headers = ["Session-Key: " . $_COOKIE["session-key"], "Session-ID: " . $_COOKIE["session-id"], "Result-Count: 1"];
     $apiResult = callApi("forum/" . $requestUrlPart[$urlIndex] . "?order=time", "GET", $headers);
+    if($apiResult->code > 300)
+        header("Location: ../forum");
 ?>
 <div data-id="<?php echo $apiResult->content[0]->id; ?>" class="main">
                 <div class="author">
@@ -26,7 +28,11 @@
                     ?>
                     <button>
                         Comment
-                        <ion-icon role="img" class="md hydrated" name="chatbox-ellipses-outline"></ion-icon>
+                        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+                    </button>
+                    <button>
+                        Delete
+                        <ion-icon name="trash-outline"></ion-icon>
                     </button>
 <?php
                         }
