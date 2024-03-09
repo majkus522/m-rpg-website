@@ -264,6 +264,12 @@
             if(isSingleGet())
             {
                 isPlayerLogged($requestUrlPart[$urlIndex + 1]);
+                $passwordHeader = getHeader("Password");
+                if($passwordHeader === false)
+                    exitApi(400, "Enter password");
+                $apiResult = callApi("players/" . $requestUrlPart[$urlIndex + 1] . "/login", "GET", ["Session-Type: website", "Password: " . $passwordHeader]);
+                if($apiResult->code > 300)
+                    exitApi($apiResult->code, $apiResult->content->message);
                 $queryResult = connectToDatabase('select `guild` from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
                 $guild = $queryResult[0]->guild;
                 connectToDatabase('delete from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);

@@ -38,6 +38,14 @@
                     <p class="error"></p>
                 </div>
             </content>
+            <dialog>
+                <label>
+                    Enter password:
+                    <input type="password">
+                </label>
+                <button>Confirm</button>
+                <button>Cancel</button>
+            </dialog>
         </main>
         <?php
             require "../imports/footer.html";

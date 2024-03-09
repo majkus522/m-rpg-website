@@ -38,3 +38,34 @@ div.loading
     --size: 0.4;
     margin-left: 20px;
 }
+
+dialog
+{
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    display: none;
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+    background-color: #565656;
+    border: 2px solid #efefef;
+    border-radius: 10px;
+}
+
+dialog::backdrop
+{
+    background-color: rgba(24, 24, 24, 0.7);
+}
+
+dialog label
+{
+    display: flex;
+    flex-direction: column;
+    color: #efefef;
+    font-size: 20px;
+    gap: 10px;
+}

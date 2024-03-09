@@ -38,33 +38,45 @@ password.querySelector("input[type='button']").addEventListener("click", () =>
     });
 });
 
+let dialog = document.querySelector("main dialog");
+dialog.close();
 let del = document.querySelector("main div.delete");
 del.querySelector("input[type='button']").addEventListener("click", () =>
 {
-    if(confirm("Are you sure you want to delete your account ??"))
+    dialog.showModal();
+    dialog.style.display = "flex";
+});
+let buttons = dialog.querySelectorAll("button");
+buttons[0].addEventListener("click", () =>
+{
+    del.querySelector("div.loading").style.display = "block";
+    del.querySelector("input[type='button']").style.display = "none";
+    send({}, function ()
     {
-        del.querySelector("div.loading").style.display = "block";
-        del.querySelector("input[type='button']").style.display = "none";
-        send({}, function ()
-        {
-            del.querySelector("div.loading").style.display = "none";
-            del.querySelector("input[type='button']").style.display = "block";
-            if(this.status >= 200 && this.status < 300)
-                location.replace("../logout");
-            else if(this.status == 401)
-                location.reload();
-            else
-                del.querySelector("p").textContent = JSON.parse(this.responseText).message;
-        }, "DELETE");
-    }
+        del.querySelector("div.loading").style.display = "none";
+        del.querySelector("input[type='button']").style.display = "block";
+        dialog.close();
+        dialog.style.display = "none";
+        if(this.status < 300)
+            location.reload();
+        else
+            del.querySelector("p").textContent = JSON.parse(this.responseText).message;
+    }, "DELETE", btoa(dialog.querySelector("input").value));
+});
+buttons[1].addEventListener("click", () =>
+{
+    dialog.close();
+    dialog.style.display = "none";
 });
 
-function send(body, onload, method = "PATCH")
+function send(body, onload, method = "PATCH", password = "")
 {
     let request = new XMLHttpRequest();
     request.open(method, "../api/players/" + getCookie("username"), true);
     request.onload = onload;
     request.setRequestHeader("Session-ID", getCookie("session-id"));
     request.setRequestHeader("Session-Key", getCookie("session-key"));
+    if(password.length > 0)
+        request.setRequestHeader("Password", password);
     request.send(JSON.stringify(body));
 }
