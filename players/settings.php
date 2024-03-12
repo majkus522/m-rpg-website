@@ -43,6 +43,7 @@
                     Enter password:
                     <input type="password">
                 </label>
+                <p>After confirmation, your account will be temporarily deleted. It will be permanent after 7 days. To recover it, simply log in to your account on the website or in the game.</p>
                 <button>Confirm</button>
                 <button>Cancel</button>
             </dialog>

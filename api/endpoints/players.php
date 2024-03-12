@@ -32,6 +32,7 @@
                                 $query .= ', now()';
                             connectToDatabase('delete from `players-sessions` where `player` = ? and `key` like ?', "is", [$queryResult[0]->id, getSessionType($headerType) . "%"]);
                             connectToDatabase($query . ')', "si", [$key, $queryResult[0]->id]);
+                            connectToDatabase('delete from `players-deletion` where `player` = ?', "i", [$queryResult[0]->id]);
                             if($requestMethod != "HEAD")
                                 echo json_encode(["key" => $key, "id" => $queryResult[0]->id]);
                             else
@@ -270,11 +271,11 @@
                 $apiResult = callApi("players/" . $requestUrlPart[$urlIndex + 1] . "/login", "GET", ["Session-Type: website", "Password: " . $passwordHeader]);
                 if($apiResult->code > 300)
                     exitApi($apiResult->code, $apiResult->content->message);
-                $queryResult = connectToDatabase('select `guild` from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
-                $guild = $queryResult[0]->guild;
-                connectToDatabase('delete from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
+                $queryResult = connectToDatabase('select `guild`, `id` from `players` where `username` = ?', "s", [$requestUrlPart[$urlIndex + 1]]);
+                connectToDatabase('insert into `players-deletion`(`player`, `date`) values (?, date_add(now(), interval 7 day))', "i", [$queryResult[0]->id]);
+                connectToDatabase('delete from `players-sessions` where `player` = ?', "i", [$queryResult[0]->id]);
                 if($guild != null)
-                    connectToDatabase('update `guilds` set `leader` = (select `id` from `players` where `guild` = ? limit 1)', "s", [$guild]);
+                    connectToDatabase('update `guilds` set `leader` = (select `id` from `players` where `guild` = ? limit 1)', "s", [$queryResult[0]->guild]);
             }
             else
                 exitApi(400, "Enter player");
