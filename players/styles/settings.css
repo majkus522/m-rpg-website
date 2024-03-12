@@ -54,6 +54,7 @@ dialog
     background-color: #565656;
     border: 2px solid #efefef;
     border-radius: 10px;
+    max-width: 600px;
 }
 
 dialog::backdrop
@@ -68,4 +69,12 @@ dialog label
     color: #efefef;
     font-size: 20px;
     gap: 10px;
+}
+
+dialog p
+{
+    color: #ce3b3b;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
 }
