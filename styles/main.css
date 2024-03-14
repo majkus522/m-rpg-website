@@ -42,19 +42,6 @@ input::-ms-clear
     display: none;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active,
-select:-webkit-autofill,
-select:-webkit-autofill:hover, 
-select:-webkit-autofill:focus, 
-select:-webkit-autofill:active
-{
-    box-shadow: 0 0 0 100px var(--inputBackground) inset !important;
-    -webkit-text-fill-color: var(--color);
-}
-
 main
 {
     max-width: 1400px;

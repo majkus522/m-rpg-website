@@ -83,3 +83,17 @@ textarea
 {
     cursor: pointer;
 }
+
+input:-webkit-autofill
+{
+    -webkit-box-shadow: 0 0 0 30px #565656 inset !important;
+    box-shadow: 0 0 0 30px #565656 inset !important;
+    -webkit-text-fill-color: #efefef;
+    color: #efefef;
+}
+
+input:-webkit-autofill:hover
+{
+    -webkit-box-shadow: 0 0 0 30px #6d6d6d inset !important;
+    box-shadow: 0 0 0 30px #6d6d6d inset !important;
+}
