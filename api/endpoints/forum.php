@@ -72,6 +72,16 @@
                             }
                             break;
 
+                        case "search":
+                            
+                            foreach(explode(" ", $value) as $element)
+                            {
+                                array_push($parameters, "%" . $element . "%");
+                                $query .= ' and `title` like ?';
+                                $types .= "s";
+                            }
+                            break;
+
                         default:
                             exitApi(400, "Unknown query string parameter $key");
                             break;

@@ -1,7 +1,14 @@
 <div>
+                <form>
+                    <input type="text" name="search" <?php if(isset($_GET["search"])) echo 'value="' . $_GET["search"] . '"' ?>>
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+            <div>
                 <h2>Recent posts</h2>
 <?php
-                    $apiResult = callApi("forum?order=time-desc", "GET", ["Return-Count: 10"]);
+                    $search = isset($_GET["search"]) ? "&search=" . $_GET["search"] : "";
+                    $apiResult = callApi("forum?order=time-desc$search", "GET", ["Return-Count: 10"]);
                     if($apiResult->code < 300)
                         foreach($apiResult->content as $element)
                         {
@@ -26,7 +33,7 @@ END;
             <div>
                 <h2>Most popular posts</h2>
 <?php
-                    $apiResult = callApi("forum?order=likes-desc", "GET", ["Return-Count: 10"]);
+                    $apiResult = callApi("forum?order=likes-desc$search", "GET", ["Return-Count: 10"]);
                     if($apiResult->code < 300)
                         foreach($apiResult->content as $element)
                         {

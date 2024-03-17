@@ -14,6 +14,35 @@ h2
     margin-bottom: 10px;
 }
 
+main > div:first-child
+{
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+main > div:first-child > form
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    justify-content: center;
+    padding: 40px;
+}
+
+main > div:first-child > form > input[type="text"]
+{
+    width: 40%;
+    border-radius: 10px 0 0 10px;
+}
+
+main > div:first-child > form > input[type="submit"]
+{
+    margin-left: -2px;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+}
+
 main > div
 {
     display: flex;
@@ -28,11 +57,16 @@ main > div a
     border: 2px solid #efefef;
     width: 100%;
     display: grid;
-    border-radius: 5px;
+    border-radius: 20px;
     grid-template-columns: 1fr 1fr 2fr;
     grid-template-rows: 1fr 1fr;
     padding: 10px;
     gap: 10px 5px;
+}
+
+main > div a:hover
+{
+    background-color: #6d6d6d;
 }
 
 main > div a h3
